@@ -192,6 +192,9 @@ def test_invoker_isolates_the_agent(tmp_path, monkeypatch):
     runmod.default_claude_invoker(env={"PATH": ""})("p", work)
     assert "--safe-mode" in seen["cmd"] and "--strict-mcp-config" in seen["cmd"]
     assert seen["env"]["GIT_CEILING_DIRECTORIES"] == str(work.parent)
+    # No background jobs to die with the turn; a long command fits inside the turn.
+    assert seen["env"]["CLAUDE_CODE_DISABLE_BACKGROUND_TASKS"] == "1"
+    assert int(seen["env"]["BASH_MAX_TIMEOUT_MS"]) == 1_200_000
 
 
 def test_sandbox_root_from_local_config(tmp_path):

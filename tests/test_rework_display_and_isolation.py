@@ -331,3 +331,17 @@ def test_user_brief_is_frozen_hashed_and_tracked_for_staleness(tmp_path):
     (demo.dir / "user.md").write_text("You are someone else.", encoding="utf-8")
     st = approved_staleness(cs, demo)
     assert st.is_stale and "user.md changed since capture" in st.reasons()
+
+
+def test_a_check_file_named_like_a_staged_input_is_not_hidden(tmp_path):
+    from demoforge.capture.run import _isolation
+    from demoforge.discovery import load_content_set
+
+    cs = load_content_set(Path(__file__).resolve().parents[1] / "examples" / "claude-demo-kit")
+    demo = next(d for d in cs.demos() if d.id == "matlab-optimization")
+    # checks/ carries a byte copy of the staged kalman_update.m, so naming it is fine;
+    # naming the harness itself is still flagged.
+    given = _isolation(demo, cs, [_tool_result("type kalman_update.m")], tmp_path)
+    assert given["clean"]
+    hidden = _isolation(demo, cs, [_tool_result("type run_tests.m")], tmp_path)
+    assert [f["reason"] for f in hidden["findings"]] == ["mentions hidden check file 'run_tests.m'"]

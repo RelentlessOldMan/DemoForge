@@ -90,6 +90,11 @@ understand the run, not to reproduce Claude's tokens exactly.
   and `--strict-mcp-config` turns off their MCP servers: those would steer the
   agent in ways a viewer cannot see or reproduce. API-billing variables are
   removed from the agent's environment so it runs on the CLI's own login.
+- **No background jobs.** A headless turn ends when the agent stops talking, and
+  a background job ends with it, so an agent that backgrounds a long benchmark
+  is left waiting for output that never arrives. Captures set
+  `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1` and raise `BASH_MAX_TIMEOUT_MS` to
+  two thirds of the turn's time limit, so long commands run in the foreground.
 - **What is recorded.** The CLI's init event lists the operator's tools, skills,
   plugins and memory locations; those fields are dropped before anything is
   written. Each stream line is stamped with the seconds since launch as it
@@ -115,8 +120,8 @@ understand the run, not to reproduce Claude's tokens exactly.
   repository, with its temp folder (`TMP`, `TEMP`, `TMPDIR`) inside that sandbox,
   but a tool can still name any absolute path. After every capture each session's
   tool calls and tool results are searched for a path inside the repository or
-  content set, and for the name of any file in the demo's `checks/`
-  (`capture/isolation.py`). Findings go into `metadata.json` `extra.isolation`
+  content set, and for the name of any file in the demo's `checks/` that was not
+  also staged as an input (`capture/isolation.py`). Findings go into `metadata.json` `extra.isolation`
   and are printed by `run`; a person judges them before approving.
 - **Verification is the harness's word.** Inputs and artifacts are staged into a
   fresh folder with their relative paths (an edit to `src/gate.m` replaces

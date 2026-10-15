@@ -243,7 +243,15 @@ def _isolation(demo: Demo, cs: ContentSet, objs: list[dict], sim_dir: Path) -> d
         for path in sorted(sim_dir.glob("turn-*.jsonl")):
             streams[f"user simulator {path.stem}"] = isolation.read_stream(path)
     checks = demo.dir / "checks"
-    hidden = [p.name for p in checks.rglob("*") if p.is_file()] if checks.is_dir() else []
+    # A check file named like a staged input (a byte copy of the baseline, say) is
+    # not hidden by its name: the sessions were handed a file called that.
+    given = {
+        f.name.lower() for p in demo.input_paths()
+        for f in ([p, *p.rglob("*")] if p.is_dir() else [p])
+    }
+    hidden = [
+        p.name for p in checks.rglob("*") if p.is_file() and p.name.lower() not in given
+    ] if checks.is_dir() else []
     findings = isolation.audit(
         streams, _forbidden_roots(cs), hidden, _hidden_lines(demo),
     )
@@ -558,6 +566,12 @@ def default_claude_invoker(
         # user's home, a parent project) would show the agent files that are not
         # part of the demo, and whatever it prints is recorded.
         child_env["GIT_CEILING_DIRECTORIES"] = str(work_dir.parent)
+        # A headless turn ends when the agent stops talking, and takes any background
+        # job with it, so the agent would be left waiting on output that never comes.
+        # Long commands run in the foreground instead, up to most of a turn.
+        child_env["CLAUDE_CODE_DISABLE_BACKGROUND_TASKS"] = "1"
+        if timeout:
+            child_env["BASH_MAX_TIMEOUT_MS"] = str(int(timeout * 1000 * 2 / 3))
         # Resolve on the same PATH the child will get, so the CLI we find is the
         # CLI it runs.
         exe = shutil.which(claude_bin, path=child_env.get("PATH"))
