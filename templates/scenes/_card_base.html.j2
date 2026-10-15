@@ -1,0 +1,70 @@
+{#
+  Base for presentation cards (title, chapter, closing).
+
+  Deliberately NOT `_base.html.j2`: a scene frame carries the run chrome and the
+  captured event numbers it was built from, and a card has no run behind it. Keeping
+  them on separate bases means a card can never accidentally inherit a claim about a
+  capture it does not have.
+#}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ data.title }}</title>
+<style>
+{{ font_css | safe }}
+  *, *::before, *::after {
+    box-sizing: border-box;
+    animation: none !important;
+    transition: none !important;
+  }
+  :root {
+    --bg: #0b1020;
+    --edge: #26324d;
+    --text: #e6edf7;
+    --muted: #8ca0c4;
+    --accent: #67e8f9;
+    --ok: #4ade80;
+    --mono: "DemoForge Mono", "Cascadia Code", Consolas, "DejaVu Sans Mono", monospace;
+    --sans: "DemoForge Sans", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: {{ width }}px;
+    height: {{ height }}px;
+    overflow: hidden;
+  }
+  body {
+    background:
+      radial-gradient(1400px 800px at 50% -20%, #1a2744 0%, transparent 62%),
+      var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    display: grid;
+    place-items: center;
+    text-align: center;
+  }
+  .card { padding: 0 140px; max-width: 100%; }
+  .rule {
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: 36px auto;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 20px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+  }
+</style>
+</head>
+<body class="card-frame card-frame--{{ kind }}">
+  <div class="card">
+{% block card %}{% endblock %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+# ClaudeDemoKit Demo 10: Autonomous Engineering Investigation (the finale).
+# Auto-discovered by DemoForge. Claude is given the whole CVT repository (controlled
+# documents including a PDF, config, MATLAB/Octave and Python source, tests and their
+# recorded results, the VAL-2026-09 campaign dataset, an Excel summary, logs and a
+# colleague's handover notes) and asked why the campaign failed. Facts per STORY.md
+# (incident of 2026-09-26). The answer is not stated anywhere in the repository; it has
+# to be established from the data and the code.
+
+id: autonomous-investigation
+title: Autonomous Engineering Investigation
+order: 10
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+# The whole repository, staged as a directory tree. Most of it is not relevant to the
+# failure; deciding what is relevant is the job.
+inputs:
+  - input/README.md
+  - input/config/estimator_config.json
+  - input/config/model.json
+  - input/docs/CVT-SRS-003.pdf
+  - input/docs/CHANGELOG.md
+  - input/docs/kalman_filter_spec.md
+  - input/docs/requirements.csv
+  - input/docs/validation_plan.md
+  - input/src/cvt_model.m
+  - input/src/kalman_update.m
+  - input/src/measurement_gate.m
+  - input/src/kalman_filter.py
+  - input/tests/test_kalman.m
+  - input/tests/test_measurement_gate.m
+  - input/tests/test_results.txt
+  - input/data/validation_runs.csv
+  - input/data/validation_summary.xlsx
+  - input/data/gate_vectors.csv
+  - input/logs/estimator-worker.log
+  - input/logs/validation-runner.log
+  - input/logs/scheduler.log
+  - input/notes/handover_notes.md
+
+# The agent may read a PDF, which Claude's Read tool does by rasterizing pages with
+# pdftoppm (poppler). Declared so capture refuses up front on a machine without it.
+requires:
+  - pdftoppm
+
+runtime: octave
+
+# Independent harness (checks/check_investigation.m). It validates findings.json
+# against the repository itself (every citation must be a real line of a real file,
+# quoted correctly, and the cause, discriminator, failing-run set and threshold values
+# must match what the data and code establish), runs the agent's fixed gate on hidden
+# vectors against a hidden reference gate, and runs the agent's tests against the
+# correct gate (must pass) and against the gate as shipped (must fail). It also
+# recomputes the shape of the failure from the dataset and logs for the record.
+harness: checks/check_investigation.m
+metrics_from: metrics.json
+
+checks:
+  - id: produced_report
+    kind: file_exists
+    description: The agent wrote the root-cause report.
+    pattern: root_cause.md
+
+  - id: findings_valid
+    kind: threshold
+    description: findings.json parses and has every required field.
+    metric: findings_valid
+    min: 1
+
+  - id: citations_real
+    kind: threshold
+    description: Every evidence citation is a real line of a repository file, quoted correctly.
+    metric: invalid_citations
+    max: 0
+
+  - id: enough_citations
+    kind: threshold
+    description: At least four pieces of evidence are cited.
+    metric: n_citations
+    min: 4
+
+  - id: evidence_covers_chain
+    kind: threshold
+    description: Evidence cites the gate's threshold, the mode config, a failing Doppler run and the gate test or its trace.
+    metric: key_evidence_groups
+    min: 4
+
+  - id: cause_located
+    kind: threshold
+    description: The cause points at the inlined threshold in src/measurement_gate.m.
+    metric: cause_correct
+    min: 1
+
+  - id: discriminator_correct
+    kind: threshold
+    description: The failures are attributed to measurement mode (Doppler), not build or worker.
+    metric: discriminator_correct
+    min: 1
+
+  - id: failing_runs_exact
+    kind: threshold
+    description: The failing-run list is exactly the campaign's failed runs.
+    metric: failing_runs_match
+    min: 1
+
+  - id: wrong_value_correct
+    kind: threshold
+    description: The threshold in use (5.991) and the one that should apply (13.277) are both identified.
+    metric: value_correct
+    min: 1
+
+  - id: alternatives_ruled_out
+    kind: threshold
+    description: At least two alternative explanations are ruled out.
+    metric: ruled_out_count
+    min: 2
+
+  - id: fix_correct
+    kind: threshold
+    description: The fixed src/measurement_gate.m agrees with the hidden reference on hidden vectors.
+    metric: fix_mismatches
+    max: 0
+
+  - id: fix_fails_closed
+    kind: threshold
+    description: The fixed gate still rejects malformed input with d2 = Inf.
+    metric: fix_nonfinite
+    min: 1
+
+  - id: tests_pass_on_correct_gate
+    kind: threshold
+    description: Every tests/test_*.m passes against the hidden correct gate.
+    metric: agent_tests_pass_ref
+    min: 1
+
+  - id: tests_catch_shipped_bug
+    kind: threshold
+    description: The updated tests fail against the gate as it shipped.
+    metric: agent_tests_fail_shipped
+    min: 1
+
+  - id: tests_catch_hardcoded_doppler
+    kind: metric
+    description: Whether the tests also fail against a gate that hard-codes 13.277.
+
+  - id: cause_id
+    kind: metric
+    description: What the agent's cited cause resolved to.
+
+  - id: discriminator
+    kind: metric
+    description: Run attribute that actually separates passing from failing runs.
+
+  - id: fail_rate_doppler
+    kind: metric
+    description: Fraction of Doppler-mode runs that failed acceptance.
+
+  - id: fail_rate_planar
+    kind: metric
+    description: Fraction of planar-mode runs that failed acceptance.
+
+  - id: reject_rate_doppler
+    kind: metric
+    description: Mean gate rejection rate in Doppler mode (%).
+
+  - id: reject_rate_planar
+    kind: metric
+    description: Mean gate rejection rate in planar mode (%).
+
+  - id: campaign_pass_rate
+    kind: metric
+    description: Overall campaign pass rate (against the 0.95 minimum).
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Grep
+    - tool: Bash
+      match: octave

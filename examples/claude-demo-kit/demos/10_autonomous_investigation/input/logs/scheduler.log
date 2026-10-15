@@ -1,0 +1,12 @@
+2026-09-26T04:02:40Z INFO  [scheduler] picked up campaign VAL-2026-09 (60 runs)
+2026-09-26T04:02:41Z INFO  [scheduler] dispatch policy=round-robin workers=3
+2026-09-26T04:18:44Z WARN  [scheduler] estimator-02 heartbeat late (1.8s) - continuing
+2026-09-26T04:51:49Z WARN  [net] artifact upload retry 1/3 (connection reset by peer)
+2026-09-26T04:51:51Z INFO  [net] artifact upload succeeded on retry
+2026-09-26T05:09:59Z WARN  [disk] /var/spool/cvt at 71% capacity
+2026-09-26T05:40:49Z INFO  [cert] TLS certificate for artifact store expires in 34 days
+2026-09-26T06:10:01Z INFO  [scheduler] estimator-01 completed its queue
+2026-09-26T06:12:09Z INFO  [scheduler] estimator-02 completed its queue
+2026-09-26T06:14:38Z INFO  [scheduler] estimator-03 completed its queue
+2026-09-26T06:15:41Z WARN  [scheduler] estimator-02 mean runtime 19% above other workers - flagged for review
+2026-09-26T06:15:42Z INFO  [scheduler] campaign VAL-2026-09 released to validation

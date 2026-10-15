@@ -1,0 +1,95 @@
+# Event -> scene style map (docs/video-pipeline.md §5.1).
+#
+# This is the ONLY place the replay decides how a recorded action looks. Every scene
+# is derived from an event in the approved bundle's events.jsonl, so the replay
+# structurally cannot show something the agent did not do: there is no slot in this
+# file for a scene without an event behind it.
+#
+# A content set may override this file at <set>/config/scenes.yaml.
+#
+# `explain` is the one-line "what's happening" banner shown on each card, for viewers
+# who have never watched an agent work. It describes the KIND of step, never the
+# agent's intent, and may only fill in recorded fields ({name}, {tool}).
+
+scenes:
+  prompt:
+    kind: PromptCard
+    template: prompt_card.html.j2
+    label: The job
+    explain: "The request a person gave Claude. Claude then works on its own until it answers; every step is one it chose, recorded as it happened."
+  user_message:
+    kind: FollowUp
+    template: follow_up.html.j2
+    label: Follow-up
+    explain: "The person has read Claude's answer and replies: a question, a doubt, or something to fix. Here the person is played by a second Claude session briefed on the role; it never sees the hidden checks."
+  assistant_text:
+    kind: NarratedText
+    template: narrated_text.html.j2
+    label: Claude
+    explain: "Claude's own words to the person: what it has found, what it did, or what it plans next."
+  file_read:
+    kind: FileGlance
+    template: file_glance.html.j2
+    label: Reading
+    explain: "Claude opens a file and reads it. Reading the code, data and documents is how it learns the problem before changing anything."
+  file_search:
+    kind: FileGlance
+    template: file_glance.html.j2
+    label: Searching
+    explain: "Claude searches through the files for something it needs."
+  file_write:
+    kind: DiffReveal
+    template: diff_reveal.html.j2
+    label: Writing
+    explain: "Claude creates a new file, {name}, writing the contents itself. Below: the start of what it wrote."
+  file_edit:
+    kind: DiffReveal
+    template: diff_reveal.html.j2
+    label: Editing
+    explain: "Claude changes part of an existing file, {name}, and leaves the rest as it was. Red lines are taken out, green lines put in."
+  command:
+    kind: TerminalRun
+    template: terminal_run.html.j2
+    label: Running
+    explain: "Claude types a command into a {tool} terminal and the computer runs it. Top line: the command. Below it: what the computer printed back."
+  test_result:
+    kind: ResultBadge
+    template: result_badge.html.j2
+    label: Tests
+    explain: "The result of a test run during the session."
+  artifact:
+    kind: ArtifactReveal
+    template: artifact_reveal.html.j2
+    label: Artifact
+    explain: "A file Claude produced as part of its answer."
+  tool_call:
+    kind: ToolCard
+    template: tool_card.html.j2
+    label: Tool
+    explain: "Claude uses one of its built-in tools ({tool})."
+  completion:
+    kind: ChapterEnd
+    template: chapter_end.html.j2
+    label: Result
+    explain: "Claude has finished. These results come from an independent check run afterwards, which Claude never saw."
+
+# Events folded into the preceding scene rather than getting one of their own.
+# A command's output belongs on the same terminal card as the command that produced
+# it — one scene, both recorded events, nothing invented.
+merge_into_previous:
+  command_output: command
+
+# Recorded event types deliberately not shown. How a conversation ended
+# (user_done) is in the written record; on screen the last answer simply stands.
+ignore: [user_done]
+
+# What fits on a frame. The timeline computes a scene's duration from the text that
+# is actually on screen, so these caps belong with the style map, not the pacing.
+limits:
+  terminal_max_lines: 16
+  terminal_max_line_chars: 110
+  terminal_command_max_lines: 5
+  # Longer text is split over consecutive pages (each traced to the same event),
+  # never cut off.
+  text_page_lines: 11
+  text_line_chars: 100

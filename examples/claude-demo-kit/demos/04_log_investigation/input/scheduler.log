@@ -1,0 +1,76 @@
+2026-02-18T02:00:05.220Z INFO  scheduler: nightly trigger fired: batch val-2026-02-18
+2026-02-18T02:00:05.224Z INFO  scheduler: suite=cvt-regression tests=1800..1850 (51) release=v2.1.0 build=2.1.0+b412
+2026-02-18T02:00:05.229Z INFO  scheduler: workers=[estimator-01, estimator-02] policy=parity (odd->estimator-01, even->estimator-02)
+2026-02-18T02:00:05.530Z INFO  scheduler: health: estimator-01 ok (load 0.12) estimator-02 ok (load 0.31) data-ingest ok runner ok
+2026-02-18T02:00:05.550Z INFO  scheduler: waiting for data-ingest READY markers
+2026-02-18T02:00:46.295Z INFO  scheduler: dispatch test 1800 -> estimator-02
+2026-02-18T02:01:05.000Z INFO  scheduler: progress: 1/51 dispatched
+2026-02-18T02:01:05.159Z INFO  scheduler: dispatch test 1801 -> estimator-01
+2026-02-18T02:01:23.668Z INFO  scheduler: dispatch test 1802 -> estimator-02
+2026-02-18T02:01:41.439Z INFO  scheduler: dispatch test 1803 -> estimator-01
+2026-02-18T02:01:58.621Z INFO  scheduler: dispatch test 1804 -> estimator-02
+2026-02-18T02:02:05.000Z INFO  scheduler: progress: 5/51 dispatched
+2026-02-18T02:02:18.239Z INFO  scheduler: dispatch test 1805 -> estimator-01
+2026-02-18T02:02:36.755Z INFO  scheduler: dispatch test 1806 -> estimator-02
+2026-02-18T02:02:38.155Z WARN  scheduler: estimator-02 slow to ack dispatch of test 1806 (1.4s); continuing
+2026-02-18T02:02:53.632Z INFO  scheduler: dispatch test 1807 -> estimator-01
+2026-02-18T02:03:05.000Z INFO  scheduler: progress: 8/51 dispatched
+2026-02-18T02:03:14.129Z INFO  scheduler: dispatch test 1808 -> estimator-02
+2026-02-18T02:03:30.243Z INFO  scheduler: dispatch test 1809 -> estimator-01
+2026-02-18T02:03:49.224Z INFO  scheduler: dispatch test 1810 -> estimator-02
+2026-02-18T02:04:05.000Z INFO  scheduler: progress: 11/51 dispatched
+2026-02-18T02:04:07.868Z INFO  scheduler: dispatch test 1811 -> estimator-01
+2026-02-18T02:04:25.533Z INFO  scheduler: dispatch test 1812 -> estimator-02
+2026-02-18T02:04:44.385Z INFO  scheduler: dispatch test 1813 -> estimator-01
+2026-02-18T02:05:03.637Z INFO  scheduler: dispatch test 1814 -> estimator-02
+2026-02-18T02:05:05.000Z INFO  scheduler: progress: 15/51 dispatched
+2026-02-18T02:05:20.552Z INFO  scheduler: dispatch test 1815 -> estimator-01
+2026-02-18T02:05:38.335Z INFO  scheduler: dispatch test 1816 -> estimator-02
+2026-02-18T02:05:57.361Z INFO  scheduler: dispatch test 1817 -> estimator-01
+2026-02-18T02:06:05.000Z INFO  scheduler: progress: 18/51 dispatched
+2026-02-18T02:06:16.736Z INFO  scheduler: dispatch test 1818 -> estimator-02
+2026-02-18T02:06:34.764Z INFO  scheduler: dispatch test 1819 -> estimator-01
+2026-02-18T02:06:52.127Z INFO  scheduler: dispatch test 1820 -> estimator-02
+2026-02-18T02:07:05.000Z INFO  scheduler: progress: 21/51 dispatched
+2026-02-18T02:07:09.705Z INFO  scheduler: dispatch test 1821 -> estimator-01
+2026-02-18T02:07:28.415Z INFO  scheduler: dispatch test 1822 -> estimator-02
+2026-02-18T02:07:48.334Z INFO  scheduler: dispatch test 1823 -> estimator-01
+2026-02-18T02:08:05.000Z INFO  scheduler: progress: 24/51 dispatched
+2026-02-18T02:08:05.669Z INFO  scheduler: dispatch test 1824 -> estimator-02
+2026-02-18T02:08:23.447Z INFO  scheduler: dispatch test 1825 -> estimator-01
+2026-02-18T02:08:42.691Z INFO  scheduler: dispatch test 1826 -> estimator-02
+2026-02-18T02:08:44.091Z WARN  scheduler: estimator-02 slow to ack dispatch of test 1826 (1.4s); continuing
+2026-02-18T02:09:01.281Z INFO  scheduler: dispatch test 1827 -> estimator-01
+2026-02-18T02:09:05.000Z INFO  scheduler: progress: 28/51 dispatched
+2026-02-18T02:09:18.876Z INFO  scheduler: dispatch test 1828 -> estimator-02
+2026-02-18T02:09:37.552Z INFO  scheduler: dispatch test 1829 -> estimator-01
+2026-02-18T02:09:56.853Z INFO  scheduler: dispatch test 1830 -> estimator-02
+2026-02-18T02:10:05.000Z INFO  scheduler: progress: 31/51 dispatched
+2026-02-18T02:10:15.636Z INFO  scheduler: dispatch test 1831 -> estimator-01
+2026-02-18T02:10:33.004Z INFO  scheduler: dispatch test 1832 -> estimator-02
+2026-02-18T02:10:51.868Z INFO  scheduler: dispatch test 1833 -> estimator-01
+2026-02-18T02:11:05.000Z INFO  scheduler: progress: 34/51 dispatched
+2026-02-18T02:11:10.153Z INFO  scheduler: dispatch test 1834 -> estimator-02
+2026-02-18T02:11:28.058Z INFO  scheduler: dispatch test 1835 -> estimator-01
+2026-02-18T02:11:46.012Z INFO  scheduler: dispatch test 1836 -> estimator-02
+2026-02-18T02:12:04.476Z INFO  scheduler: dispatch test 1837 -> estimator-01
+2026-02-18T02:12:05.000Z INFO  scheduler: progress: 38/51 dispatched
+2026-02-18T02:12:22.855Z INFO  scheduler: dispatch test 1838 -> estimator-02
+2026-02-18T02:12:24.255Z WARN  scheduler: estimator-02 slow to ack dispatch of test 1838 (1.6s); continuing
+2026-02-18T02:12:40.377Z INFO  scheduler: dispatch test 1839 -> estimator-01
+2026-02-18T02:12:58.751Z INFO  scheduler: dispatch test 1840 -> estimator-02
+2026-02-18T02:13:05.000Z INFO  scheduler: progress: 41/51 dispatched
+2026-02-18T02:13:18.769Z INFO  scheduler: dispatch test 1841 -> estimator-01
+2026-02-18T02:13:36.801Z INFO  scheduler: dispatch test 1842 -> estimator-02
+2026-02-18T02:13:54.267Z INFO  scheduler: dispatch test 1843 -> estimator-01
+2026-02-18T02:14:05.000Z INFO  scheduler: progress: 44/51 dispatched
+2026-02-18T02:14:13.644Z INFO  scheduler: dispatch test 1844 -> estimator-02
+2026-02-18T02:14:31.245Z INFO  scheduler: dispatch test 1845 -> estimator-01
+2026-02-18T02:14:48.998Z INFO  scheduler: dispatch test 1846 -> estimator-02
+2026-02-18T02:15:05.000Z INFO  scheduler: progress: 47/51 dispatched
+2026-02-18T02:15:08.067Z INFO  scheduler: dispatch test 1847 -> estimator-01
+2026-02-18T02:15:26.443Z INFO  scheduler: dispatch test 1848 -> estimator-02
+2026-02-18T02:15:44.963Z INFO  scheduler: dispatch test 1849 -> estimator-01
+2026-02-18T02:16:03.271Z INFO  scheduler: dispatch test 1850 -> estimator-02
+2026-02-18T02:16:04.840Z INFO  scheduler: batch val-2026-02-18 finished: 50 passed, 1 failed, 0 skipped
+2026-02-18T02:16:04.850Z INFO  scheduler: next run: 2026-02-19T02:00:00Z

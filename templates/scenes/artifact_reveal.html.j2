@@ -1,0 +1,22 @@
+{# An artifact the run produced. The record holds its contents. #}
+{% extends "_base.html.j2" %}
+{% block stage %}
+  <style>
+    .art { text-align: center; }
+    .art__name { font-family: var(--mono); font-size: 56px; margin: 0; }
+    .art__path {
+      font-family: var(--mono);
+      font-size: 20px;
+      color: var(--muted);
+      margin: 18px 0 0;
+      overflow-wrap: anywhere;
+    }
+  </style>
+  <div class="panel art">
+    <p class="eyebrow">{{ label }} produced by the run</p>
+    <p class="art__name">{{ data.name }}</p>
+{% if data.rel and data.rel != data.name %}
+    <p class="art__path">{{ data.rel }}</p>
+{% endif %}
+  </div>
+{% endblock %}

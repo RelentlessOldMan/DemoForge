@@ -1,0 +1,147 @@
+{#
+  The replay as one Claude Code window (demoforge/render/session.py).
+
+  Every line in the window is recorded text, or a prefix of it while it is being
+  typed or streamed. The newest entries sit at the bottom and older ones scroll off
+  the top, as in a real terminal. The only text not taken from the record is the
+  window's own chrome and, while a recorded command runs, a counter that climbs to
+  the duration the record measured.
+#}
+{% extends "_base.html.j2" %}
+{% block stage %}
+  <style>
+    .stage { justify-content: flex-start; }
+    .win {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: #0a0f1c;
+      border: 1px solid var(--edge);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .win__bar {
+      flex: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--edge);
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .win__dot { width: 13px; height: 13px; border-radius: 50%; background: var(--edge); }
+    .win__title {
+      font-family: var(--mono);
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-left: 10px;
+    }
+    .win__body {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 18px 32px 8px;
+      font-family: var(--mono);
+      font-size: 22px;
+      line-height: 1.42;
+    }
+    .e { margin: 0 0 18px; flex: none; }
+    .e--user {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: rgba(140, 160, 196, 0.12);
+      border-radius: 8px;
+      padding: 10px 16px;
+      color: var(--text);
+    }
+    .e--user::before { content: "> "; color: var(--muted); }
+    .e--assistant { display: flex; gap: 14px; }
+    .e--assistant .bullet { color: var(--text); }
+    .e--assistant .md { font-family: var(--sans); font-size: 26px; line-height: 1.45; }
+    .e--assistant .md code { font-size: 0.85em; }
+    .e--tool .head { display: flex; gap: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .e--tool .bullet { color: var(--ok); }
+    .e--tool .name { font-weight: 700; color: var(--text); }
+    .e--tool .arg { color: var(--accent); }
+    .e--tool .out { margin: 6px 0 0 34px; white-space: normal; color: #c9d3e6; }
+    .e--tool .out .l { display: block; white-space: pre; overflow: hidden; text-overflow: ellipsis; }
+    .e--tool .out .l--minus { background: rgba(248, 113, 113, 0.16); color: #fecaca; }
+    .e--tool .out .l--plus { background: rgba(74, 222, 128, 0.14); color: #bbf7d0; }
+    .e--tool .out .l--gap { color: var(--muted); }
+    .e--tool .elbow { color: var(--muted); }
+    .e--tool .running { margin: 6px 0 0 34px; color: var(--warn); }
+    .e--tool .more { margin: 4px 0 0 34px; color: var(--muted); font-style: italic; }
+    .input {
+      flex: none;
+      margin: 0 24px 18px;
+      border: 1px solid var(--edge);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-family: var(--mono);
+      font-size: 22px;
+      line-height: 1.42;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      max-height: 45%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .input__text::before { content: "> "; color: var(--muted); }
+    .input__cursor {
+      display: inline-block;
+      width: 0.6em;
+      height: 1.1em;
+      vertical-align: text-bottom;
+      background: var(--text);
+      opacity: 0.8;
+    }
+  </style>
+  <div class="win">
+    <div class="win__bar">
+      <span class="win__dot"></span><span class="win__dot"></span><span class="win__dot"></span>
+      <span class="win__title">Claude Code &middot; replayed from the record</span>
+    </div>
+    <div class="win__body">
+{% for e in session.entries %}
+{% if e.role == "user" %}
+      <div class="e e--user">{{ e.text }}</div>
+{% elif e.role == "assistant" %}
+      <div class="e e--assistant"><span class="bullet">&#9679;</span><div class="md">{{ e.html | safe }}</div></div>
+{% else %}
+      <div class="e e--tool">
+        <div class="head"><span class="bullet">&#9679;</span><span><span class="name">{{ e.tool }}</span>{% if e.arg %}(<span class="arg">{{ e.arg }}</span>){% endif %}</span></div>
+{% if e.running %}
+        <div class="running">{{ e.running }}</div>
+{% endif %}
+{% if e.lines %}
+        <div class="out">
+{%- for line in e.lines %}
+{%- set cls = "l--minus" if line.sign == "-" else ("l--plus" if line.sign == "+" else ("l--gap" if line.sign == "~" else "")) %}
+<span class="l {{ cls }}">{% if loop.first %}<span class="elbow">&#9151;  </span>{% else %}   {% endif %}{% if line.sign in ("-", "+") %}{{ line.sign }} {% elif line.sign == " " %}  {% endif %}{% if line.sign == "~" %}&hellip;{% else %}{{ line.text }}{% endif %}</span>
+{%- endfor %}
+        </div>
+{% endif %}
+{% if e.more %}
+        <div class="more">{{ e.more }}</div>
+{% endif %}
+      </div>
+{% endif %}
+{% endfor %}
+    </div>
+    <div class="input">
+{%- if session.input and session.input.text %}
+      <div><span class="input__text">{{ session.input.text }}</span><span class="input__cursor"></span></div>
+{%- else %}
+      <div><span class="input__text"></span><span class="input__cursor"></span></div>
+{%- endif %}
+    </div>
+  </div>
+{% endblock %}

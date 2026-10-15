@@ -1,0 +1,18 @@
+# Normalize line endings: LF in the repository, checked out natively.
+* text=auto eol=lf
+
+# Windows-specific text files keep CRLF.
+*.sln text eol=crlf
+
+# Binary / index artifacts (belt-and-suspenders; these are gitignored anyway).
+*.idx binary
+*.bin binary
+
+# Byte-exact content: approved runs record hashes of each demo's inputs, some
+# inputs (CSV, logs) are CRLF on purpose, and the harnesses and frozen bundles
+# must match what was captured. Never convert these. Prose (SPEC, README,
+# narration) is ordinary text.
+examples/*/demos/*/input/** -text
+examples/*/demos/*/checks/** -text
+examples/*/demos/*/reference/** -text
+examples/*/approved/** -text

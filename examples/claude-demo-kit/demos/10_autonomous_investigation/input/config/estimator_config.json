@@ -1,0 +1,30 @@
+{
+  "version": "2.4.1",
+  "model_file": "config/model.json",
+  "active_mode": "doppler",
+  "modes": {
+    "planar": {
+      "description": "Position-only sensor (px, py). H and R from the model file.",
+      "measurement_dim": 2
+    },
+    "doppler": {
+      "description": "Position and velocity sensor (px, py, vx, vy). Added in v2.4.0.",
+      "measurement_dim": 4,
+      "H": [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]],
+      "R": [[0.25, 0, 0, 0], [0, 0.25, 0, 0], [0, 0, 0.04, 0], [0, 0, 0, 0.04]]
+    }
+  },
+  "gate": {
+    "enabled": true,
+    "confidence": 0.99,
+    "gamma": {
+      "planar": 9.210,
+      "doppler": 13.277
+    }
+  },
+  "logging": {
+    "level": "INFO",
+    "gate_rejections": true,
+    "gate_rejection_alert_pct": 10.0
+  }
+}

@@ -1,0 +1,64 @@
+{#
+  The closing card (video-pipeline.md §9).
+
+  Every number on it is measured from what was actually rendered in this build, and
+  the claim it makes — that nothing here was re-enacted — is exactly the property the
+  timeline enforces. If that stopped being true, this card would have to change.
+#}
+{% extends "_card_base.html.j2" %}
+{% block card %}
+  <style>
+    .claim {
+      font-size: 46px;
+      line-height: 1.4;
+      margin: 0 auto;
+      font-weight: 400;
+      max-width: 1380px;
+      text-wrap: balance;
+    }
+    .claim strong { color: var(--accent); font-weight: 600; }
+    .cmd {
+      font-family: var(--mono);
+      font-size: 32px;
+      color: var(--ok);
+      margin: 44px 0 0;
+    }
+    .facts {
+      display: flex;
+      gap: 72px;
+      justify-content: center;
+      margin: 56px 0 0;
+    }
+    .fact__n { font-family: var(--mono); font-size: 58px; margin: 0; color: var(--text); }
+    .fact__k {
+      font-family: var(--mono);
+      font-size: 17px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 12px 0 0;
+    }
+  </style>
+  <p class="eyebrow">{{ data.title }}</p>
+  <div class="rule"></div>
+  <p class="claim">
+    Every frame you just saw was <strong>replayed from a recorded run</strong>,
+    not re-enacted.<br>
+    The records, the deck and this video were generated from one repository.
+  </p>
+  <p class="cmd">$ demoforge build --video</p>
+  <div class="facts">
+    <div>
+      <p class="fact__n">{{ data.demo_count }}</p>
+      <p class="fact__k">demo{{ "" if data.demo_count == 1 else "s" }}</p>
+    </div>
+    <div>
+      <p class="fact__n">{{ data.event_count }}</p>
+      <p class="fact__k">captured events</p>
+    </div>
+    <div>
+      <p class="fact__n">{{ data.minutes }}</p>
+      <p class="fact__k">minutes</p>
+    </div>
+  </div>
+{% endblock %}

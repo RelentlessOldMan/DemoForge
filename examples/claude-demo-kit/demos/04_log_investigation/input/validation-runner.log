@@ -1,0 +1,108 @@
+2026-02-18T02:00:06.001Z INFO  validation-runner: batch val-2026-02-18 opened: 51 cases, pass criterion max_abs_error < 1e-7
+2026-02-18T02:00:06.002Z INFO  validation-runner: reference filter: cvt-ref 2.1.0, soft deadline 4.0 s/case
+2026-02-18T02:00:46.335Z INFO  validation-runner: test 1800 queued on estimator-02 input=batch_1800_vectors.csv
+2026-02-18T02:00:46.675Z INFO  validation-runner: test 1800 PASS on estimator-02: max_abs_error=3.33e-10 states=1500 runtime=56.7ms
+2026-02-18T02:01:05.199Z INFO  validation-runner: test 1801 queued on estimator-01 input=batch_1801_vectors.csv
+2026-02-18T02:01:05.597Z INFO  validation-runner: test 1801 PASS on estimator-01: max_abs_error=2.63e-10 states=1500 runtime=50.0ms
+2026-02-18T02:01:23.708Z INFO  validation-runner: test 1802 queued on estimator-02 input=batch_1802_vectors.csv
+2026-02-18T02:01:23.994Z INFO  validation-runner: test 1802 PASS on estimator-02: max_abs_error=3.37e-10 states=1500 runtime=56.6ms
+2026-02-18T02:01:41.479Z INFO  validation-runner: test 1803 queued on estimator-01 input=batch_1803_vectors.csv
+2026-02-18T02:01:41.726Z INFO  validation-runner: test 1803 PASS on estimator-01: max_abs_error=3.19e-10 states=1500 runtime=44.8ms
+2026-02-18T02:01:58.661Z INFO  validation-runner: test 1804 queued on estimator-02 input=batch_1804_vectors.csv
+2026-02-18T02:01:58.974Z INFO  validation-runner: test 1804 PASS on estimator-02: max_abs_error=2.57e-10 states=1500 runtime=56.3ms
+2026-02-18T02:02:18.279Z INFO  validation-runner: test 1805 queued on estimator-01 input=batch_1805_vectors.csv
+2026-02-18T02:02:18.597Z INFO  validation-runner: test 1805 PASS on estimator-01: max_abs_error=2.63e-10 states=1500 runtime=47.4ms
+2026-02-18T02:02:36.795Z INFO  validation-runner: test 1806 queued on estimator-02 input=batch_1806_vectors.csv
+2026-02-18T02:02:37.099Z INFO  validation-runner: test 1806 PASS on estimator-02: max_abs_error=2.94e-10 states=1500 runtime=56.5ms
+2026-02-18T02:02:53.672Z INFO  validation-runner: test 1807 queued on estimator-01 input=batch_1807_vectors.csv
+2026-02-18T02:02:54.045Z INFO  validation-runner: test 1807 PASS on estimator-01: max_abs_error=3.33e-10 states=1500 runtime=46.8ms
+2026-02-18T02:03:14.169Z INFO  validation-runner: test 1808 queued on estimator-02 input=batch_1808_vectors.csv
+2026-02-18T02:03:14.427Z INFO  validation-runner: test 1808 PASS on estimator-02: max_abs_error=2.61e-10 states=1500 runtime=57.4ms
+2026-02-18T02:03:30.283Z INFO  validation-runner: test 1809 queued on estimator-01 input=batch_1809_vectors.csv
+2026-02-18T02:03:30.673Z INFO  validation-runner: test 1809 PASS on estimator-01: max_abs_error=2.74e-10 states=1500 runtime=46.7ms
+2026-02-18T02:03:49.264Z INFO  validation-runner: test 1810 queued on estimator-02 input=batch_1810_vectors.csv
+2026-02-18T02:03:49.648Z INFO  validation-runner: test 1810 PASS on estimator-02: max_abs_error=3.57e-10 states=1500 runtime=53.5ms
+2026-02-18T02:04:07.908Z INFO  validation-runner: test 1811 queued on estimator-01 input=batch_1811_vectors.csv
+2026-02-18T02:04:08.193Z INFO  validation-runner: test 1811 PASS on estimator-01: max_abs_error=3.11e-10 states=1500 runtime=46.7ms
+2026-02-18T02:04:25.573Z INFO  validation-runner: test 1812 queued on estimator-02 input=batch_1812_vectors.csv
+2026-02-18T02:04:25.911Z INFO  validation-runner: test 1812 PASS on estimator-02: max_abs_error=2.75e-10 states=1500 runtime=54.6ms
+2026-02-18T02:04:44.425Z INFO  validation-runner: test 1813 queued on estimator-01 input=batch_1813_vectors.csv
+2026-02-18T02:04:44.766Z INFO  validation-runner: test 1813 PASS on estimator-01: max_abs_error=3.08e-10 states=1500 runtime=46.1ms
+2026-02-18T02:05:03.677Z INFO  validation-runner: test 1814 queued on estimator-02 input=batch_1814_vectors.csv
+2026-02-18T02:05:03.973Z INFO  validation-runner: test 1814 PASS on estimator-02: max_abs_error=3.20e-10 states=1500 runtime=57.5ms
+2026-02-18T02:05:20.592Z INFO  validation-runner: test 1815 queued on estimator-01 input=batch_1815_vectors.csv
+2026-02-18T02:05:20.960Z INFO  validation-runner: test 1815 PASS on estimator-01: max_abs_error=3.32e-10 states=1500 runtime=49.9ms
+2026-02-18T02:05:38.375Z INFO  validation-runner: test 1816 queued on estimator-02 input=batch_1816_vectors.csv
+2026-02-18T02:05:38.764Z INFO  validation-runner: test 1816 PASS on estimator-02: max_abs_error=3.13e-10 states=1500 runtime=53.7ms
+2026-02-18T02:05:57.401Z INFO  validation-runner: test 1817 queued on estimator-01 input=batch_1817_vectors.csv
+2026-02-18T02:05:57.722Z INFO  validation-runner: test 1817 PASS on estimator-01: max_abs_error=2.68e-10 states=1500 runtime=45.7ms
+2026-02-18T02:06:16.776Z INFO  validation-runner: test 1818 queued on estimator-02 input=batch_1818_vectors.csv
+2026-02-18T02:06:17.157Z INFO  validation-runner: test 1818 PASS on estimator-02: max_abs_error=2.12e-10 states=1500 runtime=53.1ms
+2026-02-18T02:06:34.804Z INFO  validation-runner: test 1819 queued on estimator-01 input=batch_1819_vectors.csv
+2026-02-18T02:06:35.159Z INFO  validation-runner: test 1819 PASS on estimator-01: max_abs_error=2.89e-10 states=1500 runtime=48.6ms
+2026-02-18T02:06:52.167Z INFO  validation-runner: test 1820 queued on estimator-02 input=batch_1820_vectors.csv
+2026-02-18T02:06:52.505Z INFO  validation-runner: test 1820 PASS on estimator-02: max_abs_error=2.62e-10 states=1500 runtime=52.4ms
+2026-02-18T02:07:09.745Z INFO  validation-runner: test 1821 queued on estimator-01 input=batch_1821_vectors.csv
+2026-02-18T02:07:10.072Z INFO  validation-runner: test 1821 PASS on estimator-01: max_abs_error=2.75e-10 states=1500 runtime=48.1ms
+2026-02-18T02:07:28.455Z INFO  validation-runner: test 1822 queued on estimator-02 input=batch_1822_vectors.csv
+2026-02-18T02:07:28.859Z INFO  validation-runner: test 1822 PASS on estimator-02: max_abs_error=3.44e-10 states=1500 runtime=53.7ms
+2026-02-18T02:07:48.374Z INFO  validation-runner: test 1823 queued on estimator-01 input=batch_1823_vectors.csv
+2026-02-18T02:07:52.434Z WARN  validation-runner: test 1823 on estimator-01: no result within soft deadline 4.0 s; retrying (1/1)
+2026-02-18T02:07:52.772Z INFO  validation-runner: test 1823 PASS on estimator-01: max_abs_error=2.75e-10 states=1500 runtime=47.6ms (retry 1)
+2026-02-18T02:08:05.709Z INFO  validation-runner: test 1824 queued on estimator-02 input=batch_1824_vectors.csv
+2026-02-18T02:08:06.084Z INFO  validation-runner: test 1824 PASS on estimator-02: max_abs_error=3.62e-10 states=1500 runtime=56.9ms
+2026-02-18T02:08:23.487Z INFO  validation-runner: test 1825 queued on estimator-01 input=batch_1825_vectors.csv
+2026-02-18T02:08:23.782Z INFO  validation-runner: test 1825 PASS on estimator-01: max_abs_error=2.96e-10 states=1500 runtime=48.0ms
+2026-02-18T02:08:42.731Z INFO  validation-runner: test 1826 queued on estimator-02 input=batch_1826_vectors.csv
+2026-02-18T02:08:43.128Z INFO  validation-runner: test 1826 PASS on estimator-02: max_abs_error=3.50e-10 states=1500 runtime=55.7ms
+2026-02-18T02:09:01.321Z INFO  validation-runner: test 1827 queued on estimator-01 input=batch_1827_vectors.csv
+2026-02-18T02:09:01.614Z INFO  validation-runner: test 1827 PASS on estimator-01: max_abs_error=2.48e-10 states=1500 runtime=45.1ms
+2026-02-18T02:09:18.916Z INFO  validation-runner: test 1828 queued on estimator-02 input=batch_1828_vectors.csv
+2026-02-18T02:09:19.173Z INFO  validation-runner: test 1828 PASS on estimator-02: max_abs_error=2.62e-10 states=1500 runtime=55.0ms
+2026-02-18T02:09:37.592Z INFO  validation-runner: test 1829 queued on estimator-01 input=batch_1829_vectors.csv
+2026-02-18T02:09:37.858Z INFO  validation-runner: test 1829 PASS on estimator-01: max_abs_error=2.64e-10 states=1500 runtime=48.2ms
+2026-02-18T02:09:56.893Z INFO  validation-runner: test 1830 queued on estimator-02 input=batch_1830_vectors.csv
+2026-02-18T02:09:57.293Z INFO  validation-runner: test 1830 PASS on estimator-02: max_abs_error=2.72e-10 states=1500 runtime=55.2ms
+2026-02-18T02:10:15.676Z INFO  validation-runner: test 1831 queued on estimator-01 input=batch_1831_vectors.csv
+2026-02-18T02:10:15.949Z INFO  validation-runner: test 1831 PASS on estimator-01: max_abs_error=3.52e-10 states=1500 runtime=47.8ms
+2026-02-18T02:10:33.044Z INFO  validation-runner: test 1832 queued on estimator-02 input=batch_1832_vectors.csv
+2026-02-18T02:10:33.404Z INFO  validation-runner: test 1832 PASS on estimator-02: max_abs_error=3.04e-10 states=1500 runtime=55.8ms
+2026-02-18T02:10:51.908Z INFO  validation-runner: test 1833 queued on estimator-01 input=batch_1833_vectors.csv
+2026-02-18T02:10:52.213Z INFO  validation-runner: test 1833 PASS on estimator-01: max_abs_error=2.96e-10 states=1500 runtime=46.5ms
+2026-02-18T02:11:10.193Z INFO  validation-runner: test 1834 queued on estimator-02 input=batch_1834_vectors.csv
+2026-02-18T02:11:10.461Z INFO  validation-runner: test 1834 PASS on estimator-02: max_abs_error=3.27e-10 states=1500 runtime=54.3ms
+2026-02-18T02:11:28.098Z INFO  validation-runner: test 1835 queued on estimator-01 input=batch_1835_vectors.csv
+2026-02-18T02:11:28.470Z INFO  validation-runner: test 1835 PASS on estimator-01: max_abs_error=2.93e-10 states=1500 runtime=46.4ms
+2026-02-18T02:11:46.052Z INFO  validation-runner: test 1836 queued on estimator-02 input=batch_1836_vectors.csv
+2026-02-18T02:11:46.343Z INFO  validation-runner: test 1836 PASS on estimator-02: max_abs_error=2.47e-10 states=1500 runtime=58.0ms
+2026-02-18T02:12:04.516Z INFO  validation-runner: test 1837 queued on estimator-01 input=batch_1837_vectors.csv
+2026-02-18T02:12:04.786Z INFO  validation-runner: test 1837 PASS on estimator-01: max_abs_error=2.88e-10 states=1500 runtime=48.6ms
+2026-02-18T02:12:22.895Z INFO  validation-runner: test 1838 queued on estimator-02 input=batch_1838_vectors.csv
+2026-02-18T02:12:23.194Z INFO  validation-runner: test 1838 PASS on estimator-02: max_abs_error=2.94e-10 states=1500 runtime=55.1ms
+2026-02-18T02:12:40.417Z INFO  validation-runner: test 1839 queued on estimator-01 input=batch_1839_vectors.csv
+2026-02-18T02:12:40.723Z INFO  validation-runner: test 1839 PASS on estimator-01: max_abs_error=2.55e-10 states=1500 runtime=49.9ms
+2026-02-18T02:12:58.791Z INFO  validation-runner: test 1840 queued on estimator-02 input=batch_1840_vectors.csv
+2026-02-18T02:12:59.124Z INFO  validation-runner: test 1840 PASS on estimator-02: max_abs_error=3.27e-10 states=1500 runtime=58.9ms
+2026-02-18T02:13:18.809Z INFO  validation-runner: test 1841 queued on estimator-01 input=batch_1841_vectors.csv
+2026-02-18T02:13:19.147Z INFO  validation-runner: test 1841 PASS on estimator-01: max_abs_error=3.69e-10 states=1500 runtime=45.8ms
+2026-02-18T02:13:36.841Z INFO  validation-runner: test 1842 queued on estimator-02 input=batch_1842_vectors.csv
+2026-02-18T02:13:37.227Z INFO  validation-runner: test 1842 PASS on estimator-02: max_abs_error=3.30e-10 states=1500 runtime=57.6ms
+2026-02-18T02:13:54.307Z INFO  validation-runner: test 1843 queued on estimator-01 input=batch_1843_vectors.csv
+2026-02-18T02:13:54.600Z INFO  validation-runner: test 1843 PASS on estimator-01: max_abs_error=2.77e-10 states=1500 runtime=48.0ms
+2026-02-18T02:14:13.684Z INFO  validation-runner: test 1844 queued on estimator-02 input=batch_1844_vectors.csv
+2026-02-18T02:14:13.948Z INFO  validation-runner: test 1844 PASS on estimator-02: max_abs_error=2.73e-10 states=1500 runtime=56.4ms
+2026-02-18T02:14:31.285Z INFO  validation-runner: test 1845 queued on estimator-01 input=batch_1845_vectors.csv
+2026-02-18T02:14:31.553Z INFO  validation-runner: test 1845 PASS on estimator-01: max_abs_error=2.28e-10 states=1500 runtime=46.6ms
+2026-02-18T02:14:49.038Z INFO  validation-runner: test 1846 queued on estimator-02 input=batch_1846_vectors.csv
+2026-02-18T02:14:49.294Z INFO  validation-runner: test 1846 PASS on estimator-02: max_abs_error=3.73e-10 states=1500 runtime=54.7ms
+2026-02-18T02:15:08.107Z INFO  validation-runner: test 1847 queued on estimator-01 input=batch_1847_vectors.csv
+2026-02-18T02:15:08.380Z ERROR validation-runner: test 1847 FAIL on estimator-01: worker error 'non-finite result'; states=0 expected=1500
+2026-02-18T02:15:26.483Z INFO  validation-runner: test 1848 queued on estimator-02 input=batch_1848_vectors.csv
+2026-02-18T02:15:26.869Z INFO  validation-runner: test 1848 PASS on estimator-02: max_abs_error=2.72e-10 states=1500 runtime=56.1ms
+2026-02-18T02:15:45.003Z INFO  validation-runner: test 1849 queued on estimator-01 input=batch_1849_vectors.csv
+2026-02-18T02:15:45.334Z INFO  validation-runner: test 1849 PASS on estimator-01: max_abs_error=2.84e-10 states=1500 runtime=47.3ms
+2026-02-18T02:16:03.311Z INFO  validation-runner: test 1850 queued on estimator-02 input=batch_1850_vectors.csv
+2026-02-18T02:16:03.640Z INFO  validation-runner: test 1850 PASS on estimator-02: max_abs_error=2.83e-10 states=1500 runtime=54.6ms
+2026-02-18T02:16:04.540Z INFO  validation-runner: batch val-2026-02-18 closed: 50 PASS, 1 FAIL, 0 SKIP
+2026-02-18T02:16:04.545Z INFO  validation-runner: failed: [1847]
+2026-02-18T02:16:04.590Z INFO  validation-runner: results written to /var/validation/reports/val-2026-02-18.json

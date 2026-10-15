@@ -1,0 +1,40 @@
+# Regenerable — never the source of truth. Per content set.
+examples/*/runs/
+# Per-machine overrides (tool paths, sandbox location)
+demoforge.local.toml
+examples/*/output/
+/output/
+/runs/
+# Per-machine overrides (tool paths, sandbox location)
+demoforge.local.toml
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+.coverage
+.coverage.*
+htmlcov/
+
+# Node
+node_modules/
+
+# Scratch commit messages (project root per CLAUDE.md, never inside .git/)
+commit-msg.tmp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Rendered frame/audio caches live under output/ and are rebuildable
+
+# Editor / build
+.vscode/
+.idea/
+*.py[cod]
+build/
+dist/
+*.spec

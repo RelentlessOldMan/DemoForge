@@ -1,0 +1,187 @@
+2026-02-18T02:00:02.500Z INFO  estimator-01: worker up, release v2.1.0 (build 2.1.0+b412), load 0.10
+2026-02-18T02:00:02.500Z INFO  estimator-02: worker up, release v2.1.0 (build 2.1.0+b412), load 0.29
+2026-02-18T02:00:02.600Z INFO  estimator-01: license checkout ok (pool cvt-est, lease 300 s)
+2026-02-18T02:00:02.600Z INFO  estimator-02: license checkout ok (pool cvt-est, lease 300 s)
+2026-02-18T02:00:46.528Z INFO  estimator-02: test 1800: open /var/validation/batches/val-2026-02-18/batch_1800_vectors.csv
+2026-02-18T02:00:46.558Z INFO  estimator-02: test 1800: read 1500 measurement rows
+2026-02-18T02:00:46.615Z INFO  estimator-02: test 1800: done, 1500 states, 56.7 ms
+2026-02-18T02:01:05.457Z INFO  estimator-01: test 1801: open /var/validation/batches/val-2026-02-18/batch_1801_vectors.csv
+2026-02-18T02:01:05.487Z INFO  estimator-01: test 1801: read 1500 measurement rows
+2026-02-18T02:01:05.537Z INFO  estimator-01: test 1801: done, 1500 states, 50.0 ms
+2026-02-18T02:01:23.848Z INFO  estimator-02: test 1802: open /var/validation/batches/val-2026-02-18/batch_1802_vectors.csv
+2026-02-18T02:01:23.878Z INFO  estimator-02: test 1802: read 1500 measurement rows
+2026-02-18T02:01:23.934Z INFO  estimator-02: test 1802: done, 1500 states, 56.6 ms
+2026-02-18T02:01:30.000Z INFO  estimator-01: stats: queue=0 rss=182MB cpu=5.2%
+2026-02-18T02:01:30.000Z INFO  estimator-02: stats: queue=0 rss=183MB cpu=6.5%
+2026-02-18T02:01:41.591Z INFO  estimator-01: test 1803: open /var/validation/batches/val-2026-02-18/batch_1803_vectors.csv
+2026-02-18T02:01:41.621Z INFO  estimator-01: test 1803: read 1500 measurement rows
+2026-02-18T02:01:41.666Z INFO  estimator-01: test 1803: done, 1500 states, 44.8 ms
+2026-02-18T02:01:58.828Z INFO  estimator-02: test 1804: open /var/validation/batches/val-2026-02-18/batch_1804_vectors.csv
+2026-02-18T02:01:58.858Z INFO  estimator-02: test 1804: read 1500 measurement rows
+2026-02-18T02:01:58.914Z INFO  estimator-02: test 1804: done, 1500 states, 56.3 ms
+2026-02-18T02:02:18.460Z INFO  estimator-01: test 1805: open /var/validation/batches/val-2026-02-18/batch_1805_vectors.csv
+2026-02-18T02:02:18.490Z INFO  estimator-01: test 1805: read 1500 measurement rows
+2026-02-18T02:02:18.537Z INFO  estimator-01: test 1805: done, 1500 states, 47.4 ms
+2026-02-18T02:02:36.952Z INFO  estimator-02: test 1806: open /var/validation/batches/val-2026-02-18/batch_1806_vectors.csv
+2026-02-18T02:02:36.982Z INFO  estimator-02: test 1806: read 1500 measurement rows
+2026-02-18T02:02:37.039Z INFO  estimator-02: test 1806: done, 1500 states, 56.5 ms
+2026-02-18T02:02:53.908Z INFO  estimator-01: test 1807: open /var/validation/batches/val-2026-02-18/batch_1807_vectors.csv
+2026-02-18T02:02:53.938Z INFO  estimator-01: test 1807: read 1500 measurement rows
+2026-02-18T02:02:53.985Z INFO  estimator-01: test 1807: done, 1500 states, 46.8 ms
+2026-02-18T02:03:14.279Z INFO  estimator-02: test 1808: open /var/validation/batches/val-2026-02-18/batch_1808_vectors.csv
+2026-02-18T02:03:14.309Z INFO  estimator-02: test 1808: read 1500 measurement rows
+2026-02-18T02:03:14.367Z INFO  estimator-02: test 1808: done, 1500 states, 57.4 ms
+2026-02-18T02:03:30.000Z INFO  estimator-01: stats: queue=0 rss=191MB cpu=4.5%
+2026-02-18T02:03:30.000Z INFO  estimator-02: stats: queue=0 rss=186MB cpu=6.6%
+2026-02-18T02:03:30.537Z INFO  estimator-01: test 1809: open /var/validation/batches/val-2026-02-18/batch_1809_vectors.csv
+2026-02-18T02:03:30.567Z INFO  estimator-01: test 1809: read 1500 measurement rows
+2026-02-18T02:03:30.613Z INFO  estimator-01: test 1809: done, 1500 states, 46.7 ms
+2026-02-18T02:03:49.504Z INFO  estimator-02: test 1810: open /var/validation/batches/val-2026-02-18/batch_1810_vectors.csv
+2026-02-18T02:03:49.534Z INFO  estimator-02: test 1810: read 1500 measurement rows
+2026-02-18T02:03:49.588Z INFO  estimator-02: test 1810: done, 1500 states, 53.5 ms
+2026-02-18T02:04:08.056Z INFO  estimator-01: test 1811: open /var/validation/batches/val-2026-02-18/batch_1811_vectors.csv
+2026-02-18T02:04:08.086Z INFO  estimator-01: test 1811: read 1500 measurement rows
+2026-02-18T02:04:08.133Z INFO  estimator-01: test 1811: done, 1500 states, 46.7 ms
+2026-02-18T02:04:25.766Z INFO  estimator-02: test 1812: open /var/validation/batches/val-2026-02-18/batch_1812_vectors.csv
+2026-02-18T02:04:25.796Z INFO  estimator-02: test 1812: read 1500 measurement rows
+2026-02-18T02:04:25.851Z INFO  estimator-02: test 1812: done, 1500 states, 54.6 ms
+2026-02-18T02:04:44.630Z INFO  estimator-01: test 1813: open /var/validation/batches/val-2026-02-18/batch_1813_vectors.csv
+2026-02-18T02:04:44.660Z INFO  estimator-01: test 1813: read 1500 measurement rows
+2026-02-18T02:04:44.706Z INFO  estimator-01: test 1813: done, 1500 states, 46.1 ms
+2026-02-18T02:05:02.600Z INFO  estimator-01: license heartbeat ok (pool cvt-est)
+2026-02-18T02:05:02.900Z INFO  estimator-02: license heartbeat ok (pool cvt-est)
+2026-02-18T02:05:03.826Z INFO  estimator-02: test 1814: open /var/validation/batches/val-2026-02-18/batch_1814_vectors.csv
+2026-02-18T02:05:03.856Z INFO  estimator-02: test 1814: read 1500 measurement rows
+2026-02-18T02:05:03.913Z INFO  estimator-02: test 1814: done, 1500 states, 57.5 ms
+2026-02-18T02:05:20.820Z INFO  estimator-01: test 1815: open /var/validation/batches/val-2026-02-18/batch_1815_vectors.csv
+2026-02-18T02:05:20.850Z INFO  estimator-01: test 1815: read 1500 measurement rows
+2026-02-18T02:05:20.900Z INFO  estimator-01: test 1815: done, 1500 states, 49.9 ms
+2026-02-18T02:05:30.000Z INFO  estimator-01: stats: queue=0 rss=192MB cpu=4.7%
+2026-02-18T02:05:30.000Z INFO  estimator-02: stats: queue=0 rss=192MB cpu=7.5%
+2026-02-18T02:05:38.620Z INFO  estimator-02: test 1816: open /var/validation/batches/val-2026-02-18/batch_1816_vectors.csv
+2026-02-18T02:05:38.650Z INFO  estimator-02: test 1816: read 1500 measurement rows
+2026-02-18T02:05:38.704Z INFO  estimator-02: test 1816: done, 1500 states, 53.7 ms
+2026-02-18T02:05:57.586Z INFO  estimator-01: test 1817: open /var/validation/batches/val-2026-02-18/batch_1817_vectors.csv
+2026-02-18T02:05:57.616Z INFO  estimator-01: test 1817: read 1500 measurement rows
+2026-02-18T02:05:57.662Z INFO  estimator-01: test 1817: done, 1500 states, 45.7 ms
+2026-02-18T02:06:17.014Z INFO  estimator-02: test 1818: open /var/validation/batches/val-2026-02-18/batch_1818_vectors.csv
+2026-02-18T02:06:17.044Z INFO  estimator-02: test 1818: read 1500 measurement rows
+2026-02-18T02:06:17.097Z INFO  estimator-02: test 1818: done, 1500 states, 53.1 ms
+2026-02-18T02:06:35.020Z INFO  estimator-01: test 1819: open /var/validation/batches/val-2026-02-18/batch_1819_vectors.csv
+2026-02-18T02:06:35.050Z INFO  estimator-01: test 1819: read 1500 measurement rows
+2026-02-18T02:06:35.099Z INFO  estimator-01: test 1819: done, 1500 states, 48.6 ms
+2026-02-18T02:06:52.363Z INFO  estimator-02: test 1820: open /var/validation/batches/val-2026-02-18/batch_1820_vectors.csv
+2026-02-18T02:06:52.393Z INFO  estimator-02: test 1820: read 1500 measurement rows
+2026-02-18T02:06:52.445Z INFO  estimator-02: test 1820: done, 1500 states, 52.4 ms
+2026-02-18T02:07:09.934Z INFO  estimator-01: test 1821: open /var/validation/batches/val-2026-02-18/batch_1821_vectors.csv
+2026-02-18T02:07:09.964Z INFO  estimator-01: test 1821: read 1500 measurement rows
+2026-02-18T02:07:10.012Z INFO  estimator-01: test 1821: done, 1500 states, 48.1 ms
+2026-02-18T02:07:28.715Z INFO  estimator-02: test 1822: open /var/validation/batches/val-2026-02-18/batch_1822_vectors.csv
+2026-02-18T02:07:28.745Z INFO  estimator-02: test 1822: read 1500 measurement rows
+2026-02-18T02:07:28.799Z INFO  estimator-02: test 1822: done, 1500 states, 53.7 ms
+2026-02-18T02:07:30.000Z INFO  estimator-01: stats: queue=0 rss=194MB cpu=8.8%
+2026-02-18T02:07:30.000Z INFO  estimator-02: stats: queue=0 rss=191MB cpu=5.5%
+2026-02-18T02:07:48.559Z INFO  estimator-01: test 1823: open /var/validation/batches/val-2026-02-18/batch_1823_vectors.csv
+2026-02-18T02:07:48.589Z INFO  estimator-01: test 1823: read 1500 measurement rows
+2026-02-18T02:07:52.484Z WARN  estimator-01: test 1823: cancelled by runner (deadline); restarting
+2026-02-18T02:07:52.664Z INFO  estimator-01: test 1823: read 1500 measurement rows
+2026-02-18T02:07:52.712Z INFO  estimator-01: test 1823: done, 1500 states, 47.6 ms
+2026-02-18T02:08:05.937Z INFO  estimator-02: test 1824: open /var/validation/batches/val-2026-02-18/batch_1824_vectors.csv
+2026-02-18T02:08:05.967Z INFO  estimator-02: test 1824: read 1500 measurement rows
+2026-02-18T02:08:06.024Z INFO  estimator-02: test 1824: done, 1500 states, 56.9 ms
+2026-02-18T02:08:23.644Z INFO  estimator-01: test 1825: open /var/validation/batches/val-2026-02-18/batch_1825_vectors.csv
+2026-02-18T02:08:23.674Z INFO  estimator-01: test 1825: read 1500 measurement rows
+2026-02-18T02:08:23.722Z INFO  estimator-01: test 1825: done, 1500 states, 48.0 ms
+2026-02-18T02:08:42.982Z INFO  estimator-02: test 1826: open /var/validation/batches/val-2026-02-18/batch_1826_vectors.csv
+2026-02-18T02:08:43.012Z INFO  estimator-02: test 1826: read 1500 measurement rows
+2026-02-18T02:08:43.068Z INFO  estimator-02: test 1826: done, 1500 states, 55.7 ms
+2026-02-18T02:09:01.479Z INFO  estimator-01: test 1827: open /var/validation/batches/val-2026-02-18/batch_1827_vectors.csv
+2026-02-18T02:09:01.509Z INFO  estimator-01: test 1827: read 1500 measurement rows
+2026-02-18T02:09:01.554Z INFO  estimator-01: test 1827: done, 1500 states, 45.1 ms
+2026-02-18T02:09:19.028Z INFO  estimator-02: test 1828: open /var/validation/batches/val-2026-02-18/batch_1828_vectors.csv
+2026-02-18T02:09:19.058Z INFO  estimator-02: test 1828: read 1500 measurement rows
+2026-02-18T02:09:19.113Z INFO  estimator-02: test 1828: done, 1500 states, 55.0 ms
+2026-02-18T02:09:30.000Z INFO  estimator-01: stats: queue=0 rss=193MB cpu=6.6%
+2026-02-18T02:09:30.000Z INFO  estimator-02: stats: queue=0 rss=182MB cpu=7.8%
+2026-02-18T02:09:37.720Z INFO  estimator-01: test 1829: open /var/validation/batches/val-2026-02-18/batch_1829_vectors.csv
+2026-02-18T02:09:37.750Z INFO  estimator-01: test 1829: read 1500 measurement rows
+2026-02-18T02:09:37.798Z INFO  estimator-01: test 1829: done, 1500 states, 48.2 ms
+2026-02-18T02:09:57.147Z INFO  estimator-02: test 1830: open /var/validation/batches/val-2026-02-18/batch_1830_vectors.csv
+2026-02-18T02:09:57.177Z INFO  estimator-02: test 1830: read 1500 measurement rows
+2026-02-18T02:09:57.233Z INFO  estimator-02: test 1830: done, 1500 states, 55.2 ms
+2026-02-18T02:10:02.600Z INFO  estimator-01: license heartbeat ok (pool cvt-est)
+2026-02-18T02:10:02.900Z INFO  estimator-02: license heartbeat ok (pool cvt-est)
+2026-02-18T02:10:15.811Z INFO  estimator-01: test 1831: open /var/validation/batches/val-2026-02-18/batch_1831_vectors.csv
+2026-02-18T02:10:15.841Z INFO  estimator-01: test 1831: read 1500 measurement rows
+2026-02-18T02:10:15.889Z INFO  estimator-01: test 1831: done, 1500 states, 47.8 ms
+2026-02-18T02:10:33.258Z INFO  estimator-02: test 1832: open /var/validation/batches/val-2026-02-18/batch_1832_vectors.csv
+2026-02-18T02:10:33.288Z INFO  estimator-02: test 1832: read 1500 measurement rows
+2026-02-18T02:10:33.344Z INFO  estimator-02: test 1832: done, 1500 states, 55.8 ms
+2026-02-18T02:10:52.076Z INFO  estimator-01: test 1833: open /var/validation/batches/val-2026-02-18/batch_1833_vectors.csv
+2026-02-18T02:10:52.106Z INFO  estimator-01: test 1833: read 1500 measurement rows
+2026-02-18T02:10:52.153Z INFO  estimator-01: test 1833: done, 1500 states, 46.5 ms
+2026-02-18T02:11:10.317Z INFO  estimator-02: test 1834: open /var/validation/batches/val-2026-02-18/batch_1834_vectors.csv
+2026-02-18T02:11:10.347Z INFO  estimator-02: test 1834: read 1500 measurement rows
+2026-02-18T02:11:10.401Z INFO  estimator-02: test 1834: done, 1500 states, 54.3 ms
+2026-02-18T02:11:28.334Z INFO  estimator-01: test 1835: open /var/validation/batches/val-2026-02-18/batch_1835_vectors.csv
+2026-02-18T02:11:28.364Z INFO  estimator-01: test 1835: read 1500 measurement rows
+2026-02-18T02:11:28.410Z INFO  estimator-01: test 1835: done, 1500 states, 46.4 ms
+2026-02-18T02:11:30.000Z INFO  estimator-01: stats: queue=0 rss=182MB cpu=6.3%
+2026-02-18T02:11:30.000Z INFO  estimator-02: stats: queue=0 rss=187MB cpu=3.3%
+2026-02-18T02:11:46.195Z INFO  estimator-02: test 1836: open /var/validation/batches/val-2026-02-18/batch_1836_vectors.csv
+2026-02-18T02:11:46.225Z INFO  estimator-02: test 1836: read 1500 measurement rows
+2026-02-18T02:11:46.283Z INFO  estimator-02: test 1836: done, 1500 states, 58.0 ms
+2026-02-18T02:12:04.648Z INFO  estimator-01: test 1837: open /var/validation/batches/val-2026-02-18/batch_1837_vectors.csv
+2026-02-18T02:12:04.678Z INFO  estimator-01: test 1837: read 1500 measurement rows
+2026-02-18T02:12:04.726Z INFO  estimator-01: test 1837: done, 1500 states, 48.6 ms
+2026-02-18T02:12:23.049Z INFO  estimator-02: test 1838: open /var/validation/batches/val-2026-02-18/batch_1838_vectors.csv
+2026-02-18T02:12:23.079Z INFO  estimator-02: test 1838: read 1500 measurement rows
+2026-02-18T02:12:23.134Z INFO  estimator-02: test 1838: done, 1500 states, 55.1 ms
+2026-02-18T02:12:40.583Z INFO  estimator-01: test 1839: open /var/validation/batches/val-2026-02-18/batch_1839_vectors.csv
+2026-02-18T02:12:40.613Z INFO  estimator-01: test 1839: read 1500 measurement rows
+2026-02-18T02:12:40.663Z INFO  estimator-01: test 1839: done, 1500 states, 49.9 ms
+2026-02-18T02:12:58.975Z INFO  estimator-02: test 1840: open /var/validation/batches/val-2026-02-18/batch_1840_vectors.csv
+2026-02-18T02:12:59.005Z INFO  estimator-02: test 1840: read 1500 measurement rows
+2026-02-18T02:12:59.064Z INFO  estimator-02: test 1840: done, 1500 states, 58.9 ms
+2026-02-18T02:13:19.011Z INFO  estimator-01: test 1841: open /var/validation/batches/val-2026-02-18/batch_1841_vectors.csv
+2026-02-18T02:13:19.041Z INFO  estimator-01: test 1841: read 1500 measurement rows
+2026-02-18T02:13:19.087Z INFO  estimator-01: test 1841: done, 1500 states, 45.8 ms
+2026-02-18T02:13:30.000Z INFO  estimator-01: stats: queue=0 rss=193MB cpu=8.6%
+2026-02-18T02:13:30.000Z INFO  estimator-02: stats: queue=0 rss=184MB cpu=7.9%
+2026-02-18T02:13:37.079Z INFO  estimator-02: test 1842: open /var/validation/batches/val-2026-02-18/batch_1842_vectors.csv
+2026-02-18T02:13:37.109Z INFO  estimator-02: test 1842: read 1500 measurement rows
+2026-02-18T02:13:37.167Z INFO  estimator-02: test 1842: done, 1500 states, 57.6 ms
+2026-02-18T02:13:54.462Z INFO  estimator-01: test 1843: open /var/validation/batches/val-2026-02-18/batch_1843_vectors.csv
+2026-02-18T02:13:54.492Z INFO  estimator-01: test 1843: read 1500 measurement rows
+2026-02-18T02:13:54.540Z INFO  estimator-01: test 1843: done, 1500 states, 48.0 ms
+2026-02-18T02:14:13.801Z INFO  estimator-02: test 1844: open /var/validation/batches/val-2026-02-18/batch_1844_vectors.csv
+2026-02-18T02:14:13.831Z INFO  estimator-02: test 1844: read 1500 measurement rows
+2026-02-18T02:14:13.888Z INFO  estimator-02: test 1844: done, 1500 states, 56.4 ms
+2026-02-18T02:14:31.417Z INFO  estimator-01: test 1845: open /var/validation/batches/val-2026-02-18/batch_1845_vectors.csv
+2026-02-18T02:14:31.447Z INFO  estimator-01: test 1845: read 1500 measurement rows
+2026-02-18T02:14:31.493Z INFO  estimator-01: test 1845: done, 1500 states, 46.6 ms
+2026-02-18T02:14:49.149Z INFO  estimator-02: test 1846: open /var/validation/batches/val-2026-02-18/batch_1846_vectors.csv
+2026-02-18T02:14:49.179Z INFO  estimator-02: test 1846: read 1500 measurement rows
+2026-02-18T02:14:49.234Z INFO  estimator-02: test 1846: done, 1500 states, 54.7 ms
+2026-02-18T02:15:02.600Z INFO  estimator-01: license heartbeat ok (pool cvt-est)
+2026-02-18T02:15:06.240Z WARN  estimator-02: license heartbeat to lic-01:27000 timed out after 1000 ms
+2026-02-18T02:15:07.450Z INFO  estimator-02: license reacquired (pool cvt-est, lease 300 s); no task interrupted
+2026-02-18T02:15:08.240Z INFO  estimator-01: test 1847: open /var/validation/batches/val-2026-02-18/batch_1847_vectors.csv
+2026-02-18T02:15:08.271Z INFO  estimator-01: test 1847: read 1181 measurement rows
+2026-02-18T02:15:08.272Z WARN  estimator-01: test 1847: row 1181 col 2: empty field, value set to NaN
+2026-02-18T02:15:08.273Z INFO  estimator-01: test 1847: running filter (model cv2d, dt=1)
+2026-02-18T02:15:08.308Z ERROR estimator-01: test 1847: step 1181: innovation not finite (z = [0.731, NaN])
+2026-02-18T02:15:08.309Z ERROR estimator-01: test 1847: covariance not finite after step 1181; aborting, 0 states emitted
+2026-02-18T02:15:26.723Z INFO  estimator-02: test 1848: open /var/validation/batches/val-2026-02-18/batch_1848_vectors.csv
+2026-02-18T02:15:26.753Z INFO  estimator-02: test 1848: read 1500 measurement rows
+2026-02-18T02:15:26.809Z INFO  estimator-02: test 1848: done, 1500 states, 56.1 ms
+2026-02-18T02:15:30.000Z INFO  estimator-01: stats: queue=0 rss=193MB cpu=7.8%
+2026-02-18T02:15:30.000Z INFO  estimator-02: stats: queue=0 rss=193MB cpu=5.4%
+2026-02-18T02:15:45.196Z INFO  estimator-01: test 1849: open /var/validation/batches/val-2026-02-18/batch_1849_vectors.csv
+2026-02-18T02:15:45.226Z INFO  estimator-01: test 1849: read 1500 measurement rows
+2026-02-18T02:15:45.274Z INFO  estimator-01: test 1849: done, 1500 states, 47.3 ms
+2026-02-18T02:16:03.496Z INFO  estimator-02: test 1850: open /var/validation/batches/val-2026-02-18/batch_1850_vectors.csv
+2026-02-18T02:16:03.526Z INFO  estimator-02: test 1850: read 1500 measurement rows
+2026-02-18T02:16:03.580Z INFO  estimator-02: test 1850: done, 1500 states, 54.6 ms
+2026-02-18T02:16:04.940Z INFO  estimator-01: idle; awaiting dispatch
+2026-02-18T02:16:04.940Z INFO  estimator-02: idle; awaiting dispatch

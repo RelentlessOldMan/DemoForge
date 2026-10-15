@@ -1,0 +1,93 @@
+{#
+  Claude produced or changed a file. The artifact itself is in the record.
+
+  A write shows the first lines of what Claude wrote; an edit shows only what
+  changed (removed lines in red, added in green, one line of context). Lines are
+  capped like terminal output, and `dropped_lines` says how many were left off.
+  Bundles recorded before the code was kept show the file name alone.
+#}
+{% extends "_base.html.j2" %}
+{% block stage %}
+  <style>
+    .write { display: flex; flex-direction: column; gap: 26px; min-height: 0; max-height: 100%; }
+    .write__head { display: flex; align-items: center; gap: 36px; }
+    .write__badge {
+      flex: none;
+      font-family: var(--mono);
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 14px;
+      padding: 18px 26px;
+      color: var(--ok);
+      border: 1px solid rgba(74, 222, 128, 0.45);
+      background: rgba(74, 222, 128, 0.07);
+    }
+    .write__badge--edit {
+      color: var(--warn);
+      border-color: rgba(251, 191, 36, 0.45);
+      background: rgba(251, 191, 36, 0.07);
+    }
+    .write__name { font-family: var(--mono); font-size: 54px; margin: 0; }
+    .write--code .write__name { font-size: 40px; }
+    .write__path {
+      font-family: var(--mono);
+      font-size: 20px;
+      color: var(--muted);
+      margin: 12px 0 0;
+      overflow-wrap: anywhere;
+    }
+    .code-view {
+      font-family: var(--mono);
+      font-size: 22px;
+      line-height: 1.42;
+      background: var(--panel-2);
+      border: 1px solid var(--edge);
+      border-radius: 14px;
+      padding: 20px 28px;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .code-view__line { white-space: pre; color: var(--text); }
+    .code-view__line--add { color: var(--ok); }
+    .code-view__line--del { color: var(--bad, #f87171); }
+    .code-view__line--add::before { content: "+ "; }
+    .code-view__line--del::before { content: "- "; }
+    .code-view__gap { color: var(--muted); }
+    .code-view__more { margin-top: 12px; color: var(--muted); font-style: italic; }
+  </style>
+  <div class="panel write {% if data.code_lines %}write--code{% endif %}">
+    <div class="write__head">
+      <div class="write__badge {% if data.action == 'edit' %}write__badge--edit{% endif %}">
+        {% if data.action == 'edit' %}edited{% else %}new file{% endif %}
+      </div>
+      <div>
+        <p class="eyebrow">{{ label }}{% if data.tool and data.tool|lower != label|lower %} &middot; {{ data.tool }}{% endif %}</p>
+        <p class="write__name">{{ data.name }}</p>
+{% if data.rel and data.rel != data.name %}
+        <p class="write__path">{{ data.rel }}</p>
+{% endif %}
+      </div>
+    </div>
+{% if data.code_lines %}
+    <div class="code-view fit">
+{%- for row in data.code_lines %}
+{%- if row.sign == "~" %}
+      <div class="code-view__line code-view__gap">&hellip;</div>
+{%- elif row.sign == "+" %}
+      <div class="code-view__line code-view__line--add">{{ row.text }}</div>
+{%- elif row.sign == "-" %}
+      <div class="code-view__line code-view__line--del">{{ row.text }}</div>
+{%- elif data.action == "edit" %}
+      <div class="code-view__line">  {{ row.text }}</div>
+{%- else %}
+      <div class="code-view__line">{{ row.text if row.text else " " }}</div>
+{%- endif %}
+{%- endfor %}
+{%- if data.dropped_lines %}
+      <div class="code-view__more">&hellip; {{ data.dropped_lines }} further line{{ "" if data.dropped_lines == 1 else "s" }}, kept in the record</div>
+{%- endif %}
+    </div>
+{% endif %}
+  </div>
+{% endblock %}

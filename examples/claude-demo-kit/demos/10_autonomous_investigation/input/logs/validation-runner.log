@@ -1,0 +1,64 @@
+2026-09-26T04:02:59Z INFO  [validation] campaign VAL-2026-09 queued: 60 runs
+2026-09-26T04:03:00Z INFO  [validation] acceptance: max_pos_error<=0.500 m runtime<=50.0 ms min_pass_rate>=0.950 (CVT-VAL-002 Rev A section 4)
+2026-09-26T04:03:44Z ERROR [validation] run=VR-2101 mode=doppler build=v2.4.1 max_pos_error=1.319 m runtime=28.4 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:05:54Z ERROR [validation] run=VR-2102 mode=doppler build=v2.4.1 max_pos_error=1.001 m runtime=39.3 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:08:18Z ERROR [validation] run=VR-2103 mode=doppler build=v2.4.1 max_pos_error=0.810 m runtime=26.2 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:10:10Z INFO  [validation] run=VR-2104 mode=planar build=v2.4.1 max_pos_error=0.072 m runtime=26.4 ms -> PASS
+2026-09-26T04:12:32Z ERROR [validation] run=VR-2105 mode=doppler build=v2.4.1 max_pos_error=1.283 m runtime=30.2 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:14:35Z ERROR [validation] run=VR-2106 mode=doppler build=v2.4.1 max_pos_error=0.856 m runtime=27.3 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:16:28Z INFO  [validation] run=VR-2107 mode=planar build=v2.3.2 max_pos_error=0.331 m runtime=33.9 ms -> PASS
+2026-09-26T04:19:05Z INFO  [validation] run=VR-2108 mode=planar build=v2.3.2 max_pos_error=0.260 m runtime=38.0 ms -> PASS
+2026-09-26T04:21:08Z INFO  [validation] run=VR-2109 mode=planar build=v2.3.2 max_pos_error=0.299 m runtime=30.6 ms -> PASS
+2026-09-26T04:23:22Z INFO  [validation] run=VR-2110 mode=planar build=v2.4.1 max_pos_error=0.218 m runtime=29.1 ms -> PASS
+2026-09-26T04:25:11Z INFO  [validation] run=VR-2111 mode=planar build=v2.3.2 max_pos_error=0.227 m runtime=33.6 ms -> PASS
+2026-09-26T04:27:43Z INFO  [validation] run=VR-2112 mode=planar build=v2.4.1 max_pos_error=0.278 m runtime=26.3 ms -> PASS
+2026-09-26T04:29:27Z ERROR [validation] run=VR-2113 mode=doppler build=v2.4.1 max_pos_error=0.637 m runtime=31.6 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:32:03Z ERROR [validation] run=VR-2114 mode=doppler build=v2.4.1 max_pos_error=0.702 m runtime=38.3 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:34:15Z INFO  [validation] run=VR-2115 mode=planar build=v2.4.1 max_pos_error=0.320 m runtime=26.7 ms -> PASS
+2026-09-26T04:36:54Z INFO  [validation] run=VR-2116 mode=doppler build=v2.4.1 max_pos_error=0.468 m runtime=33.8 ms -> PASS
+2026-09-26T04:39:31Z INFO  [validation] run=VR-2117 mode=doppler build=v2.4.1 max_pos_error=0.470 m runtime=32.7 ms -> PASS
+2026-09-26T04:41:58Z ERROR [validation] run=VR-2118 mode=doppler build=v2.4.1 max_pos_error=0.663 m runtime=28.6 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:44:28Z ERROR [validation] run=VR-2119 mode=doppler build=v2.4.1 max_pos_error=1.179 m runtime=28.7 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:46:37Z INFO  [validation] run=VR-2120 mode=planar build=v2.4.1 max_pos_error=0.359 m runtime=38.7 ms -> PASS
+2026-09-26T04:49:11Z INFO  [validation] run=VR-2121 mode=planar build=v2.3.2 max_pos_error=0.349 m runtime=27.5 ms -> PASS
+2026-09-26T04:51:42Z ERROR [validation] run=VR-2122 mode=doppler build=v2.4.1 max_pos_error=0.845 m runtime=26.2 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T04:54:19Z INFO  [validation] run=VR-2123 mode=planar build=v2.4.1 max_pos_error=0.203 m runtime=34.9 ms -> PASS
+2026-09-26T04:55:59Z INFO  [validation] run=VR-2124 mode=planar build=v2.4.1 max_pos_error=0.326 m runtime=33.1 ms -> PASS
+2026-09-26T04:57:47Z INFO  [validation] run=VR-2125 mode=planar build=v2.3.2 max_pos_error=0.147 m runtime=30.4 ms -> PASS
+2026-09-26T04:59:30Z ERROR [validation] run=VR-2126 mode=doppler build=v2.4.1 max_pos_error=0.636 m runtime=37.5 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T05:01:15Z INFO  [validation] run=VR-2127 mode=planar build=v2.3.2 max_pos_error=0.321 m runtime=31.6 ms -> PASS
+2026-09-26T05:03:21Z INFO  [validation] run=VR-2128 mode=planar build=v2.3.2 max_pos_error=0.121 m runtime=30.5 ms -> PASS
+2026-09-26T05:05:14Z INFO  [validation] run=VR-2129 mode=planar build=v2.4.1 max_pos_error=0.224 m runtime=37.3 ms -> PASS
+2026-09-26T05:07:48Z INFO  [validation] run=VR-2130 mode=planar build=v2.4.1 max_pos_error=0.310 m runtime=31.7 ms -> PASS
+2026-09-26T05:09:42Z ERROR [validation] run=VR-2131 mode=doppler build=v2.4.1 max_pos_error=0.651 m runtime=28.6 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T05:11:49Z INFO  [validation] run=VR-2132 mode=planar build=v2.4.1 max_pos_error=0.405 m runtime=39.6 ms -> PASS
+2026-09-26T05:13:34Z INFO  [validation] run=VR-2133 mode=planar build=v2.4.1 max_pos_error=0.229 m runtime=33.1 ms -> PASS
+2026-09-26T05:15:45Z INFO  [validation] run=VR-2134 mode=doppler build=v2.4.1 max_pos_error=0.415 m runtime=26.3 ms -> PASS
+2026-09-26T05:18:21Z INFO  [validation] run=VR-2135 mode=planar build=v2.4.1 max_pos_error=0.088 m runtime=32.3 ms -> PASS
+2026-09-26T05:20:43Z INFO  [validation] run=VR-2136 mode=planar build=v2.3.2 max_pos_error=0.122 m runtime=28.2 ms -> PASS
+2026-09-26T05:22:42Z INFO  [validation] run=VR-2137 mode=planar build=v2.4.1 max_pos_error=0.325 m runtime=27.3 ms -> PASS
+2026-09-26T05:24:57Z ERROR [validation] run=VR-2138 mode=doppler build=v2.4.1 max_pos_error=1.030 m runtime=38.3 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T05:27:27Z INFO  [validation] run=VR-2139 mode=planar build=v2.3.2 max_pos_error=0.093 m runtime=26.2 ms -> PASS
+2026-09-26T05:29:04Z INFO  [validation] run=VR-2140 mode=planar build=v2.4.1 max_pos_error=0.349 m runtime=28.7 ms -> PASS
+2026-09-26T05:31:26Z INFO  [validation] run=VR-2141 mode=planar build=v2.4.1 max_pos_error=0.073 m runtime=37.3 ms -> PASS
+2026-09-26T05:34:05Z INFO  [validation] run=VR-2142 mode=planar build=v2.3.2 max_pos_error=0.191 m runtime=33.9 ms -> PASS
+2026-09-26T05:36:11Z INFO  [validation] run=VR-2143 mode=planar build=v2.3.2 max_pos_error=0.155 m runtime=29.5 ms -> PASS
+2026-09-26T05:38:25Z INFO  [validation] run=VR-2144 mode=planar build=v2.4.1 max_pos_error=0.374 m runtime=31.8 ms -> PASS
+2026-09-26T05:40:21Z INFO  [validation] run=VR-2145 mode=planar build=v2.3.2 max_pos_error=0.136 m runtime=32.3 ms -> PASS
+2026-09-26T05:42:47Z ERROR [validation] run=VR-2146 mode=doppler build=v2.4.1 max_pos_error=1.272 m runtime=28.6 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T05:44:34Z INFO  [validation] run=VR-2147 mode=planar build=v2.3.2 max_pos_error=0.314 m runtime=32.8 ms -> PASS
+2026-09-26T05:47:11Z INFO  [validation] run=VR-2148 mode=planar build=v2.4.1 max_pos_error=0.191 m runtime=32.2 ms -> PASS
+2026-09-26T05:49:25Z INFO  [validation] run=VR-2149 mode=planar build=v2.4.1 max_pos_error=0.136 m runtime=29.8 ms -> PASS
+2026-09-26T05:51:31Z INFO  [validation] run=VR-2150 mode=planar build=v2.3.2 max_pos_error=0.303 m runtime=31.1 ms -> PASS
+2026-09-26T05:54:02Z ERROR [validation] run=VR-2151 mode=doppler build=v2.4.1 max_pos_error=0.766 m runtime=33.9 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T05:56:20Z ERROR [validation] run=VR-2152 mode=doppler build=v2.4.1 max_pos_error=0.684 m runtime=31.0 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T05:58:05Z INFO  [validation] run=VR-2153 mode=planar build=v2.3.2 max_pos_error=0.106 m runtime=30.9 ms -> PASS
+2026-09-26T06:00:11Z INFO  [validation] run=VR-2154 mode=planar build=v2.4.1 max_pos_error=0.384 m runtime=32.5 ms -> PASS
+2026-09-26T06:02:14Z ERROR [validation] run=VR-2155 mode=doppler build=v2.4.1 max_pos_error=1.005 m runtime=27.1 ms -> FAIL (max_pos_error > 0.500 m)
+2026-09-26T06:04:48Z INFO  [validation] run=VR-2156 mode=planar build=v2.3.2 max_pos_error=0.130 m runtime=38.3 ms -> PASS
+2026-09-26T06:07:24Z INFO  [validation] run=VR-2157 mode=planar build=v2.4.1 max_pos_error=0.161 m runtime=33.2 ms -> PASS
+2026-09-26T06:10:02Z INFO  [validation] run=VR-2158 mode=planar build=v2.3.2 max_pos_error=0.129 m runtime=32.2 ms -> PASS
+2026-09-26T06:12:10Z INFO  [validation] run=VR-2159 mode=planar build=v2.3.2 max_pos_error=0.383 m runtime=38.4 ms -> PASS
+2026-09-26T06:14:39Z INFO  [validation] run=VR-2160 mode=planar build=v2.3.2 max_pos_error=0.358 m runtime=33.6 ms -> PASS
+2026-09-26T06:15:21Z ERROR [validation] campaign VAL-2026-09 complete: 60 runs, 17 failed, pass_rate=0.717 (min 0.950) -> REJECT
+2026-09-26T06:15:23Z INFO  [validation] summary written to validation_summary.xlsx

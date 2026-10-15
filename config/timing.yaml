@@ -1,0 +1,63 @@
+# Presentation pacing for the run replay (docs/video-pipeline.md §5.2).
+#
+# Scene durations are computed FROM THIS FILE, never from wall-clock elapsed time. A
+# real 90-second benchmark is shown as a short, clearly-labeled progress beat: honest
+# about *what* happened, honest that *time* is compressed. The renderer may compress
+# time and restyle an event; it may never invent one.
+#
+# A content set may override this file at <set>/config/timing.yaml.
+
+# Every card stays up long enough to register, even one that only names a file.
+scene_min_seconds: 3.0
+# Ceiling for a glance card (a filename, a tool name, a badge).
+scene_max_seconds: 8.0
+# Ceiling for a scene the audience has to actually read: the prompt, Claude's
+# explanations, streamed terminal output. Capping prose at the glance bound would
+# put text on screen for less time than it takes to read.
+read_scene_max_seconds: 20.0
+# Ceiling for a terminal card. Command output is skimmed for its shape, not read
+# line by line, and a silent card that outstays its welcome loses the audience.
+terminal_scene_max_seconds: 10.0
+# Pause after narration ends before the cut, so a scene never clips the last word.
+narration_tail_seconds: 0.75
+
+# Reading pace for on-screen prose (the prompt card, Claude's visible explanations).
+reading_chars_per_second: 18.0
+# Typewriter pace for streamed terminal output.
+terminal_chars_per_second: 60.0
+# Estimated speech pace, used to reserve room for a narration block before the real
+# audio length is known. TTS then supplies the exact duration and overrides this.
+narration_chars_per_second: 14.0
+
+# The results panel at the end of a chapter is the payoff — let it sit.
+chapter_end_seconds: 6.0
+
+# Presentation cards. These carry no captured action, only the deck's own
+# structure, so they are short — long enough to read, not to dwell on. A chapter
+# card stretches if the previous demo's `transition` narration runs longer.
+title_card_seconds: 6.0
+chapter_card_seconds: 4.0
+outro_card_seconds: 9.0
+
+# Mark a scene time-compressed when the run really spent much longer there than the
+# replay spends showing it, so the on-screen affordance is driven by recorded time
+# rather than by a guess.
+compress_idle: true
+compress_notice_seconds: 10.0
+
+fps: 30
+
+# How the replay is drawn. "session" animates one continuous Claude Code window: the
+# prompt is typed in, replies stream out, commands run and print, and the window
+# scrolls. Every character shown is recorded text, revealed over time. "slides" is
+# the older one-still-card-per-scene style.
+replay_style: session
+# Animation speeds. They change only how fast recorded text appears inside a scene,
+# never how long the scene lasts, so the narration timing is unaffected.
+typing_chars_per_second: 45.0
+stream_chars_per_second: 150.0
+output_lines_per_second: 12.0
+session_step_seconds: 0.12
+# The later pages of a long message stream on in place: each shows for its streaming
+# time plus this hold. Narration over the message can still lengthen it.
+continued_page_hold_seconds: 2.0

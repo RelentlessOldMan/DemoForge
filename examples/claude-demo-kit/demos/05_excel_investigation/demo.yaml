@@ -1,0 +1,137 @@
+# ClaudeDemoKit Demo 5: Excel Investigation.
+# Auto-discovered by DemoForge. Claude does a sign-off review of the VAL-2026-05
+# acceptance workbook for the v2.3.0 release candidate against CVT-VAL-002 Rev A.
+# Planted: the per-run position-error limit reads 5 m instead of 0.5 m, so the six
+# `maneuver` runs pass and the workbook shows ACCEPT where REJECT is correct; and the
+# Result formula ignores the plan's per-run runtime limit (latent in this campaign).
+# STORY.md: demo 5. Inputs are built by checks/_generate_workbook.py.
+
+id: excel-investigation
+title: Excel Investigation
+order: 5
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+inputs:
+  - input/validation_results.xlsx
+  - input/validation_plan.md
+
+runtime: python
+
+# Harness: evaluates the corrected workbook's own formulas (checks/xlcalc.py) on the
+# delivered data and on five hidden variants of the run data, and checks
+# findings.json against an independent recomputation. See checks/check_workbook.py.
+harness: checks/check_workbook.py
+metrics_from: metrics.json
+
+checks:
+  - id: produced_corrected_workbook
+    kind: file_exists
+    description: The agent saved the corrected workbook.
+    path: validation_results_corrected.xlsx
+
+  - id: produced_note
+    kind: file_exists
+    description: The agent wrote the review note.
+    path: review_note.md
+
+  - id: formulas_evaluable
+    kind: threshold
+    description: The harness could evaluate every formula in the workbook.
+    metric: unsupported_formula
+    max: 0
+
+  - id: criteria_match_plan
+    kind: threshold
+    description: The Criteria limits equal CVT-VAL-002 Rev A §4 (0.5 m, 0.95, 50 ms).
+    metric: criteria_match_plan
+    min: 1
+
+  - id: run_data_intact
+    kind: threshold
+    description: The 40 recorded runs are unchanged.
+    metric: run_data_intact
+    min: 1
+
+  - id: formulas_live
+    kind: threshold
+    description: Result, Passed, Pass rate and Verdict are still formulas.
+    metric: formulas_live
+    min: 1
+
+  - id: verdict_reject
+    kind: threshold
+    description: The corrected workbook's Verdict formula evaluates to REJECT.
+    metric: verdict_reject
+    min: 1
+
+  - id: results_follow_plan
+    kind: threshold
+    description: Every Result cell matches the plan (error <= 0.5 m and runtime <= 50 ms) on the delivered and five hidden data variants.
+    metric: result_mismatches
+    min: 0
+    max: 0
+
+  - id: summary_follows_plan
+    kind: threshold
+    description: Passed, Failed and Pass rate match a recomputation on all six data variants.
+    metric: summary_mismatches
+    min: 0
+    max: 0
+
+  - id: verdict_follows_plan
+    kind: threshold
+    description: The Verdict matches the plan (REJECT iff pass rate < 0.95) on all six data variants.
+    metric: verdict_mismatches
+    min: 0
+    max: 0
+
+  - id: findings_verdict
+    kind: threshold
+    description: findings.json gives REJECT.
+    metric: findings_verdict_reject
+    min: 1
+
+  - id: findings_counts
+    kind: threshold
+    description: findings.json gives the recomputed run total, passed count and pass rate.
+    metric: findings_counts_ok
+    min: 1
+
+  - id: findings_failed_runs
+    kind: threshold
+    description: findings.json lists exactly the runs that fail the plan.
+    metric: findings_failed_runs_ok
+    min: 1
+
+  - id: findings_cite_limit_cell
+    kind: threshold
+    description: findings.json cites the position-error limit cell (Criteria!B2).
+    metric: findings_cites_limit_cell
+    min: 1
+
+  - id: findings_citations_valid
+    kind: threshold
+    description: Every cell findings.json cites exists in the workbook as received.
+    metric: findings_citations_valid
+    min: 1
+
+  - id: recomputed_pass_rate
+    kind: metric
+    description: Pass rate recomputed from the run data and the plan.
+
+  - id: n_failing_runs
+    kind: metric
+    description: Runs that fail the plan.
+
+  - id: n_runs
+    kind: metric
+    description: Runs in the campaign.
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Bash
+      match: python

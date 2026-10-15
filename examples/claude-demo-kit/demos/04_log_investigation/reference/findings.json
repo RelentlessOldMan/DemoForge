@@ -1,0 +1,25 @@
+{
+  "test_id": 1847,
+  "root_cause_component": "storage",
+  "root_cause": "/var/validation ran out of space (20.0G/20.0G) while data-ingest was exporting test 1847's measurements, so the export stopped after 1180 of 1500 rows but was still marked READY, and the estimator read the partial last row as NaN.",
+  "chain": ["storage", "data-ingest", "estimator", "runner"],
+  "evidence": [
+    {"file": "system.log", "line": 7, "note": "volume already at 95% (19.0G/20.0G) when the batch started"},
+    {"file": "system.log", "line": 20, "note": "98% at 02:14:00, one minute before the failure"},
+    {"file": "data-ingest.log", "line": 102, "note": "export of batch_1847_vectors.csv fails with [Errno 28] No space left on device at offset 37104"},
+    {"file": "system.log", "line": 21, "note": "df-monitor: /var/validation at 100% at 02:15:03, same second"},
+    {"file": "data-ingest.log", "line": 103, "note": "the failed export is still published: 1180 rows, 36.2 KB, status=READY (every other export is 1500 rows, ~46 KB)"},
+    {"file": "estimator-worker.log", "line": 170, "note": "estimator-01 reads 1181 rows: 1180 complete plus the partial row cut off by the failed write"},
+    {"file": "estimator-worker.log", "line": 171, "note": "partial row 1181 has an empty second field, parsed as NaN"},
+    {"file": "estimator-worker.log", "line": 173, "note": "innovation not finite at step 1181"},
+    {"file": "estimator-worker.log", "line": 174, "note": "covariance non-finite, worker aborts with 0 states"},
+    {"file": "validation-runner.log", "line": 99, "note": "runner records FAIL: worker error 'non-finite result', states=0 expected=1500"},
+    {"file": "system.log", "line": 23, "note": "retention hook frees 6.1G at 02:15:18, so the disk looked healthy afterwards"}
+  ],
+  "ruled_out": [
+    {"item": "estimator-02 license heartbeat timeout", "file": "estimator-worker.log", "line": 167, "reason": "other worker (1847 ran on estimator-01); license reacquired 1.2 s later with no task interrupted (line 168)"},
+    {"item": "test 1823 soft-deadline retry", "file": "validation-runner.log", "line": 50, "reason": "different test, 7 minutes earlier, passed on retry with normal error (line 51)"},
+    {"item": "estimator-02 slow to ack / RT throttling", "file": "scheduler.log", "line": 15, "reason": "estimator-02 is the older, slower node; its tests all passed and it did not run 1847"},
+    {"item": "meas-archive read latency warnings", "file": "data-ingest.log", "line": 70, "reason": "affected 1812 and 1831 only, both exported 1500 rows and passed"}
+  ]
+}

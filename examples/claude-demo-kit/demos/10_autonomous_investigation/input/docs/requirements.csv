@@ -1,0 +1,12 @@
+id,requirement,source,verification,status
+R1,"The estimator shall expose the interface X = kalman_update(Z, model) exactly.",CVT-EST-001 Rev C §5,tests/test_kalman.m T1,Verified
+R2,"The estimator shall return an N-by-4 matrix of posterior estimates, one row per input measurement, in input order.",CVT-EST-001 Rev C §5,tests/test_kalman.m T1 T4,Verified
+R3,"The estimator shall implement the predict/update recursion of §4 using the model constants, initializing state and covariance from model.x0 and model.P0.",CVT-EST-001 Rev C §5,tests/test_kalman.m T3 T4,Verified
+R4,"The estimator shall be deterministic: identical (Z, model) yields identical X.",CVT-EST-001 Rev C §5,tests/test_kalman.m T2,Verified
+R5,The implementation shall be accompanied by a runnable test exercising R1-R4.,CVT-EST-001 Rev C §5,tests/test_kalman.m,Verified
+R6,"Non-finite or malformed measurements shall be rejected and reported, never propagated into the state.",CVT-EST-001 Rev C §5,tests/test_measurement_gate.m T5,Verified
+G1,The gate shall compute d2 by solving S x = y (not by forming inv(S)).,CVT-SRS-003 Rev C §7.3.1,tests/test_measurement_gate.m T1 T2,Verified
+G2,The gate shall admit a measurement if and only if d2 <= gamma.,CVT-SRS-003 Rev C §7.3.2,tests/test_measurement_gate.m T3 T4,Verified
+G3,The gate shall use the supplied gamma (the chi-squared critical value for the configured confidence and the active mode's measurement dimension) and hold no threshold of its own.,CVT-SRS-003 Rev C §7.3.3,tests/test_measurement_gate.m T4,Verified
+G4,"The gate shall fail closed on non-finite y or S and on a non-finite or non-positive gamma, without raising an error.",CVT-SRS-003 Rev C §7.3.5,tests/test_measurement_gate.m T5,Verified
+G5,The gate shall be accompanied by a runnable test that exercises G1-G4.,CVT-SRS-003 Rev C §7.3.6,tests/test_measurement_gate.m,Verified

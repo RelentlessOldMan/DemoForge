@@ -1,0 +1,92 @@
+# ClaudeDemoKit Demo 7: Specification to Implementation (from a PDF).
+# Auto-discovered by DemoForge. Claude gets the CVT-SRS-003 Rev C requirements spec as
+# a PDF and a bench capture, and is asked for the §7.3 measurement gate plus a CI test.
+# SPEC.md §Demo 7; facts per STORY.md (SRS-003 Rev C, 2026-09-08).
+
+id: spec-implementation
+title: Specification to Implementation
+order: 7
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+inputs:
+  - input/CVT-SRS-003.pdf
+  - input/gate_vectors.csv
+
+# The agent must read a PDF, which Claude's Read tool does by rasterizing pages with
+# pdftoppm (poppler). Declared so capture refuses up front on a machine without it
+# instead of spending agent time on a run that fails for an environmental reason.
+requires:
+  - pdftoppm
+
+runtime: octave
+
+# Independent harness (checks/run_tests.m): runs the agent's gate on the bench capture
+# and on hidden vectors (m = 1..4, every Appendix A column, exact boundary), checks the
+# fail-closed rules, then runs the agent's test file against the hidden correct gate
+# (must pass) and against four hidden mutants (must fail on each).
+harness: checks/run_tests.m
+metrics_from: metrics.json
+
+checks:
+  - id: produced_implementation
+    kind: file_exists
+    description: The agent implemented the gate as measurement_gate.m.
+    pattern: measurement_gate.m
+
+  - id: produced_tests
+    kind: file_exists
+    description: The agent wrote the CI test test_measurement_gate.m.
+    pattern: test_measurement_gate.m
+
+  - id: nis_correct
+    kind: numeric_tolerance
+    description: d2 matches y' inv(S) y on the capture and the hidden vectors (G1).
+    metric: max_abs_error
+    max_abs_error: 1.0e-6
+
+  - id: decisions_match
+    kind: threshold
+    description: Every decision on the bench capture agrees with the spec (G2).
+    metric: accept_mismatches
+    max: 0
+
+  - id: gamma_honoured
+    kind: threshold
+    description: Every decision on hidden vectors (m = 1..4, other gammas, d2 == gamma) agrees (G2, G3).
+    metric: hidden_mismatches
+    max: 0
+
+  - id: handles_nonfinite
+    kind: threshold
+    description: Malformed y, S or gamma is rejected with d2 = Inf, without error (G-BC-1/2).
+    metric: nonfinite_handled
+    min: 1
+
+  - id: tests_pass_on_correct_gate
+    kind: threshold
+    description: The agent's test passes against the hidden correct gate.
+    metric: agent_tests_pass_ref
+    min: 1
+
+  - id: tests_have_teeth
+    kind: threshold
+    description: The agent's test fails against all four hidden mutants (G5).
+    metric: mutants_killed
+    min: 4
+
+  - id: n_vectors
+    kind: metric
+    description: Bench-capture rows exercised.
+
+  - id: n_hidden
+    kind: metric
+    description: Hidden vectors exercised.
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Bash
+      match: octave

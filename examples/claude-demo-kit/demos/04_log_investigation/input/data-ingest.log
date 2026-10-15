@@ -1,0 +1,111 @@
+2026-02-18T02:00:31.007Z INFO  data-ingest[20481]: starting export for batch val-2026-02-18 (suite cvt-regression, 51 cases)
+2026-02-18T02:00:31.009Z INFO  data-ingest[20481]: source=meas-archive://cvt/streams/2026-02-17 target=/var/validation/batches/val-2026-02-18
+2026-02-18T02:00:31.052Z INFO  data-ingest[20481]: manifest loaded: 51 streams, 1500 vectors each
+2026-02-18T02:00:32.310Z INFO  data-ingest[20481]: connected to meas-archive (latency 14 ms)
+2026-02-18T02:00:40.143Z INFO  data-ingest[20481]: export batch_1800_vectors.csv: begin (1500 vectors)
+2026-02-18T02:00:40.886Z INFO  data-ingest[20481]: export batch_1800_vectors.csv: 1500 rows, 46.0 KB, sha1=e4cf2c8c status=READY
+2026-02-18T02:00:58.564Z INFO  data-ingest[20481]: export batch_1801_vectors.csv: begin (1500 vectors)
+2026-02-18T02:00:59.193Z INFO  data-ingest[20481]: export batch_1801_vectors.csv: 1500 rows, 46.0 KB, sha1=7a572e2f status=READY
+2026-02-18T02:01:17.294Z INFO  data-ingest[20481]: export batch_1802_vectors.csv: begin (1500 vectors)
+2026-02-18T02:01:18.050Z INFO  data-ingest[20481]: export batch_1802_vectors.csv: 1500 rows, 46.0 KB, sha1=49e249d5 status=READY
+2026-02-18T02:01:35.783Z INFO  data-ingest[20481]: export batch_1803_vectors.csv: begin (1500 vectors)
+2026-02-18T02:01:36.650Z INFO  data-ingest[20481]: export batch_1803_vectors.csv: 1500 rows, 46.0 KB, sha1=e2bda2b4 status=READY
+2026-02-18T02:01:53.109Z INFO  data-ingest[20481]: export batch_1804_vectors.csv: begin (1500 vectors)
+2026-02-18T02:01:54.098Z INFO  data-ingest[20481]: export batch_1804_vectors.csv: 1500 rows, 46.0 KB, sha1=262f603a status=READY
+2026-02-18T02:02:11.971Z INFO  data-ingest[20481]: export batch_1805_vectors.csv: begin (1500 vectors)
+2026-02-18T02:02:13.057Z INFO  data-ingest[20481]: export batch_1805_vectors.csv: 1500 rows, 46.1 KB, sha1=b80b2d62 status=READY
+2026-02-18T02:02:30.453Z INFO  data-ingest[20481]: export batch_1806_vectors.csv: begin (1500 vectors)
+2026-02-18T02:02:31.299Z INFO  data-ingest[20481]: export batch_1806_vectors.csv: 1500 rows, 46.1 KB, sha1=9ef3edcf status=READY
+2026-02-18T02:02:48.258Z INFO  data-ingest[20481]: export batch_1807_vectors.csv: begin (1500 vectors)
+2026-02-18T02:02:49.052Z INFO  data-ingest[20481]: export batch_1807_vectors.csv: 1500 rows, 46.0 KB, sha1=a75801a9 status=READY
+2026-02-18T02:03:07.530Z INFO  data-ingest[20481]: export batch_1808_vectors.csv: begin (1500 vectors)
+2026-02-18T02:03:08.139Z INFO  data-ingest[20481]: export batch_1808_vectors.csv: 1500 rows, 46.0 KB, sha1=e1fbde92 status=READY
+2026-02-18T02:03:24.745Z INFO  data-ingest[20481]: export batch_1809_vectors.csv: begin (1500 vectors)
+2026-02-18T02:03:25.376Z INFO  data-ingest[20481]: export batch_1809_vectors.csv: 1500 rows, 46.1 KB, sha1=13e662f9 status=READY
+2026-02-18T02:03:43.538Z INFO  data-ingest[20481]: export batch_1810_vectors.csv: begin (1500 vectors)
+2026-02-18T02:03:44.235Z INFO  data-ingest[20481]: export batch_1810_vectors.csv: 1500 rows, 46.1 KB, sha1=17da9999 status=READY
+2026-02-18T02:04:01.859Z INFO  data-ingest[20481]: export batch_1811_vectors.csv: begin (1500 vectors)
+2026-02-18T02:04:02.669Z INFO  data-ingest[20481]: export batch_1811_vectors.csv: 1500 rows, 45.9 KB, sha1=74676d87 status=READY
+2026-02-18T02:04:19.634Z INFO  data-ingest[20481]: export batch_1812_vectors.csv: begin (1500 vectors)
+2026-02-18T02:04:20.274Z INFO  data-ingest[20481]: export batch_1812_vectors.csv: 1500 rows, 46.1 KB, sha1=a6e51e70 status=READY
+2026-02-18T02:04:20.867Z WARN  data-ingest[20481]: meas-archive read latency 412 ms (threshold 250 ms)
+2026-02-18T02:04:38.766Z INFO  data-ingest[20481]: export batch_1813_vectors.csv: begin (1500 vectors)
+2026-02-18T02:04:39.642Z INFO  data-ingest[20481]: export batch_1813_vectors.csv: 1500 rows, 46.0 KB, sha1=f8092101 status=READY
+2026-02-18T02:04:57.404Z INFO  data-ingest[20481]: export batch_1814_vectors.csv: begin (1500 vectors)
+2026-02-18T02:04:58.023Z INFO  data-ingest[20481]: export batch_1814_vectors.csv: 1500 rows, 46.1 KB, sha1=0b96a784 status=READY
+2026-02-18T02:05:15.151Z INFO  data-ingest[20481]: export batch_1815_vectors.csv: begin (1500 vectors)
+2026-02-18T02:05:16.218Z INFO  data-ingest[20481]: export batch_1815_vectors.csv: 1500 rows, 46.0 KB, sha1=c8535d4c status=READY
+2026-02-18T02:05:32.768Z INFO  data-ingest[20481]: export batch_1816_vectors.csv: begin (1500 vectors)
+2026-02-18T02:05:33.433Z INFO  data-ingest[20481]: export batch_1816_vectors.csv: 1500 rows, 46.0 KB, sha1=3149e665 status=READY
+2026-02-18T02:05:52.094Z INFO  data-ingest[20481]: export batch_1817_vectors.csv: begin (1500 vectors)
+2026-02-18T02:05:53.156Z INFO  data-ingest[20481]: export batch_1817_vectors.csv: 1500 rows, 46.0 KB, sha1=f7a543c3 status=READY
+2026-02-18T02:06:10.524Z INFO  data-ingest[20481]: export batch_1818_vectors.csv: begin (1500 vectors)
+2026-02-18T02:06:11.165Z INFO  data-ingest[20481]: export batch_1818_vectors.csv: 1500 rows, 45.9 KB, sha1=26f12c13 status=READY
+2026-02-18T02:06:29.007Z INFO  data-ingest[20481]: export batch_1819_vectors.csv: begin (1500 vectors)
+2026-02-18T02:06:29.761Z INFO  data-ingest[20481]: export batch_1819_vectors.csv: 1500 rows, 46.1 KB, sha1=2be2920f status=READY
+2026-02-18T02:06:46.048Z INFO  data-ingest[20481]: export batch_1820_vectors.csv: begin (1500 vectors)
+2026-02-18T02:06:46.954Z INFO  data-ingest[20481]: export batch_1820_vectors.csv: 1500 rows, 46.0 KB, sha1=658e37d6 status=READY
+2026-02-18T02:07:04.531Z INFO  data-ingest[20481]: export batch_1821_vectors.csv: begin (1500 vectors)
+2026-02-18T02:07:05.333Z INFO  data-ingest[20481]: export batch_1821_vectors.csv: 1500 rows, 46.0 KB, sha1=6871f5dd status=READY
+2026-02-18T02:07:22.907Z INFO  data-ingest[20481]: export batch_1822_vectors.csv: begin (1500 vectors)
+2026-02-18T02:07:23.848Z INFO  data-ingest[20481]: export batch_1822_vectors.csv: 1500 rows, 46.0 KB, sha1=45b93de9 status=READY
+2026-02-18T02:07:41.750Z INFO  data-ingest[20481]: export batch_1823_vectors.csv: begin (1500 vectors)
+2026-02-18T02:07:42.845Z INFO  data-ingest[20481]: export batch_1823_vectors.csv: 1500 rows, 46.0 KB, sha1=42146bce status=READY
+2026-02-18T02:08:00.251Z INFO  data-ingest[20481]: export batch_1824_vectors.csv: begin (1500 vectors)
+2026-02-18T02:08:00.914Z INFO  data-ingest[20481]: export batch_1824_vectors.csv: 1500 rows, 46.0 KB, sha1=5da7a89b status=READY
+2026-02-18T02:08:17.933Z INFO  data-ingest[20481]: export batch_1825_vectors.csv: begin (1500 vectors)
+2026-02-18T02:08:18.910Z INFO  data-ingest[20481]: export batch_1825_vectors.csv: 1500 rows, 45.9 KB, sha1=263874ab status=READY
+2026-02-18T02:08:36.149Z INFO  data-ingest[20481]: export batch_1826_vectors.csv: begin (1500 vectors)
+2026-02-18T02:08:36.869Z INFO  data-ingest[20481]: export batch_1826_vectors.csv: 1500 rows, 46.0 KB, sha1=b4c36d57 status=READY
+2026-02-18T02:08:55.252Z INFO  data-ingest[20481]: export batch_1827_vectors.csv: begin (1500 vectors)
+2026-02-18T02:08:55.953Z INFO  data-ingest[20481]: export batch_1827_vectors.csv: 1500 rows, 46.0 KB, sha1=0ebaf8ca status=READY
+2026-02-18T02:09:13.412Z INFO  data-ingest[20481]: export batch_1828_vectors.csv: begin (1500 vectors)
+2026-02-18T02:09:14.467Z INFO  data-ingest[20481]: export batch_1828_vectors.csv: 1500 rows, 46.0 KB, sha1=c80cbac2 status=READY
+2026-02-18T02:09:32.323Z INFO  data-ingest[20481]: export batch_1829_vectors.csv: begin (1500 vectors)
+2026-02-18T02:09:33.024Z INFO  data-ingest[20481]: export batch_1829_vectors.csv: 1500 rows, 46.1 KB, sha1=671f9010 status=READY
+2026-02-18T02:09:51.085Z INFO  data-ingest[20481]: export batch_1830_vectors.csv: begin (1500 vectors)
+2026-02-18T02:09:51.762Z INFO  data-ingest[20481]: export batch_1830_vectors.csv: 1500 rows, 46.1 KB, sha1=5d552e0f status=READY
+2026-02-18T02:10:09.400Z INFO  data-ingest[20481]: export batch_1831_vectors.csv: begin (1500 vectors)
+2026-02-18T02:10:10.441Z INFO  data-ingest[20481]: export batch_1831_vectors.csv: 1500 rows, 46.0 KB, sha1=a17fd1f1 status=READY
+2026-02-18T02:10:10.868Z WARN  data-ingest[20481]: meas-archive read latency 412 ms (threshold 250 ms)
+2026-02-18T02:10:27.208Z INFO  data-ingest[20481]: export batch_1832_vectors.csv: begin (1500 vectors)
+2026-02-18T02:10:28.180Z INFO  data-ingest[20481]: export batch_1832_vectors.csv: 1500 rows, 46.0 KB, sha1=9b64bed5 status=READY
+2026-02-18T02:10:46.158Z INFO  data-ingest[20481]: export batch_1833_vectors.csv: begin (1500 vectors)
+2026-02-18T02:10:47.160Z INFO  data-ingest[20481]: export batch_1833_vectors.csv: 1500 rows, 45.9 KB, sha1=80055672 status=READY
+2026-02-18T02:11:04.415Z INFO  data-ingest[20481]: export batch_1834_vectors.csv: begin (1500 vectors)
+2026-02-18T02:11:05.343Z INFO  data-ingest[20481]: export batch_1834_vectors.csv: 1500 rows, 46.1 KB, sha1=daafacdc status=READY
+2026-02-18T02:11:22.677Z INFO  data-ingest[20481]: export batch_1835_vectors.csv: begin (1500 vectors)
+2026-02-18T02:11:23.480Z INFO  data-ingest[20481]: export batch_1835_vectors.csv: 1500 rows, 46.1 KB, sha1=d509d032 status=READY
+2026-02-18T02:11:40.761Z INFO  data-ingest[20481]: export batch_1836_vectors.csv: begin (1500 vectors)
+2026-02-18T02:11:41.850Z INFO  data-ingest[20481]: export batch_1836_vectors.csv: 1500 rows, 46.0 KB, sha1=4fa26b04 status=READY
+2026-02-18T02:11:58.225Z INFO  data-ingest[20481]: export batch_1837_vectors.csv: begin (1500 vectors)
+2026-02-18T02:11:58.993Z INFO  data-ingest[20481]: export batch_1837_vectors.csv: 1500 rows, 46.1 KB, sha1=1a36cdf9 status=READY
+2026-02-18T02:12:16.800Z INFO  data-ingest[20481]: export batch_1838_vectors.csv: begin (1500 vectors)
+2026-02-18T02:12:17.406Z INFO  data-ingest[20481]: export batch_1838_vectors.csv: 1500 rows, 46.0 KB, sha1=1ee62078 status=READY
+2026-02-18T02:12:34.860Z INFO  data-ingest[20481]: export batch_1839_vectors.csv: begin (1500 vectors)
+2026-02-18T02:12:35.489Z INFO  data-ingest[20481]: export batch_1839_vectors.csv: 1500 rows, 46.1 KB, sha1=c9b3b36b status=READY
+2026-02-18T02:12:53.039Z INFO  data-ingest[20481]: export batch_1840_vectors.csv: begin (1500 vectors)
+2026-02-18T02:12:54.119Z INFO  data-ingest[20481]: export batch_1840_vectors.csv: 1500 rows, 46.0 KB, sha1=d2482484 status=READY
+2026-02-18T02:13:12.840Z INFO  data-ingest[20481]: export batch_1841_vectors.csv: begin (1500 vectors)
+2026-02-18T02:13:13.763Z INFO  data-ingest[20481]: export batch_1841_vectors.csv: 1500 rows, 46.0 KB, sha1=0c10c6c4 status=READY
+2026-02-18T02:13:30.479Z INFO  data-ingest[20481]: export batch_1842_vectors.csv: begin (1500 vectors)
+2026-02-18T02:13:31.578Z INFO  data-ingest[20481]: export batch_1842_vectors.csv: 1500 rows, 46.0 KB, sha1=db0b8de9 status=READY
+2026-02-18T02:13:48.028Z INFO  data-ingest[20481]: export batch_1843_vectors.csv: begin (1500 vectors)
+2026-02-18T02:13:49.094Z INFO  data-ingest[20481]: export batch_1843_vectors.csv: 1500 rows, 46.1 KB, sha1=fe9b45db status=READY
+2026-02-18T02:14:07.085Z INFO  data-ingest[20481]: export batch_1844_vectors.csv: begin (1500 vectors)
+2026-02-18T02:14:07.818Z INFO  data-ingest[20481]: export batch_1844_vectors.csv: 1500 rows, 45.9 KB, sha1=36ce6023 status=READY
+2026-02-18T02:14:25.089Z INFO  data-ingest[20481]: export batch_1845_vectors.csv: begin (1500 vectors)
+2026-02-18T02:14:26.161Z INFO  data-ingest[20481]: export batch_1845_vectors.csv: 1500 rows, 46.0 KB, sha1=8ab16569 status=READY
+2026-02-18T02:14:43.809Z INFO  data-ingest[20481]: export batch_1846_vectors.csv: begin (1500 vectors)
+2026-02-18T02:14:44.797Z INFO  data-ingest[20481]: export batch_1846_vectors.csv: 1500 rows, 46.0 KB, sha1=8923e8b5 status=READY
+2026-02-18T02:15:02.118Z INFO  data-ingest[20481]: export batch_1847_vectors.csv: begin (1500 vectors)
+2026-02-18T02:15:03.002Z ERROR data-ingest[20481]: export batch_1847_vectors.csv: write failed at offset 37104: [Errno 28] No space left on device
+2026-02-18T02:15:03.004Z INFO  data-ingest[20481]: export batch_1847_vectors.csv: 1180 rows, 36.2 KB, sha1=9c41e07d status=READY
+2026-02-18T02:15:20.086Z INFO  data-ingest[20481]: export batch_1848_vectors.csv: begin (1500 vectors)
+2026-02-18T02:15:21.170Z INFO  data-ingest[20481]: export batch_1848_vectors.csv: 1500 rows, 46.1 KB, sha1=b2d93259 status=READY
+2026-02-18T02:15:38.745Z INFO  data-ingest[20481]: export batch_1849_vectors.csv: begin (1500 vectors)
+2026-02-18T02:15:39.587Z INFO  data-ingest[20481]: export batch_1849_vectors.csv: 1500 rows, 45.9 KB, sha1=b47e1988 status=READY
+2026-02-18T02:15:57.599Z INFO  data-ingest[20481]: export batch_1850_vectors.csv: begin (1500 vectors)
+2026-02-18T02:15:58.212Z INFO  data-ingest[20481]: export batch_1850_vectors.csv: 1500 rows, 46.0 KB, sha1=9f20ae04 status=READY
+2026-02-18T02:15:59.099Z INFO  data-ingest[20481]: batch val-2026-02-18: 51 exports finished, 0 errors reported by archive
+2026-02-18T02:15:59.139Z INFO  data-ingest[20481]: export run complete in 15m28s

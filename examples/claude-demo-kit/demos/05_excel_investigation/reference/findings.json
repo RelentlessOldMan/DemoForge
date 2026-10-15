@@ -1,0 +1,11 @@
+{
+  "campaign_verdict": "REJECT",
+  "runs_total": 40,
+  "runs_passed": 34,
+  "pass_rate": 0.85,
+  "failed_runs": ["VR-1901", "VR-1903", "VR-1904", "VR-1917", "VR-1929", "VR-1932"],
+  "issues": [
+    {"sheet": "Criteria", "cell": "B2", "description": "Per-run peak position error limit is 5 m; CVT-VAL-002 Rev A §4 sets 0.5 m. With 5 m the six maneuver runs (0.750 to 1.003 m) pass and the campaign shows ACCEPT."},
+    {"sheet": "Runs", "cell": "H2:H41", "description": "Result formula tests only the position error. §3 also requires runtime <= 50 ms per run (Criteria!B4). No run in this campaign exceeds it (max 43.3 ms), so the outcome is unchanged here, but a slow run would be marked PASS."}
+  ]
+}

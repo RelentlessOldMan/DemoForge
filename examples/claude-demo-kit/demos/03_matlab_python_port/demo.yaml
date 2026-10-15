@@ -1,0 +1,60 @@
+# ClaudeDemoKit Demo 3 — MATLAB -> Python Port.
+# Auto-discovered by DemoForge. Ports the constant-velocity Kalman filter to
+# Python (the v2.2.0 Python port, STORY.md) and verifies it against
+# Octave-produced references.
+
+id: matlab-python-port
+title: MATLAB to Python Port
+order: 3
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+# Staged (by basename) into the agent's working copy. NOTE: the reference output
+# (checks/reference_states.csv) is deliberately NOT an input — the agent gets the
+# MATLAB source and the vectors, never the expected answer.
+inputs:
+  - input/kalman_update.m
+  - input/test_vectors.csv
+  - input/model.json
+
+runtime: python
+
+# Independent harness: runs the agent's port and compares it against the MATLAB
+# reference, then again on a hidden second model and stream (model_alt.json,
+# reference_states_alt.csv) to catch a port that hard-codes the model. Its whole directory (checks/) is staged alongside it at verify time,
+# so reference_states.csv travels with the harness but never reaches the agent.
+harness: checks/run_tests.py
+metrics_from: metrics.json
+
+checks:
+  - id: produced_port
+    kind: file_exists
+    description: The agent produced the Python port.
+    pattern: kalman_filter.py
+
+  - id: equivalence
+    kind: numeric_tolerance
+    description: Python output matches the MATLAB reference within tolerance.
+    max_abs_error: 1.0e-9
+
+  - id: model_driven
+    kind: numeric_tolerance
+    description: On a hidden second model (other F, Q, R, x0, P0) the port still matches MATLAB.
+    metric: hidden_model_error
+    max_abs_error: 1.0e-9
+
+  - id: port_runtime_ms
+    kind: metric
+    description: Python port runtime (ms).
+
+  - id: n_vectors
+    kind: metric
+    description: Number of measurement vectors processed.
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Bash
+      match: python

@@ -1,0 +1,53 @@
+function [X, rejected] = kalman_update(Z, model)
+  % KALMAN_UPDATE  Constant-velocity Kalman filter over a batch of measurements.
+  %
+  %   X = kalman_update(Z, model)
+  %   [X, rejected] = kalman_update(Z, model)
+  %
+  %   Z         N-by-m matrix; row k is the measurement z_k (m = rows of model.H).
+  %   model     struct with fields F (n-by-n), Q (n-by-n), H (m-by-n), R (m-by-m),
+  %             x0 (n-by-1), P0 (n-by-n), and optionally gamma, the gate threshold
+  %             (see cvt_model). With gamma present every measurement is screened by
+  %             measurement_gate before it is applied (CVT-EST-001 R6, CVT-SRS-003 §7.3).
+  %   X         N-by-n matrix; row k is the posterior state estimate after step k.
+  %   rejected  N-by-1 logical; true where the gate rejected z_k. A rejected
+  %             measurement is not applied: the step keeps the predicted state.
+  %
+  % Each step predicts with the constant-velocity model, then applies the
+  % measurement update:
+  %     x = F x;            P = F P F' + Q
+  %     y = z - H x;        S = H P H' + R
+  %     K = P H' / S;       x = x + K y;   P = (I - K H) P
+
+  F = model.F; Q = model.Q; H = model.H; R = model.R;
+  x = model.x0(:); P = model.P0;
+  gated = isfield(model, 'gamma') && ~isempty(model.gamma);
+
+  N = size(Z, 1);
+  n = numel(x);
+  X = zeros(N, n);
+  rejected = false(N, 1);
+  I = eye(n);
+
+  for k = 1:N
+    z = Z(k, :)';
+
+    % --- predict ---
+    x = F * x;
+    P = F * P * F' + Q;
+
+    % --- update ---
+    y = z - H * x;
+    S = H * P * H' + R;
+    if gated && ~measurement_gate(y, S, model.gamma)
+      rejected(k) = true;
+      X(k, :) = x';
+      continue;
+    end
+    K = (P * H') / S;          % mrdivide: solves K*S = P*H'
+    x = x + K * y;
+    P = (I - K * H) * P;
+
+    X(k, :) = x';
+  end
+end

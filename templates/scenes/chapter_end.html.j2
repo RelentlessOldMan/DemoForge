@@ -1,0 +1,98 @@
+{#
+  The payoff: the measured results from the approved bundle's results.json.
+
+  These are property checks evaluated by the demo's own hidden harness during capture
+  (architecture.md §6) — not a rerun, and not a claim the agent made about itself.
+  Metric rows carry no verdict by design; they are there to be read.
+#}
+{% extends "_base.html.j2" %}
+{% block stage %}
+  <style>
+    .wrap { display: flex; flex-direction: column; gap: 26px; max-height: 100%; min-width: 0; }
+    /* With a closing summary, the measured checks and the words sit side by side:
+       a caption strip this long would bury the table it is talking about. */
+    .split { display: flex; gap: 56px; min-height: 0; }
+    .split .wrap { flex: 1 1 52%; gap: 18px; }
+    .split td { padding: 8px 0; font-size: 20px; }
+    .split .verdict__word { font-size: 52px; }
+    .summary {
+      flex: 1 1 48%;
+      margin: 0;
+      padding: 0 0 0 48px;
+      border-left: 3px solid var(--accent);
+      font-size: 30px;
+      line-height: 1.45;
+      align-self: center;
+    }
+    .verdict {
+      display: flex;
+      align-items: baseline;
+      gap: 22px;
+      font-family: var(--mono);
+    }
+    .verdict__word { font-size: 60px; letter-spacing: 0.04em; }
+    .verdict--ok .verdict__word { color: var(--ok); }
+    .verdict--bad .verdict__word { color: var(--bad); }
+    .verdict__sub { font-size: 22px; color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 22px; }
+    th {
+      text-align: left;
+      font-size: 15px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      padding: 0 0 14px;
+      border-bottom: 1px solid var(--edge);
+    }
+    td { padding: 13px 0; border-bottom: 1px solid rgba(38, 50, 77, 0.55); vertical-align: top; }
+    td.value { color: var(--accent); text-align: right; white-space: nowrap; padding-left: 28px; }
+    td.value .limit { color: var(--muted); }
+    td.mark { width: 92px; }
+    .mark--pass { color: var(--ok); }
+    .mark--fail { color: var(--bad); }
+    .mark--metric { color: var(--muted); }
+  </style>
+{% if caption %}<div class="split">{% endif %}
+  <div class="wrap">
+{% set failures = results | selectattr("passed", "equalto", false) | list %}
+{% set checks = results | rejectattr("passed", "none") | list %}
+    <div class="verdict {% if failures or data.is_error %}verdict--bad{% else %}verdict--ok{% endif %}">
+      <span class="verdict__word">
+        {% if failures or data.is_error %}FAILED{% else %}VERIFIED{% endif %}
+      </span>
+      <span class="verdict__sub">
+        {{ checks | length - failures | length }}/{{ checks | length }} checks passed
+        {%- if data.follow_ups is not none %} &middot; {% if data.follow_ups %}{{ data.follow_ups }} follow-up{{ "" if data.follow_ups == 1 else "s" }} from the person{% else %}no follow-ups{% endif %}{% endif %}
+      </span>
+    </div>
+
+{% if results %}
+    <table>
+      <thead><tr><th class="mark">&nbsp;</th><th>check</th><th style="text-align:right">measured</th></tr></thead>
+      <tbody>
+{% for c in results %}
+        <tr>
+          <td class="mark {% if c.passed is none %}mark--metric{% elif c.passed %}mark--pass{% else %}mark--fail{% endif %}">
+            {%- if c.passed is none %}&mdash;{% elif c.passed %}PASS{% else %}FAIL{% endif -%}
+          </td>
+          <td>{{ c.id | replace("_", " ") }}</td>
+          <td class="value">
+            {%- if c.kind == "numeric_tolerance" %}<span class="limit">error </span>{% endif -%}
+            {{ c.value | num }}
+            {%- if c.get("limit") %}<span class="limit"> &middot; limit {{ c.limit }}</span>{% endif -%}
+          </td>
+        </tr>
+{% endfor %}
+      </tbody>
+    </table>
+{% else %}
+    <p class="prose muted">No checks recorded for this run.</p>
+{% endif %}
+  </div>
+{% if caption %}
+  <p class="summary">{{ caption }}</p>
+</div>
+{% endif %}
+{% endblock %}
+{% block caption %}{% endblock %}

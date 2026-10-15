@@ -1,0 +1,7 @@
+id,requirement,source,added_in
+R1,The estimator shall expose the interface X = kalman_update(Z, model) exactly.,CVT-EST-001 §5 R1 (§3),Rev B
+R2,"The estimator shall return an N-by-4 matrix of posterior estimates, one row per input measurement, in input order.",CVT-EST-001 §5 R2 (§3),Rev B
+R3,"The estimator shall implement the predict/update recursion of §4 using the model constants, including initializing state and covariance from model.x0 and model.P0.",CVT-EST-001 §5 R3 (§4),Rev B
+R4,"The estimator shall be deterministic: identical (Z, model) yields identical X.",CVT-EST-001 §5 R4,Rev B
+R5,The implementation shall be accompanied by a runnable test on test_vectors.csv exercising R1-R4.,CVT-EST-001 §5 R5,Rev B
+R6,"Non-finite (NaN/Inf) or malformed measurements shall be rejected and reported to the caller, never propagated into the state estimate.",CVT-EST-001 §5 R6,Rev C

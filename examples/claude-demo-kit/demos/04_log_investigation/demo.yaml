@@ -1,0 +1,112 @@
+# ClaudeDemoKit Demo 4 — Log Investigation.
+# Auto-discovered by DemoForge. Claude investigates the one failure in nightly batch
+# val-2026-02-18 (STORY.md, incident 2026-02-18): /var/validation filled up while
+# data-ingest was exporting test 1847's measurements, the export stopped after 1180 of
+# 1500 rows but was marked READY, the estimator read the partial last row as NaN, and
+# the filter went non-finite. The chain spans three of the five logs; decoys (an
+# estimator-02 license heartbeat miss seconds before the failure, a test 1823 retry,
+# the slower estimator-02) must be dismissed.
+#
+# The logs are produced by checks/_generate_logs.py (provenance only; never staged).
+
+id: log-investigation
+title: Log Investigation
+order: 4
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+# The agent gets the raw logs only. It must correlate across them.
+inputs:
+  - input/scheduler.log
+  - input/validation-runner.log
+  - input/estimator-worker.log
+  - input/data-ingest.log
+  - input/system.log
+
+# Python runs the harness only; the job itself is reading logs.
+runtime: python
+
+# Independent harness: validates findings.json against the staged logs: cited lines
+# must exist, the evidence must include a disk-full line, the short READY export (or
+# the short read) and a NaN/non-finite line, the cause must be storage or data-ingest, the decoys
+# must not be cited as evidence, and the ruled-out list must cover the decoys.
+harness: checks/check_findings.py
+metrics_from: metrics.json
+
+checks:
+  - id: produced_report
+    kind: file_exists
+    description: The agent wrote the investigation report.
+    pattern: findings.md
+
+  - id: report_names_test
+    kind: contains
+    description: The report is about test 1847 (cheap secondary check).
+    file: findings.md
+    pattern: '1847'
+
+  - id: findings_valid
+    kind: threshold
+    description: findings.json follows the requested schema and is about test 1847.
+    metric: findings_valid
+    min: 1
+
+  - id: citations_exist
+    kind: threshold
+    description: Every cited file:line exists in the logs (no fabricated evidence).
+    metric: citations_exist
+    min: 1
+
+  - id: cause_ok
+    kind: threshold
+    description: Root cause is the full volume or the short export it caused (never license), chained storage -> data-ingest -> estimator.
+    metric: cause_ok
+    min: 1
+
+  - id: evidence_enospc
+    kind: threshold
+    description: Evidence cites the disk-full (ENOSPC / 100 %) line.
+    metric: evidence_enospc
+    min: 1
+
+  - id: evidence_truncation
+    kind: threshold
+    description: Evidence cites the short export marked READY or the short read.
+    metric: evidence_truncation
+    min: 1
+
+  - id: evidence_nonfinite
+    kind: threshold
+    description: Evidence cites the NaN / non-finite failure of test 1847.
+    metric: evidence_nonfinite
+    min: 1
+
+  - id: evidence_no_decoys
+    kind: threshold
+    description: No decoy line (license heartbeat, 1823 retry, estimator-02 slowness) is cited as evidence.
+    metric: evidence_no_decoys
+    min: 1
+
+  - id: ruled_out_not_cause
+    kind: threshold
+    description: The ruled-out list does not cite the real causal lines.
+    metric: ruled_out_not_cause
+    min: 1
+
+  - id: decoys_ruled_out
+    kind: threshold
+    description: At least two of the three decoy families are explicitly ruled out.
+    metric: decoys_ruled_out
+    min: 2
+
+  - id: n_evidence
+    kind: metric
+    description: Number of log lines cited as evidence.
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Grep
+      match: "1847"

@@ -1,0 +1,88 @@
+# ClaudeDemoKit Demo 2 — MATLAB Algorithm Optimization.
+# Auto-discovered by DemoForge (any demos/*/demo.yaml). See docs/architecture.md §4.
+
+id: matlab-optimization
+title: MATLAB Algorithm Optimization
+order: 2
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+# Files staged (by basename) into the agent's working copy before the run.
+inputs:
+  - input/kalman_update.m
+  - input/model.json
+  - input/test_vectors.csv
+
+# .m runs on GNU Octave (no MATLAB license here) — see docs/architecture.md §10.
+runtime: octave
+
+# DemoForge's independent verification harness (not staged to the agent). It
+# runs the original and the agent's kalman_update_fast on the public stream with
+# model.json, on a longer hidden stream, and under a hidden second model, and
+# times both itself; it never trusts the agent's reported numbers. checks/ also
+# carries a byte copy of input/kalman_update.m, so the baseline is always the
+# original. Data comes from tools/generate_vectors.py (author tool, not staged).
+harness: checks/run_tests.m
+metrics_from: metrics.json
+
+# Property-based success criteria: never byte-exact comparison (§6).
+checks:
+  - id: produced_fast_impl
+    kind: file_exists
+    description: The agent produced the optimized implementation.
+    pattern: kalman_update_fast.m
+
+  - id: equivalence
+    kind: numeric_tolerance
+    description: >-
+      Optimized output matches the original within 1e-9 on the public stream, a
+      longer hidden stream, and a hidden second model.
+    max_abs_error: 1.0e-9
+
+  - id: timed_runs_consistent
+    kind: numeric_tolerance
+    description: The timed runs (fresh inputs each) also return correct output.
+    metric: timed_runs_max_abs_error
+    max_abs_error: 1.0e-9
+
+  - id: speedup
+    kind: threshold
+    description: Harness-measured speedup over the original on the 4500-vector stream.
+    metric: speedup
+    min: 3.0
+
+  - id: benchmark_left
+    kind: file_exists
+    description: A runnable benchmark/equivalence check was left in place.
+    pattern: benchmark_kalman_update.m
+
+  - id: report_written
+    kind: file_exists
+    description: The short write-up exists.
+    pattern: OPTIMIZATION.md
+
+  - id: report_states_speedup
+    kind: contains
+    description: The write-up states a speedup figure (secondary check).
+    file: OPTIMIZATION.md
+    pattern: '(?i)\d+(\.\d+)?\s*(x|×)'
+
+  - id: original_runtime_ms
+    kind: metric
+    description: Baseline runtime on the 4500-vector stream (ms).
+
+  - id: optimized_runtime_ms
+    kind: metric
+    description: Optimized runtime on the 4500-vector stream (ms, median of 5).
+
+  - id: n_vectors
+    kind: metric
+    description: Number of vectors in the public stream.
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Bash
+      match: benchmark

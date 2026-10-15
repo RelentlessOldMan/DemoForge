@@ -1,0 +1,67 @@
+{#
+  A real command and its real recorded output, on one card.
+
+  Output lines are already capped by config/scenes.yaml, and `dropped_lines` says how
+  many were left off — the frame never implies it is showing everything when it is not.
+#}
+{% extends "_base.html.j2" %}
+{% block stage %}
+  <style>
+    .term {
+      background: var(--panel-2);
+      border: 1px solid var(--edge);
+      border-radius: 18px;
+      overflow: hidden;
+      max-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .term__bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--edge);
+      background: rgba(0, 0, 0, 0.25);
+    }
+    .term__dot { width: 13px; height: 13px; border-radius: 50%; background: var(--edge); }
+    .term__title {
+      font-family: var(--mono);
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-left: 10px;
+    }
+    .term__body {
+      font-family: var(--mono);
+      font-size: 23px;
+      line-height: 1.42;
+      padding: 26px 32px;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .term__cmd { color: var(--accent); display: flex; gap: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .term__cmd::before { content: "$"; color: var(--ok); }
+    .term__out { margin-top: 18px; color: var(--text); white-space: pre; }
+    .term__more { margin-top: 14px; color: var(--muted); font-style: italic; }
+  </style>
+  <div class="term">
+    <div class="term__bar">
+      <span class="term__dot"></span><span class="term__dot"></span><span class="term__dot"></span>
+      <span class="term__title">{{ data.tool or "shell" }}</span>
+    </div>
+    <div class="term__body fit">
+      <div class="term__cmd">{{ data.command }}</div>
+{%- if data.command_cut %}
+      <div class="term__more">&hellip; command continues, full text in the record</div>
+{%- endif %}
+{%- if data.output_lines %}
+      <div class="term__out">{{ data.output_lines | join("\n") }}</div>
+{%- endif %}
+{% if data.dropped_lines %}
+      <div class="term__more">&hellip; {{ data.dropped_lines }} further line{{ "" if data.dropped_lines == 1 else "s" }} of recorded output, kept in the record</div>
+{% endif %}
+    </div>
+  </div>
+{% endblock %}

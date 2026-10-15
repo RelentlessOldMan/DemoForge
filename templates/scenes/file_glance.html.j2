@@ -1,0 +1,38 @@
+{# A read or a search: which file Claude looked at, and with what tool. #}
+{% extends "_base.html.j2" %}
+{% block stage %}
+  <style>
+    .glance { display: flex; align-items: center; gap: 36px; }
+    .glance__mark {
+      flex: none;
+      width: 104px;
+      height: 104px;
+      border-radius: 20px;
+      border: 1px solid var(--edge);
+      background: var(--panel-2);
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-size: 42px;
+      color: var(--accent);
+    }
+    .glance__name { font-family: var(--mono); font-size: 52px; margin: 0; }
+    .glance__path {
+      font-family: var(--mono);
+      font-size: 20px;
+      color: var(--muted);
+      margin: 12px 0 0;
+      overflow-wrap: anywhere;
+    }
+  </style>
+  <div class="panel glance">
+    <div class="glance__mark">{% if data.query %}&#8981;{% else %}&#9906;{% endif %}</div>
+    <div>
+      <p class="eyebrow">{{ label }}{% if data.tool and data.tool|lower != label|lower %} &middot; {{ data.tool }}{% endif %}</p>
+      <p class="glance__name">{{ data.name or data.query }}</p>
+{% if data.rel and data.rel != data.name %}
+      <p class="glance__path">{{ data.rel }}</p>
+{% endif %}
+    </div>
+  </div>
+{% endblock %}

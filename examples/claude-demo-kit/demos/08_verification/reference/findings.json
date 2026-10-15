@@ -1,0 +1,14 @@
+{
+  "verdict": "defect_found",
+  "defects": [
+    {
+      "requirement": "R3",
+      "summary": "kalman_update ignores model.x0 and model.P0: it always starts from x = zeros(4,1) and P = eye(4) instead of initialising x = x0, P = P0 as CVT-EST-001 §4 requires.",
+      "evidence": [
+        {"file": "kalman_update.m", "line": 18},
+        {"file": "kalman_update.m", "line": 19},
+        {"file": "kalman_filter_spec.md", "line": 67}
+      ]
+    }
+  ]
+}

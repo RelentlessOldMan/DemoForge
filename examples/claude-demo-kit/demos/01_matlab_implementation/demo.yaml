@@ -1,0 +1,83 @@
+# ClaudeDemoKit Demo 1 — MATLAB Algorithm Implementation.
+# Auto-discovered by DemoForge. Claude implements the constant-velocity Kalman
+# filter from a written spec; the result is the `kalman_update.m` that Demo 2
+# optimizes and Demo 3 ports (one shared artifact across the suite — SPEC.md §6).
+
+id: matlab-implementation
+title: MATLAB Algorithm Implementation
+order: 1
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+# The person asking, played during capture by a second Claude session that reads each
+# answer and replies, up to max_follow_ups times. Never staged: the agent does not see it.
+user: user.md
+max_follow_ups: 3
+
+# Staged (by basename) into the agent's working copy. The agent gets the spec, the
+# measurement stream, and the model constants — but NOT the expected output
+# (checks/reference_states.csv) and NOT a reference implementation.
+inputs:
+  - input/kalman_filter_spec.md
+  - input/test_vectors.csv
+  - input/model.json
+
+runtime: octave
+
+# Independent harness (checks/ is staged beside it at verify time, never to the
+# agent): compares the agent's kalman_update against the hidden reference output,
+# re-runs it on a hidden second model to catch hard-coded constants, and runs the
+# agent's own test against the hidden correct implementation (must pass) and a
+# broken mutant (must fail).
+harness: checks/run_tests.m
+metrics_from: metrics.json
+
+checks:
+  - id: produced_implementation
+    kind: file_exists
+    description: The agent produced the MATLAB implementation.
+    pattern: kalman_update.m
+
+  - id: produced_test
+    kind: file_exists
+    description: The agent produced the runnable test the spec requires (R5).
+    pattern: test_kalman_update.m
+
+  - id: correct
+    kind: numeric_tolerance
+    description: Implementation output matches the reference filter within tolerance.
+    max_abs_error: 1.0e-6
+
+  - id: model_driven
+    kind: numeric_tolerance
+    description: On a hidden second model (other F, Q, H, R, x0, P0) the output still matches the reference.
+    metric: hidden_model_error
+    max_abs_error: 1.0e-6
+
+  - id: test_passes_reference
+    kind: threshold
+    description: The agent's test passes against the hidden correct implementation.
+    metric: test_passes_reference
+    min: 1
+
+  - id: test_catches_defect
+    kind: threshold
+    description: The agent's test fails against a broken implementation (it has teeth).
+    metric: test_catches_mutant
+    min: 1
+
+  - id: runtime_ms
+    kind: metric
+    description: Implementation runtime over the test vectors (ms).
+
+  - id: n_vectors
+    kind: metric
+    description: Number of measurement vectors processed.
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Bash
+      match: octave

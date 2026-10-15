@@ -1,0 +1,108 @@
+# ClaudeDemoKit Demo 8: Automated Verification.
+# Auto-discovered by DemoForge. Claude independently verifies the pre-release
+# kalman_update.m (v2.1.0 candidate) against CVT-EST-001 Rev B and writes a stronger
+# test. The planted defect: the implementation ignores model.x0 and model.P0, which
+# is invisible on the default model (x0 = 0, P0 = I) the existing test uses.
+# STORY.md: demo 8.
+
+id: verification
+title: Automated Verification
+order: 8
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+# The agent gets the spec, the implementation, the existing test, the vectors and
+# the model. It never sees checks/ (correct implementation, mutants, harness).
+inputs:
+  - input/kalman_filter_spec.md
+  - input/kalman_update.m
+  - input/test_kalman_existing.m
+  - input/test_vectors.csv
+  - input/model.json
+
+runtime: octave
+
+# Harness: runs the agent's test_kalman.m against a hidden correct implementation
+# (must pass) and nine hidden mutants (three that mishandle x0/P0, six other
+# recursion slips), and validates findings.json. See checks/run_tests.m.
+harness: checks/run_tests.m
+metrics_from: metrics.json
+
+checks:
+  - id: produced_report
+    kind: file_exists
+    description: The agent produced a verification report.
+    pattern: verification_report.md
+
+  - id: produced_tests
+    kind: file_exists
+    description: The agent produced the strengthened test.
+    pattern: test_kalman.m
+
+  - id: tests_pass_correct_impl
+    kind: threshold
+    description: The agent's test passes on a hidden correct implementation.
+    metric: passes_correct
+    min: 1
+
+  - id: tests_catch_init_defects
+    kind: threshold
+    description: The test fails on all three hidden implementations that ignore x0, P0 or both (the provided code is one).
+    metric: kills_init
+    min: 3
+
+  - id: tests_catch_other_mutants
+    kind: threshold
+    description: The test fails on at least 4 of 6 hidden implementations with other recursion errors (Q omitted or hard-coded, R hard-coded, wrong covariance update, prior recorded, update before predict).
+    metric: kills_other
+    min: 4
+
+  - id: findings_verdict
+    kind: threshold
+    description: findings.json reports a defect.
+    metric: findings_verdict_ok
+    min: 1
+
+  - id: findings_pins_defect
+    kind: threshold
+    description: findings.json blames R3 and cites the initialisation lines of kalman_update.m.
+    metric: findings_defect_pinned
+    min: 1
+
+  - id: findings_no_false_requirement
+    kind: threshold
+    description: No defect is blamed on R1, R2 or R4, which the implementation meets.
+    metric: findings_no_false_requirement
+    min: 1
+
+  - id: findings_citations_valid
+    kind: threshold
+    description: Every evidence citation in findings.json resolves to a real file and line.
+    metric: findings_citations_valid
+    min: 1
+
+  - id: report_names_initialisation
+    kind: contains
+    description: Secondary check; the report talks about initialisation.
+    file: verification_report.md
+    pattern: '(?i)(\bx0\b|\bp0\b|initiali[sz])'
+
+  - id: kills_other
+    kind: metric
+    description: Other mutants the agent's test caught (of 6).
+
+  - id: init_discrepancy
+    kind: metric
+    description: Provided vs correct output with a non-default initial state.
+
+  - id: default_discrepancy
+    kind: metric
+    description: Provided vs correct output on the default model (why the old test missed it).
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Bash
+      match: octave

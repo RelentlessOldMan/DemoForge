@@ -1,0 +1,12 @@
+{# A recorded tool call with no richer scene of its own. Named, not dramatised. #}
+{% extends "_base.html.j2" %}
+{% block stage %}
+  <style>
+    .tool { text-align: center; }
+    .tool__name { font-family: var(--mono); font-size: 62px; margin: 0; color: var(--accent); }
+  </style>
+  <div class="panel tool">
+    <p class="eyebrow">{{ label }}</p>
+    <p class="tool__name">{{ data.tool }}</p>
+  </div>
+{% endblock %}

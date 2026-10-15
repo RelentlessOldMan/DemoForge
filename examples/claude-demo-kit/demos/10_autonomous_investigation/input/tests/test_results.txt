@@ -1,0 +1,18 @@
+CVT estimator test run
+======================
+host:   build-agent-04
+date:   2026-09-27T21:46:12Z
+branch: release/v2.4
+commit: 7f3a19c
+octave: 11.3.0
+
+$ octave --no-gui tests/test_kalman.m
+test_kalman: 4/4 checks passed
+
+$ octave --no-gui tests/test_measurement_gate.m
+test_measurement_gate: 5/5 checks passed
+
+----------------------------------------
+TOTAL: 9 checks, 9 passed, 0 failed
+RESULT: PASS
+----------------------------------------

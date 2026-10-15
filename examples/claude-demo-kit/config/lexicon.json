@@ -1,0 +1,10 @@
+{
+  "_README": "Narration pronunciations for this content set. word -> IPA phonemes. The engine ships none of these on purpose: which words a narrator gets wrong is a property of the subject matter, not of DemoForge. Keys starting with _ are notes, not words.",
+  "_PRECEDENCE": "Writing [word](/ipa/) directly in a narration.md always beats this file.",
+  "_HOW_TO_ADD": "Check before adding, don't guess: PYTHONIOENCODING=utf-8 python -c \"from kokoro import KPipeline; p=KPipeline(lang_code='a', model=False); [print(ps) for _,ps,_ in p('your word')]\". Only add it if what comes back is actually wrong.",
+  "_AUDITED": "The kit's technical vocabulary was checked against Kokoro's own lexicon on 2026-10-06. It already says Python, NumPy, Octave, DemoForge, covariance, estimator, planar, volumetric, traceability, firmware, regression, vectorize, CSV, PDF and xlsx correctly. Only the two below were wrong. Keep this file small.",
+  "_CACHE": "Unlike the Books project, editing this file DOES invalidate the audio cache: the lexicon is applied before the text is hashed, so changed words re-synthesize on the next build.",
+
+  "matlab": "mˈætlˌæb",
+  "kalman": "kˈɑlmən"
+}

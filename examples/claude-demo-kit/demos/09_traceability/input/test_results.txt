@@ -1,0 +1,12 @@
+CVT estimator - unit test report
+suite    : test_kalman.m
+build    : v2.2.0  (release/v2.2 @ 4e1c9a7, build-agent-04)
+spec     : CVT-EST-001 Rev C
+runtime  : GNU Octave 11.3.0
+started  : 2026-03-10 14:22:07 UTC
+
+  T1 shape .......... PASS   0.05 s
+  T2 determinism .... PASS   0.09 s
+  T3 tracking ....... PASS   0.01 s
+
+3 passed, 0 failed, 0 skipped   (0.31 s)

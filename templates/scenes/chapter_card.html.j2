@@ -1,0 +1,41 @@
+{# Announces the next demo. Derived from the demo list, never hand-authored. #}
+{% extends "_card_base.html.j2" %}
+{% block card %}
+  <style>
+    .number {
+      font-family: var(--mono);
+      font-size: 150px;
+      line-height: 1;
+      color: var(--accent);
+      margin: 0;
+      letter-spacing: -0.03em;
+    }
+    .of {
+      font-family: var(--mono);
+      font-size: 22px;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin: 18px 0 0;
+    }
+    .title { font-size: 72px; font-weight: 600; margin: 0; letter-spacing: -0.015em; }
+    .slug { font-family: var(--mono); font-size: 22px; color: var(--muted); margin: 26px 0 0; }
+    .handoff {
+      font-size: 32px;
+      line-height: 1.45;
+      color: var(--text);
+      max-width: 1400px;
+      margin: 56px auto 0;
+      padding-top: 36px;
+      border-top: 1px solid var(--edge);
+    }
+  </style>
+  <p class="eyebrow">{{ data.set_title }}</p>
+  <p class="number">{{ "%02d" | format(data.number) }}</p>
+  <p class="of">of {{ data.total }}</p>
+  <div class="rule"></div>
+  <p class="title">{{ data.title }}</p>
+  <p class="slug">{{ data.demo_id }}</p>
+{% if data.caption %}
+  <p class="handoff">{{ data.caption }}</p>
+{% endif %}
+{% endblock %}

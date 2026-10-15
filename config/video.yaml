@@ -1,0 +1,21 @@
+# Pinned encoding flags (docs/video-pipeline.md §7). Output bytes are stable across
+# machines with the same ffmpeg build, so a rebuild with no input change is a no-op.
+#
+# A content set may override this file at <set>/config/video.yaml.
+
+width: 1920
+height: 1080
+fps: 30
+
+video_codec: libx264
+crf: 20
+preset: medium
+pix_fmt: yuv420p
+
+audio_codec: aac
+audio_bitrate: 160k
+sample_rate: 48000
+channels: 1
+
+# Written into every encode so the output carries no capture date and is byte-stable.
+deterministic_metadata: true

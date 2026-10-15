@@ -1,0 +1,38 @@
+# DemoForge engine tool-version pins (see docs/architecture.md §10).
+#
+# These are ENGINE defaults / machine-level pins. A content set may override
+# runtime paths in its own demoforge.toml [runtimes] table (e.g. the octave path
+# differs per machine). Keep engine defaults domain-agnostic.
+
+[python]
+# Data/analysis runtime + the interpreter DemoForge itself runs on.
+version = "3.12"
+packages = [
+  "numpy",
+  "scipy",
+  "pandas",
+  "matplotlib",
+  "openpyxl",
+]
+
+[claude_cli]
+# Headless agent execution for the `run` stage. The CLI updates itself, so this
+# is the version captures were last made with, not an enforced pin; every run
+# records the version it actually used in metadata.json (extra.claude_cli).
+version = "2.1.289"
+invoke = "claude -p --output-format stream-json --verbose"
+
+[octave]
+# GNU Octave for .m demos (no MATLAB license on this machine). Not on PATH.
+version = "11.3.0"
+cli = '%LOCALAPPDATA%\Programs\GNU Octave\Octave-11.3.0\mingw64\bin\octave-cli.exe'
+
+[pandoc]
+version = "3.1"
+
+[marp]
+# Slide rendering via npx; no global install pinned yet.
+invoke = "npx @marp-team/marp-cli"
+
+[ffmpeg]
+version = "7.0"

@@ -1,0 +1,85 @@
+# ClaudeDemoKit Demo 9 — Requirements Traceability.
+# Auto-discovered by DemoForge. Claude audits the v2.2.0 estimator (kalman_update.m,
+# test_kalman.m, test_results.txt) against CVT-EST-001 Rev C (R1-R6) and produces a
+# traceability matrix in a fixed column format. The truth (STORY.md): R6 is required
+# by Rev C but not implemented in v2.2.0; R3 is implemented but its initialization
+# from x0/P0 is never tested. Neither gap is stated in any input.
+
+id: traceability
+title: Requirements Traceability
+order: 9
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+# The agent gets the spec (Rev C), the requirements register, the implementation,
+# the test suite with the data it reads, and the recorded results.
+inputs:
+  - input/kalman_filter_spec.md
+  - input/requirements.csv
+  - input/kalman_update.m
+  - input/test_kalman.m
+  - input/test_vectors.csv
+  - input/model.json
+  - input/test_results.txt
+
+runtime: python
+
+# Independent harness: reads the agent's TraceabilityMatrix.xlsx (columns fixed by
+# the prompt) and checks each requirement's Implemented and Status values against
+# the known truth, and every cited test against test_kalman.m. Needs openpyxl.
+harness: checks/trace_check.py
+metrics_from: metrics.json
+
+checks:
+  - id: produced_matrix
+    kind: file_exists
+    description: The agent produced the traceability matrix workbook.
+    pattern: TraceabilityMatrix.xlsx
+
+  - id: traced_all_requirements
+    kind: threshold
+    description: All six requirements (R1-R6) have a row under the required header.
+    metric: n_requirements_traced
+    min: 6
+
+  - id: status_correct
+    kind: threshold
+    description: Every requirement's Status matches the audit truth (R1, R2, R4, R5 verified; R3 partial; R6 not implemented).
+    metric: status_correct
+    min: 6
+
+  - id: implemented_correct
+    kind: threshold
+    description: Every requirement's Implemented value is right (R6 is N, the rest Y).
+    metric: implemented_correct
+    min: 6
+
+  - id: flagged_missing_r6
+    kind: threshold
+    description: R6 is marked not implemented (Implemented N, Status NOT_IMPLEMENTED).
+    metric: r6_gap_flagged
+    min: 1
+
+  - id: cited_tests_exist
+    kind: threshold
+    description: Every cited test exists in test_kalman.m (no invented evidence).
+    metric: unknown_test_citations
+    max: 0
+
+  - id: citations_consistent
+    kind: threshold
+    description: Verified/partial rows cite real tests (T1 for R1/R2, T2 for R4); R6 cites none.
+    metric: citations_consistent
+    min: 1
+
+  - id: n_data_rows
+    kind: metric
+    description: Number of requirement rows in the matrix.
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Bash
+      match: python

@@ -1,0 +1,110 @@
+# ClaudeDemoKit Demo 6 — CSV Data Analysis and Visualization.
+# Auto-discovered by DemoForge. Claude analyses two months of nightly cvt-regression
+# results (STORY.md, "2026-06-01 ... 06-30 nightly data"): from the 2026-05-31 batch,
+# the first on v2.3.0, max_abs_error steps up from ~3e-10 to ~7e-8 (~170x by median)
+# and about 1 in 5 cases fail the 1e-7 limit, on both workers. estimator-02 being
+# ~17 % slower is the decoy; one isolated May outlier on estimator-02 sharpens it.
+#
+# The dataset is produced by checks/_generate_dataset.py (seed 20260531; provenance
+# only, never staged). There is no pass/fail column: the agent applies the 1e-7
+# criterion itself.
+
+id: csv-analysis
+title: CSV Data Analysis and Visualization
+order: 6
+enabled: true
+
+prompt: prompt.md
+narration: narration.md
+
+inputs:
+  - input/validation_runs.csv
+
+runtime: python
+
+# Independent harness: recomputes per-version statistics, the regression version and
+# start date, the factor and the affected workers from the CSV, then checks the
+# agent's findings.json against them. stdlib-only.
+harness: checks/analyze.py
+metrics_from: metrics.json
+
+checks:
+  - id: produced_plot
+    kind: file_exists
+    description: The agent produced a visualization.
+    pattern: "*.png"
+
+  - id: produced_report
+    kind: file_exists
+    description: The agent produced a written analysis.
+    pattern: analysis.md
+
+  - id: report_names_version
+    kind: contains
+    description: The write-up names v2.3.0 (cheap secondary check).
+    file: analysis.md
+    pattern: 'v2\.3\.0'
+
+  - id: findings_valid
+    kind: threshold
+    description: findings.json follows the requested schema.
+    metric: findings_valid
+    min: 1
+
+  - id: start_date_ok
+    kind: threshold
+    description: Regression start date matches the data (first affected nightly).
+    metric: start_date_ok
+    min: 1
+
+  - id: version_ok
+    kind: threshold
+    description: Culprit and baseline are the regressed version and the one before it.
+    metric: version_ok
+    min: 1
+
+  - id: factor_ok
+    kind: threshold
+    description: Magnitude factor within 20 % of the recomputed median ratio.
+    metric: factor_ok
+    min: 1
+
+  - id: workers_ok
+    kind: threshold
+    description: Affected workers are all workers (not just the slow one).
+    metric: workers_ok
+    min: 1
+
+  - id: attribution_ok
+    kind: threshold
+    description: The regression is attributed to the version, not the worker decoy.
+    metric: attribution_ok
+    min: 1
+
+  - id: per_version_ok
+    kind: threshold
+    description: Per-version runs, mean, median and fail rate match a recomputation.
+    metric: per_version_ok
+    min: 1
+
+  - id: regression_version
+    kind: metric
+    description: Version where the error steps up (ground truth from the data).
+
+  - id: error_factor
+    kind: metric
+    description: Median error on the regressed version over the version before it.
+
+  - id: worker_runtime_ratio
+    kind: metric
+    description: Runtime ratio between workers (the benign decoy).
+
+  - id: n_rows
+    kind: metric
+    description: Number of test-case results in the dataset.
+
+presentation:
+  enabled: true
+  highlights:
+    - tool: Bash
+      match: python

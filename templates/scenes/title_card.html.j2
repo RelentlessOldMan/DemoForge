@@ -1,0 +1,28 @@
+{# Opening card: what this content set is. #}
+{% extends "_card_base.html.j2" %}
+{% block card %}
+  <style>
+    .title { font-size: 104px; font-weight: 600; letter-spacing: -0.02em; margin: 0; }
+    .subtitle { font-size: 44px; color: var(--accent); margin: 28px 0 0; font-weight: 400; }
+    .blurb { font-size: 28px; color: var(--muted); margin: 0; line-height: 1.5; }
+    .count {
+      font-family: var(--mono);
+      font-size: 22px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 40px 0 0;
+    }
+  </style>
+  <p class="title">{{ data.title }}</p>
+{% if data.subtitle %}
+  <p class="subtitle">{{ data.subtitle }}</p>
+{% endif %}
+  <div class="rule"></div>
+{% if data.description %}
+  <p class="blurb">{{ data.description }}</p>
+{% endif %}
+  <p class="count">
+    {{ data.demo_count }} captured demo{{ "" if data.demo_count == 1 else "s" }}
+  </p>
+{% endblock %}

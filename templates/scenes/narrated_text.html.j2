@@ -1,0 +1,25 @@
+{# Claude's own visible explanation. Never model reasoning — only what it said. #}
+{% extends "_base.html.j2" %}
+{% block stage %}
+  <style>
+    .say { display: flex; gap: 32px; align-items: flex-start; }
+    .say__who {
+      flex: none;
+      font-family: var(--mono);
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      border: 1px solid rgba(103, 232, 249, 0.4);
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-top: 6px;
+    }
+  </style>
+  <div class="panel say">
+    <div class="say__who">CLAUDE</div>
+    <div class="say__body">
+      <div class="prose md fit {% if data.chars > 700 %}prose--dense{% endif %}">{{ data.html | safe }}</div>
+      {%- if data.pages and data.pages > 1 %}<p class="page">part {{ data.page }} of {{ data.pages }}</p>{% endif %}
+    </div>
+  </div>
+{% endblock %}

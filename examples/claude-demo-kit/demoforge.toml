@@ -1,0 +1,59 @@
+# ClaudeDemoKit — DemoForge content-set configuration.
+# DemoForge reads this to build the set. Demos themselves are auto-discovered
+# from demos/*/demo.yaml; this file holds set-level presentation defaults only.
+
+[set]
+id = "claude-demo-kit"
+title = "ClaudeDemoKit"
+subtitle = "Claude doing real engineering work"
+description = "A DemoForge content set demonstrating Claude across engineering workflows."
+
+[presentation]
+# Intro/outro slides generated for the whole set (demo sections are derived).
+intro = true
+outro = true
+# Demo order follows each demo.yaml `order`; this is a tiebreak/override if needed.
+
+[narration]
+enabled = true
+# Kokoro-82M, run locally on the GPU by whichever interpreter has it installed.
+# Falls back to timed silence (and says so) on a machine without it.
+provider = "kokoro"         # pluggable; see docs/video-pipeline.md §6
+voice = "af_heart"
+
+[capture]
+# Directories prepended to the captured agent's PATH. These are per-machine.
+#
+# Why this is needed: a Windows process inherits its environment when it starts
+# and never refreshes it, so a tool installed after the launching shell started
+# is invisible to DemoForge and to every agent it spawns. Demos 7 and 10 give the
+# agent a PDF, and Claude's Read tool rasterizes PDFs with `pdftoppm` — without
+# it those captures fail for a stale-PATH reason that looks like the demo being
+# too hard. Pinning the directory here makes capture independent of how the
+# terminal happened to be launched.
+#
+# A directory that doesn't exist is ignored, so this is safe to carry across
+# machines; a demo's `requires` is what actually reports a tool as missing.
+# Set per machine in demoforge.local.toml (git-ignored) beside this file:
+#   [capture]
+#   path_prepend = ['C:\tools\poppler\Library\bin']
+#   sandbox_root = 'C:\DemoForgeSandbox'   # where the agent works; empty = temp dir
+path_prepend = []
+
+[display]
+# Local path prefixes rewritten in everything rendered (records, slides, video),
+# and in the bundle approve freezes, so committed files never hold the real paths.
+# The run under runs/ keeps them.
+# One rule covers C:\x, C:/x, escaped C:\\x and Git Bash /c/x spellings.
+paths = { 'C:\Playground' = 'G:\Willikers', 'C:\DemoForgeSandbox' = 'G:\Willikers\sandbox' }
+# Whoever runs DemoForge, their own home folder is shown as this.
+home = 'C:\Users\you'
+
+[runtimes]
+# Tool pins for this set (see docs/architecture.md §10). Paths may be overridden
+# per-machine; keep the engine defaults domain-agnostic.
+# Not on PATH here? Point at it in demoforge.local.toml:
+#   [runtimes]
+#   octave = 'C:\tools\Octave\mingw64\bin\octave-cli.exe'
+octave = "octave-cli"
+python = "python"

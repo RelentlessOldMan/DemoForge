@@ -1,0 +1,387 @@
+{
+ "plan": {
+  "max_pos_error_m": 0.5,
+  "min_pass_rate": 0.95,
+  "max_runtime_ms": 50.0
+ },
+ "limit_cell": [
+  "Criteria",
+  "B2"
+ ],
+ "input_layout": {
+  "Criteria": [
+   4,
+   4
+  ],
+  "Runs": [
+   41,
+   8
+  ],
+  "Summary": [
+   13,
+   2
+  ]
+ },
+ "runs": [
+  {
+   "run_id": "VR-1901",
+   "date": "2026-05-20",
+   "scenario": "maneuver",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.887,
+   "runtime": 34.7
+  },
+  {
+   "run_id": "VR-1902",
+   "date": "2026-05-20",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.224,
+   "runtime": 37.2
+  },
+  {
+   "run_id": "VR-1903",
+   "date": "2026-05-20",
+   "scenario": "maneuver",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.75,
+   "runtime": 32.5
+  },
+  {
+   "run_id": "VR-1904",
+   "date": "2026-05-20",
+   "scenario": "maneuver",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 1.003,
+   "runtime": 37.8
+  },
+  {
+   "run_id": "VR-1905",
+   "date": "2026-05-20",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.208,
+   "runtime": 33.9
+  },
+  {
+   "run_id": "VR-1906",
+   "date": "2026-05-21",
+   "scenario": "turn",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.339,
+   "runtime": 35.5
+  },
+  {
+   "run_id": "VR-1907",
+   "date": "2026-05-21",
+   "scenario": "turn",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.437,
+   "runtime": 36.0
+  },
+  {
+   "run_id": "VR-1908",
+   "date": "2026-05-21",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.208,
+   "runtime": 36.8
+  },
+  {
+   "run_id": "VR-1909",
+   "date": "2026-05-21",
+   "scenario": "turn",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.366,
+   "runtime": 31.9
+  },
+  {
+   "run_id": "VR-1910",
+   "date": "2026-05-21",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.166,
+   "runtime": 37.1
+  },
+  {
+   "run_id": "VR-1911",
+   "date": "2026-05-22",
+   "scenario": "stop-go",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.228,
+   "runtime": 30.6
+  },
+  {
+   "run_id": "VR-1912",
+   "date": "2026-05-22",
+   "scenario": "crossing",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.255,
+   "runtime": 35.7
+  },
+  {
+   "run_id": "VR-1913",
+   "date": "2026-05-22",
+   "scenario": "crossing",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.23,
+   "runtime": 33.0
+  },
+  {
+   "run_id": "VR-1914",
+   "date": "2026-05-22",
+   "scenario": "crossing",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.324,
+   "runtime": 34.9
+  },
+  {
+   "run_id": "VR-1915",
+   "date": "2026-05-22",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.224,
+   "runtime": 33.4
+  },
+  {
+   "run_id": "VR-1916",
+   "date": "2026-05-23",
+   "scenario": "crossing",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.173,
+   "runtime": 37.4
+  },
+  {
+   "run_id": "VR-1917",
+   "date": "2026-05-23",
+   "scenario": "maneuver",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.931,
+   "runtime": 33.0
+  },
+  {
+   "run_id": "VR-1918",
+   "date": "2026-05-23",
+   "scenario": "crossing",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.214,
+   "runtime": 42.8
+  },
+  {
+   "run_id": "VR-1919",
+   "date": "2026-05-23",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.225,
+   "runtime": 35.2
+  },
+  {
+   "run_id": "VR-1920",
+   "date": "2026-05-23",
+   "scenario": "stop-go",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.266,
+   "runtime": 36.9
+  },
+  {
+   "run_id": "VR-1921",
+   "date": "2026-05-24",
+   "scenario": "crossing",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.178,
+   "runtime": 30.5
+  },
+  {
+   "run_id": "VR-1922",
+   "date": "2026-05-24",
+   "scenario": "turn",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.318,
+   "runtime": 40.6
+  },
+  {
+   "run_id": "VR-1923",
+   "date": "2026-05-24",
+   "scenario": "turn",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.233,
+   "runtime": 31.9
+  },
+  {
+   "run_id": "VR-1924",
+   "date": "2026-05-24",
+   "scenario": "turn",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.381,
+   "runtime": 42.6
+  },
+  {
+   "run_id": "VR-1925",
+   "date": "2026-05-24",
+   "scenario": "stop-go",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.244,
+   "runtime": 31.4
+  },
+  {
+   "run_id": "VR-1926",
+   "date": "2026-05-25",
+   "scenario": "turn",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.377,
+   "runtime": 43.3
+  },
+  {
+   "run_id": "VR-1927",
+   "date": "2026-05-25",
+   "scenario": "turn",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.243,
+   "runtime": 34.1
+  },
+  {
+   "run_id": "VR-1928",
+   "date": "2026-05-25",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.14,
+   "runtime": 37.5
+  },
+  {
+   "run_id": "VR-1929",
+   "date": "2026-05-25",
+   "scenario": "maneuver",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.837,
+   "runtime": 31.1
+  },
+  {
+   "run_id": "VR-1930",
+   "date": "2026-05-25",
+   "scenario": "crossing",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.292,
+   "runtime": 38.1
+  },
+  {
+   "run_id": "VR-1931",
+   "date": "2026-05-26",
+   "scenario": "stop-go",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.309,
+   "runtime": 34.9
+  },
+  {
+   "run_id": "VR-1932",
+   "date": "2026-05-26",
+   "scenario": "maneuver",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.786,
+   "runtime": 37.0
+  },
+  {
+   "run_id": "VR-1933",
+   "date": "2026-05-26",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.09,
+   "runtime": 36.4
+  },
+  {
+   "run_id": "VR-1934",
+   "date": "2026-05-26",
+   "scenario": "stop-go",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.306,
+   "runtime": 42.2
+  },
+  {
+   "run_id": "VR-1935",
+   "date": "2026-05-26",
+   "scenario": "turn",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.5,
+   "runtime": 31.1
+  },
+  {
+   "run_id": "VR-1936",
+   "date": "2026-05-27",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.099,
+   "runtime": 39.9
+  },
+  {
+   "run_id": "VR-1937",
+   "date": "2026-05-27",
+   "scenario": "stop-go",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.379,
+   "runtime": 33.6
+  },
+  {
+   "run_id": "VR-1938",
+   "date": "2026-05-27",
+   "scenario": "stop-go",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.362,
+   "runtime": 38.5
+  },
+  {
+   "run_id": "VR-1939",
+   "date": "2026-05-27",
+   "scenario": "cruise",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-01",
+   "error": 0.162,
+   "runtime": 32.1
+  },
+  {
+   "run_id": "VR-1940",
+   "date": "2026-05-27",
+   "scenario": "crossing",
+   "build": "v2.3.0-rc1",
+   "worker": "estimator-02",
+   "error": 0.308,
+   "runtime": 38.3
+  }
+ ]
+}

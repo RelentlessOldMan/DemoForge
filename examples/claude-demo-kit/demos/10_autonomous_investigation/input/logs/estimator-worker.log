@@ -1,0 +1,384 @@
+2026-09-26T04:02:58Z INFO  [supervisor] campaign VAL-2026-09 starting (build v2.4.1, baseline v2.3.2, 60 runs)
+2026-09-26T04:02:58Z INFO  [supervisor] config estimator_config.json version=2.4.1 gate.enabled=true gate.confidence=0.99
+2026-09-26T04:03:02Z INFO  [supervisor] 3 workers available: estimator-01, estimator-02, estimator-03
+2026-09-26T04:03:11Z INFO  [worker:estimator-01] run=VR-2101 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:03:14Z WARN  [gate] run=VR-2101 k=501 rejected d2=6.208
+2026-09-26T04:03:22Z WARN  [gate] run=VR-2101 k=653 rejected d2=6.614
+2026-09-26T04:03:30Z WARN  [gate] run=VR-2101 k=1008 rejected d2=8.694
+2026-09-26T04:03:38Z WARN  [gate] run=VR-2101 rejection rate 20.47% above alert level 10.0%
+2026-09-26T04:03:41Z INFO  [gate] run=VR-2101 mode=doppler complete: measurements=1500 rejected=307 (20.47%)
+2026-09-26T04:03:42Z INFO  [worker:estimator-01] run=VR-2101 finished (28.4 ms)
+2026-09-26T04:05:21Z INFO  [worker:estimator-02] run=VR-2102 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:05:24Z WARN  [gate] run=VR-2102 k=37 rejected d2=6.702
+2026-09-26T04:05:32Z WARN  [gate] run=VR-2102 k=247 rejected d2=7.835
+2026-09-26T04:05:40Z WARN  [gate] run=VR-2102 k=1466 rejected d2=6.337
+2026-09-26T04:05:48Z WARN  [gate] run=VR-2102 rejection rate 18.40% above alert level 10.0%
+2026-09-26T04:05:51Z INFO  [gate] run=VR-2102 mode=doppler complete: measurements=1500 rejected=276 (18.40%)
+2026-09-26T04:05:52Z INFO  [worker:estimator-02] run=VR-2102 finished (39.3 ms)
+2026-09-26T04:07:45Z INFO  [worker:estimator-03] run=VR-2103 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:07:48Z WARN  [gate] run=VR-2103 k=489 rejected d2=6.988
+2026-09-26T04:07:56Z WARN  [gate] run=VR-2103 k=1209 rejected d2=9.943
+2026-09-26T04:08:04Z WARN  [gate] run=VR-2103 k=1483 rejected d2=6.620
+2026-09-26T04:08:12Z WARN  [gate] run=VR-2103 rejection rate 19.47% above alert level 10.0%
+2026-09-26T04:08:15Z INFO  [gate] run=VR-2103 mode=doppler complete: measurements=1500 rejected=292 (19.47%)
+2026-09-26T04:08:16Z INFO  [worker:estimator-03] run=VR-2103 finished (26.2 ms)
+2026-09-26T04:09:37Z INFO  [worker:estimator-01] run=VR-2104 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T04:09:40Z WARN  [gate] run=VR-2104 k=588 rejected d2=7.544
+2026-09-26T04:09:48Z WARN  [gate] run=VR-2104 k=748 rejected d2=12.986
+2026-09-26T04:09:56Z WARN  [gate] run=VR-2104 k=841 rejected d2=7.031
+2026-09-26T04:10:07Z INFO  [gate] run=VR-2104 mode=planar complete: measurements=1500 rejected=75 (5.00%)
+2026-09-26T04:10:08Z INFO  [worker:estimator-01] run=VR-2104 finished (26.4 ms)
+2026-09-26T04:11:59Z INFO  [worker:estimator-02] run=VR-2105 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:12:02Z WARN  [gate] run=VR-2105 k=932 rejected d2=9.288
+2026-09-26T04:12:10Z WARN  [gate] run=VR-2105 k=1185 rejected d2=6.340
+2026-09-26T04:12:18Z WARN  [gate] run=VR-2105 k=1376 rejected d2=6.873
+2026-09-26T04:12:26Z WARN  [gate] run=VR-2105 rejection rate 20.33% above alert level 10.0%
+2026-09-26T04:12:29Z INFO  [gate] run=VR-2105 mode=doppler complete: measurements=1500 rejected=305 (20.33%)
+2026-09-26T04:12:30Z INFO  [worker:estimator-02] run=VR-2105 finished (30.2 ms)
+2026-09-26T04:14:02Z INFO  [worker:estimator-03] run=VR-2106 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:14:05Z WARN  [gate] run=VR-2106 k=830 rejected d2=7.951
+2026-09-26T04:14:13Z WARN  [gate] run=VR-2106 k=1283 rejected d2=6.005
+2026-09-26T04:14:21Z WARN  [gate] run=VR-2106 k=1361 rejected d2=6.215
+2026-09-26T04:14:29Z WARN  [gate] run=VR-2106 rejection rate 20.13% above alert level 10.0%
+2026-09-26T04:14:32Z INFO  [gate] run=VR-2106 mode=doppler complete: measurements=1500 rejected=302 (20.13%)
+2026-09-26T04:14:33Z INFO  [worker:estimator-03] run=VR-2106 finished (27.3 ms)
+2026-09-26T04:15:55Z INFO  [worker:estimator-01] run=VR-2107 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T04:15:58Z WARN  [gate] run=VR-2107 k=321 rejected d2=9.570
+2026-09-26T04:16:06Z WARN  [gate] run=VR-2107 k=748 rejected d2=8.780
+2026-09-26T04:16:14Z WARN  [gate] run=VR-2107 k=1359 rejected d2=9.070
+2026-09-26T04:16:25Z INFO  [gate] run=VR-2107 mode=planar complete: measurements=1500 rejected=78 (5.20%)
+2026-09-26T04:16:26Z INFO  [worker:estimator-01] run=VR-2107 finished (33.9 ms)
+2026-09-26T04:18:32Z INFO  [worker:estimator-02] run=VR-2108 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T04:18:35Z WARN  [gate] run=VR-2108 k=247 rejected d2=9.631
+2026-09-26T04:18:43Z WARN  [gate] run=VR-2108 k=901 rejected d2=8.035
+2026-09-26T04:18:51Z WARN  [gate] run=VR-2108 k=1225 rejected d2=7.946
+2026-09-26T04:19:02Z INFO  [gate] run=VR-2108 mode=planar complete: measurements=1500 rejected=65 (4.33%)
+2026-09-26T04:19:03Z INFO  [worker:estimator-02] run=VR-2108 finished (38.0 ms)
+2026-09-26T04:20:35Z INFO  [worker:estimator-03] run=VR-2109 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T04:20:38Z WARN  [gate] run=VR-2109 k=832 rejected d2=8.647
+2026-09-26T04:20:46Z WARN  [gate] run=VR-2109 k=962 rejected d2=7.656
+2026-09-26T04:20:54Z WARN  [gate] run=VR-2109 k=1094 rejected d2=8.038
+2026-09-26T04:21:05Z INFO  [gate] run=VR-2109 mode=planar complete: measurements=1500 rejected=76 (5.07%)
+2026-09-26T04:21:06Z INFO  [worker:estimator-03] run=VR-2109 finished (30.6 ms)
+2026-09-26T04:22:49Z INFO  [worker:estimator-01] run=VR-2110 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T04:22:52Z WARN  [gate] run=VR-2110 k=222 rejected d2=9.501
+2026-09-26T04:23:00Z WARN  [gate] run=VR-2110 k=764 rejected d2=7.156
+2026-09-26T04:23:08Z WARN  [gate] run=VR-2110 k=1208 rejected d2=7.259
+2026-09-26T04:23:19Z INFO  [gate] run=VR-2110 mode=planar complete: measurements=1500 rejected=77 (5.13%)
+2026-09-26T04:23:20Z INFO  [worker:estimator-01] run=VR-2110 finished (29.1 ms)
+2026-09-26T04:24:38Z INFO  [worker:estimator-02] run=VR-2111 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T04:24:41Z WARN  [gate] run=VR-2111 k=141 rejected d2=6.010
+2026-09-26T04:24:49Z WARN  [gate] run=VR-2111 k=293 rejected d2=6.401
+2026-09-26T04:24:57Z WARN  [gate] run=VR-2111 k=911 rejected d2=6.876
+2026-09-26T04:25:08Z INFO  [gate] run=VR-2111 mode=planar complete: measurements=1500 rejected=77 (5.13%)
+2026-09-26T04:25:09Z INFO  [worker:estimator-02] run=VR-2111 finished (33.6 ms)
+2026-09-26T04:27:10Z INFO  [worker:estimator-03] run=VR-2112 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T04:27:13Z WARN  [gate] run=VR-2112 k=649 rejected d2=7.043
+2026-09-26T04:27:21Z WARN  [gate] run=VR-2112 k=703 rejected d2=6.204
+2026-09-26T04:27:29Z WARN  [gate] run=VR-2112 k=1325 rejected d2=6.314
+2026-09-26T04:27:40Z INFO  [gate] run=VR-2112 mode=planar complete: measurements=1500 rejected=81 (5.40%)
+2026-09-26T04:27:41Z INFO  [worker:estimator-03] run=VR-2112 finished (26.3 ms)
+2026-09-26T04:28:54Z INFO  [worker:estimator-01] run=VR-2113 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:28:57Z WARN  [gate] run=VR-2113 k=305 rejected d2=7.461
+2026-09-26T04:29:05Z WARN  [gate] run=VR-2113 k=532 rejected d2=10.971
+2026-09-26T04:29:13Z WARN  [gate] run=VR-2113 k=825 rejected d2=20.570
+2026-09-26T04:29:21Z WARN  [gate] run=VR-2113 rejection rate 21.13% above alert level 10.0%
+2026-09-26T04:29:24Z INFO  [gate] run=VR-2113 mode=doppler complete: measurements=1500 rejected=317 (21.13%)
+2026-09-26T04:29:25Z INFO  [worker:estimator-01] run=VR-2113 finished (31.6 ms)
+2026-09-26T04:31:30Z INFO  [worker:estimator-02] run=VR-2114 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:31:33Z WARN  [gate] run=VR-2114 k=75 rejected d2=9.759
+2026-09-26T04:31:41Z WARN  [gate] run=VR-2114 k=156 rejected d2=6.141
+2026-09-26T04:31:49Z WARN  [gate] run=VR-2114 k=444 rejected d2=7.026
+2026-09-26T04:31:57Z WARN  [gate] run=VR-2114 rejection rate 20.73% above alert level 10.0%
+2026-09-26T04:32:00Z INFO  [gate] run=VR-2114 mode=doppler complete: measurements=1500 rejected=311 (20.73%)
+2026-09-26T04:32:01Z INFO  [worker:estimator-02] run=VR-2114 finished (38.3 ms)
+2026-09-26T04:33:42Z INFO  [worker:estimator-03] run=VR-2115 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T04:33:45Z WARN  [gate] run=VR-2115 k=119 rejected d2=6.725
+2026-09-26T04:33:53Z WARN  [gate] run=VR-2115 k=538 rejected d2=7.124
+2026-09-26T04:34:01Z WARN  [gate] run=VR-2115 k=1216 rejected d2=7.181
+2026-09-26T04:34:12Z INFO  [gate] run=VR-2115 mode=planar complete: measurements=1500 rejected=79 (5.27%)
+2026-09-26T04:34:13Z INFO  [worker:estimator-03] run=VR-2115 finished (26.7 ms)
+2026-09-26T04:36:21Z INFO  [worker:estimator-01] run=VR-2116 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:36:24Z WARN  [gate] run=VR-2116 k=825 rejected d2=7.295
+2026-09-26T04:36:32Z WARN  [gate] run=VR-2116 k=836 rejected d2=8.662
+2026-09-26T04:36:40Z WARN  [gate] run=VR-2116 k=848 rejected d2=8.285
+2026-09-26T04:36:48Z WARN  [gate] run=VR-2116 rejection rate 19.80% above alert level 10.0%
+2026-09-26T04:36:51Z INFO  [gate] run=VR-2116 mode=doppler complete: measurements=1500 rejected=297 (19.80%)
+2026-09-26T04:36:52Z INFO  [worker:estimator-01] run=VR-2116 finished (33.8 ms)
+2026-09-26T04:38:58Z INFO  [worker:estimator-02] run=VR-2117 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:39:01Z WARN  [gate] run=VR-2117 k=148 rejected d2=11.412
+2026-09-26T04:39:09Z WARN  [gate] run=VR-2117 k=417 rejected d2=6.811
+2026-09-26T04:39:17Z WARN  [gate] run=VR-2117 k=1441 rejected d2=11.427
+2026-09-26T04:39:25Z WARN  [gate] run=VR-2117 rejection rate 18.40% above alert level 10.0%
+2026-09-26T04:39:28Z INFO  [gate] run=VR-2117 mode=doppler complete: measurements=1500 rejected=276 (18.40%)
+2026-09-26T04:39:29Z INFO  [worker:estimator-02] run=VR-2117 finished (32.7 ms)
+2026-09-26T04:41:25Z INFO  [worker:estimator-03] run=VR-2118 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:41:28Z WARN  [gate] run=VR-2118 k=233 rejected d2=6.219
+2026-09-26T04:41:36Z WARN  [gate] run=VR-2118 k=1116 rejected d2=6.239
+2026-09-26T04:41:44Z WARN  [gate] run=VR-2118 k=1375 rejected d2=7.817
+2026-09-26T04:41:52Z WARN  [gate] run=VR-2118 rejection rate 20.67% above alert level 10.0%
+2026-09-26T04:41:55Z INFO  [gate] run=VR-2118 mode=doppler complete: measurements=1500 rejected=310 (20.67%)
+2026-09-26T04:41:56Z INFO  [worker:estimator-03] run=VR-2118 finished (28.6 ms)
+2026-09-26T04:43:55Z INFO  [worker:estimator-01] run=VR-2119 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:43:58Z WARN  [gate] run=VR-2119 k=445 rejected d2=9.468
+2026-09-26T04:44:06Z WARN  [gate] run=VR-2119 k=752 rejected d2=7.580
+2026-09-26T04:44:14Z WARN  [gate] run=VR-2119 k=871 rejected d2=6.111
+2026-09-26T04:44:22Z WARN  [gate] run=VR-2119 rejection rate 19.33% above alert level 10.0%
+2026-09-26T04:44:25Z INFO  [gate] run=VR-2119 mode=doppler complete: measurements=1500 rejected=290 (19.33%)
+2026-09-26T04:44:26Z INFO  [worker:estimator-01] run=VR-2119 finished (28.7 ms)
+2026-09-26T04:46:04Z INFO  [worker:estimator-02] run=VR-2120 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T04:46:07Z WARN  [gate] run=VR-2120 k=540 rejected d2=11.996
+2026-09-26T04:46:15Z WARN  [gate] run=VR-2120 k=1302 rejected d2=6.576
+2026-09-26T04:46:23Z WARN  [gate] run=VR-2120 k=1440 rejected d2=6.022
+2026-09-26T04:46:34Z INFO  [gate] run=VR-2120 mode=planar complete: measurements=1500 rejected=75 (5.00%)
+2026-09-26T04:46:35Z INFO  [worker:estimator-02] run=VR-2120 finished (38.7 ms)
+2026-09-26T04:48:38Z INFO  [worker:estimator-03] run=VR-2121 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T04:48:41Z WARN  [gate] run=VR-2121 k=335 rejected d2=9.595
+2026-09-26T04:48:49Z WARN  [gate] run=VR-2121 k=558 rejected d2=16.317
+2026-09-26T04:48:57Z WARN  [gate] run=VR-2121 k=759 rejected d2=6.360
+2026-09-26T04:49:08Z INFO  [gate] run=VR-2121 mode=planar complete: measurements=1500 rejected=77 (5.13%)
+2026-09-26T04:49:09Z INFO  [worker:estimator-03] run=VR-2121 finished (27.5 ms)
+2026-09-26T04:51:09Z INFO  [worker:estimator-01] run=VR-2122 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:51:12Z WARN  [gate] run=VR-2122 k=76 rejected d2=6.363
+2026-09-26T04:51:20Z WARN  [gate] run=VR-2122 k=827 rejected d2=7.896
+2026-09-26T04:51:28Z WARN  [gate] run=VR-2122 k=1133 rejected d2=8.917
+2026-09-26T04:51:36Z WARN  [gate] run=VR-2122 rejection rate 20.40% above alert level 10.0%
+2026-09-26T04:51:39Z INFO  [gate] run=VR-2122 mode=doppler complete: measurements=1500 rejected=306 (20.40%)
+2026-09-26T04:51:40Z INFO  [worker:estimator-01] run=VR-2122 finished (26.2 ms)
+2026-09-26T04:53:46Z INFO  [worker:estimator-02] run=VR-2123 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T04:53:49Z WARN  [gate] run=VR-2123 k=736 rejected d2=6.349
+2026-09-26T04:53:57Z WARN  [gate] run=VR-2123 k=751 rejected d2=7.793
+2026-09-26T04:54:05Z WARN  [gate] run=VR-2123 k=986 rejected d2=6.993
+2026-09-26T04:54:16Z INFO  [gate] run=VR-2123 mode=planar complete: measurements=1500 rejected=86 (5.73%)
+2026-09-26T04:54:17Z INFO  [worker:estimator-02] run=VR-2123 finished (34.9 ms)
+2026-09-26T04:55:26Z INFO  [worker:estimator-03] run=VR-2124 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T04:55:29Z WARN  [gate] run=VR-2124 k=440 rejected d2=6.056
+2026-09-26T04:55:37Z WARN  [gate] run=VR-2124 k=692 rejected d2=6.538
+2026-09-26T04:55:45Z WARN  [gate] run=VR-2124 k=1465 rejected d2=8.685
+2026-09-26T04:55:56Z INFO  [gate] run=VR-2124 mode=planar complete: measurements=1500 rejected=70 (4.67%)
+2026-09-26T04:55:57Z INFO  [worker:estimator-03] run=VR-2124 finished (33.1 ms)
+2026-09-26T04:57:14Z INFO  [worker:estimator-01] run=VR-2125 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T04:57:17Z WARN  [gate] run=VR-2125 k=76 rejected d2=6.189
+2026-09-26T04:57:25Z WARN  [gate] run=VR-2125 k=784 rejected d2=7.472
+2026-09-26T04:57:33Z WARN  [gate] run=VR-2125 k=910 rejected d2=6.801
+2026-09-26T04:57:44Z INFO  [gate] run=VR-2125 mode=planar complete: measurements=1500 rejected=80 (5.33%)
+2026-09-26T04:57:45Z INFO  [worker:estimator-01] run=VR-2125 finished (30.4 ms)
+2026-09-26T04:58:57Z INFO  [worker:estimator-02] run=VR-2126 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T04:59:00Z WARN  [gate] run=VR-2126 k=145 rejected d2=6.817
+2026-09-26T04:59:08Z WARN  [gate] run=VR-2126 k=345 rejected d2=11.492
+2026-09-26T04:59:16Z WARN  [gate] run=VR-2126 k=1067 rejected d2=7.986
+2026-09-26T04:59:24Z WARN  [gate] run=VR-2126 rejection rate 19.80% above alert level 10.0%
+2026-09-26T04:59:27Z INFO  [gate] run=VR-2126 mode=doppler complete: measurements=1500 rejected=297 (19.80%)
+2026-09-26T04:59:28Z INFO  [worker:estimator-02] run=VR-2126 finished (37.5 ms)
+2026-09-26T05:00:42Z INFO  [worker:estimator-03] run=VR-2127 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:00:45Z WARN  [gate] run=VR-2127 k=300 rejected d2=7.303
+2026-09-26T05:00:53Z WARN  [gate] run=VR-2127 k=344 rejected d2=8.725
+2026-09-26T05:01:01Z WARN  [gate] run=VR-2127 k=1494 rejected d2=10.315
+2026-09-26T05:01:12Z INFO  [gate] run=VR-2127 mode=planar complete: measurements=1500 rejected=69 (4.60%)
+2026-09-26T05:01:13Z INFO  [worker:estimator-03] run=VR-2127 finished (31.6 ms)
+2026-09-26T05:02:48Z INFO  [worker:estimator-01] run=VR-2128 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:02:51Z WARN  [gate] run=VR-2128 k=625 rejected d2=6.766
+2026-09-26T05:02:59Z WARN  [gate] run=VR-2128 k=680 rejected d2=8.077
+2026-09-26T05:03:07Z WARN  [gate] run=VR-2128 k=1191 rejected d2=7.177
+2026-09-26T05:03:18Z INFO  [gate] run=VR-2128 mode=planar complete: measurements=1500 rejected=81 (5.40%)
+2026-09-26T05:03:19Z INFO  [worker:estimator-01] run=VR-2128 finished (30.5 ms)
+2026-09-26T05:04:41Z INFO  [worker:estimator-02] run=VR-2129 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:04:44Z WARN  [gate] run=VR-2129 k=773 rejected d2=6.985
+2026-09-26T05:04:52Z WARN  [gate] run=VR-2129 k=936 rejected d2=6.005
+2026-09-26T05:05:00Z WARN  [gate] run=VR-2129 k=1407 rejected d2=6.006
+2026-09-26T05:05:11Z INFO  [gate] run=VR-2129 mode=planar complete: measurements=1500 rejected=70 (4.67%)
+2026-09-26T05:05:12Z INFO  [worker:estimator-02] run=VR-2129 finished (37.3 ms)
+2026-09-26T05:07:15Z INFO  [worker:estimator-03] run=VR-2130 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:07:18Z WARN  [gate] run=VR-2130 k=203 rejected d2=8.141
+2026-09-26T05:07:26Z WARN  [gate] run=VR-2130 k=243 rejected d2=8.943
+2026-09-26T05:07:34Z WARN  [gate] run=VR-2130 k=665 rejected d2=7.195
+2026-09-26T05:07:45Z INFO  [gate] run=VR-2130 mode=planar complete: measurements=1500 rejected=77 (5.13%)
+2026-09-26T05:07:46Z INFO  [worker:estimator-03] run=VR-2130 finished (31.7 ms)
+2026-09-26T05:09:09Z INFO  [worker:estimator-01] run=VR-2131 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T05:09:12Z WARN  [gate] run=VR-2131 k=144 rejected d2=7.259
+2026-09-26T05:09:20Z WARN  [gate] run=VR-2131 k=205 rejected d2=6.062
+2026-09-26T05:09:28Z WARN  [gate] run=VR-2131 k=1488 rejected d2=6.773
+2026-09-26T05:09:36Z WARN  [gate] run=VR-2131 rejection rate 19.80% above alert level 10.0%
+2026-09-26T05:09:39Z INFO  [gate] run=VR-2131 mode=doppler complete: measurements=1500 rejected=297 (19.80%)
+2026-09-26T05:09:40Z INFO  [worker:estimator-01] run=VR-2131 finished (28.6 ms)
+2026-09-26T05:11:16Z INFO  [worker:estimator-02] run=VR-2132 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:11:19Z WARN  [gate] run=VR-2132 k=18 rejected d2=6.163
+2026-09-26T05:11:27Z WARN  [gate] run=VR-2132 k=158 rejected d2=7.663
+2026-09-26T05:11:35Z WARN  [gate] run=VR-2132 k=207 rejected d2=7.830
+2026-09-26T05:11:46Z INFO  [gate] run=VR-2132 mode=planar complete: measurements=1500 rejected=79 (5.27%)
+2026-09-26T05:11:47Z INFO  [worker:estimator-02] run=VR-2132 finished (39.6 ms)
+2026-09-26T05:13:01Z INFO  [worker:estimator-03] run=VR-2133 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:13:04Z WARN  [gate] run=VR-2133 k=1008 rejected d2=6.345
+2026-09-26T05:13:12Z WARN  [gate] run=VR-2133 k=1252 rejected d2=10.161
+2026-09-26T05:13:20Z WARN  [gate] run=VR-2133 k=1423 rejected d2=6.066
+2026-09-26T05:13:31Z INFO  [gate] run=VR-2133 mode=planar complete: measurements=1500 rejected=76 (5.07%)
+2026-09-26T05:13:32Z INFO  [worker:estimator-03] run=VR-2133 finished (33.1 ms)
+2026-09-26T05:15:12Z INFO  [worker:estimator-01] run=VR-2134 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T05:15:15Z WARN  [gate] run=VR-2134 k=210 rejected d2=6.324
+2026-09-26T05:15:23Z WARN  [gate] run=VR-2134 k=1361 rejected d2=8.070
+2026-09-26T05:15:31Z WARN  [gate] run=VR-2134 k=1403 rejected d2=8.525
+2026-09-26T05:15:39Z WARN  [gate] run=VR-2134 rejection rate 20.00% above alert level 10.0%
+2026-09-26T05:15:42Z INFO  [gate] run=VR-2134 mode=doppler complete: measurements=1500 rejected=300 (20.00%)
+2026-09-26T05:15:43Z INFO  [worker:estimator-01] run=VR-2134 finished (26.3 ms)
+2026-09-26T05:17:48Z INFO  [worker:estimator-02] run=VR-2135 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:17:51Z WARN  [gate] run=VR-2135 k=264 rejected d2=7.189
+2026-09-26T05:17:59Z WARN  [gate] run=VR-2135 k=269 rejected d2=6.103
+2026-09-26T05:18:07Z WARN  [gate] run=VR-2135 k=433 rejected d2=6.016
+2026-09-26T05:18:18Z INFO  [gate] run=VR-2135 mode=planar complete: measurements=1500 rejected=75 (5.00%)
+2026-09-26T05:18:19Z INFO  [worker:estimator-02] run=VR-2135 finished (32.3 ms)
+2026-09-26T05:20:10Z INFO  [worker:estimator-03] run=VR-2136 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:20:13Z WARN  [gate] run=VR-2136 k=377 rejected d2=7.279
+2026-09-26T05:20:21Z WARN  [gate] run=VR-2136 k=454 rejected d2=7.884
+2026-09-26T05:20:29Z WARN  [gate] run=VR-2136 k=951 rejected d2=9.338
+2026-09-26T05:20:40Z INFO  [gate] run=VR-2136 mode=planar complete: measurements=1500 rejected=72 (4.80%)
+2026-09-26T05:20:41Z INFO  [worker:estimator-03] run=VR-2136 finished (28.2 ms)
+2026-09-26T05:22:09Z INFO  [worker:estimator-01] run=VR-2137 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:22:12Z WARN  [gate] run=VR-2137 k=203 rejected d2=7.565
+2026-09-26T05:22:20Z WARN  [gate] run=VR-2137 k=218 rejected d2=7.564
+2026-09-26T05:22:28Z WARN  [gate] run=VR-2137 k=998 rejected d2=6.131
+2026-09-26T05:22:39Z INFO  [gate] run=VR-2137 mode=planar complete: measurements=1500 rejected=74 (4.93%)
+2026-09-26T05:22:40Z INFO  [worker:estimator-01] run=VR-2137 finished (27.3 ms)
+2026-09-26T05:24:24Z INFO  [worker:estimator-02] run=VR-2138 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T05:24:27Z WARN  [gate] run=VR-2138 k=154 rejected d2=9.970
+2026-09-26T05:24:35Z WARN  [gate] run=VR-2138 k=295 rejected d2=9.498
+2026-09-26T05:24:43Z WARN  [gate] run=VR-2138 k=489 rejected d2=9.803
+2026-09-26T05:24:51Z WARN  [gate] run=VR-2138 rejection rate 19.20% above alert level 10.0%
+2026-09-26T05:24:54Z INFO  [gate] run=VR-2138 mode=doppler complete: measurements=1500 rejected=288 (19.20%)
+2026-09-26T05:24:55Z INFO  [worker:estimator-02] run=VR-2138 finished (38.3 ms)
+2026-09-26T05:26:54Z INFO  [worker:estimator-03] run=VR-2139 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:26:57Z WARN  [gate] run=VR-2139 k=298 rejected d2=6.617
+2026-09-26T05:27:05Z WARN  [gate] run=VR-2139 k=395 rejected d2=8.264
+2026-09-26T05:27:13Z WARN  [gate] run=VR-2139 k=585 rejected d2=7.491
+2026-09-26T05:27:24Z INFO  [gate] run=VR-2139 mode=planar complete: measurements=1500 rejected=76 (5.07%)
+2026-09-26T05:27:25Z INFO  [worker:estimator-03] run=VR-2139 finished (26.2 ms)
+2026-09-26T05:28:31Z INFO  [worker:estimator-01] run=VR-2140 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:28:34Z WARN  [gate] run=VR-2140 k=298 rejected d2=7.005
+2026-09-26T05:28:42Z WARN  [gate] run=VR-2140 k=603 rejected d2=6.056
+2026-09-26T05:28:50Z WARN  [gate] run=VR-2140 k=1014 rejected d2=6.710
+2026-09-26T05:29:01Z INFO  [gate] run=VR-2140 mode=planar complete: measurements=1500 rejected=72 (4.80%)
+2026-09-26T05:29:02Z INFO  [worker:estimator-01] run=VR-2140 finished (28.7 ms)
+2026-09-26T05:30:53Z INFO  [worker:estimator-02] run=VR-2141 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:30:56Z WARN  [gate] run=VR-2141 k=76 rejected d2=9.523
+2026-09-26T05:31:04Z WARN  [gate] run=VR-2141 k=518 rejected d2=7.223
+2026-09-26T05:31:12Z WARN  [gate] run=VR-2141 k=1383 rejected d2=11.474
+2026-09-26T05:31:23Z INFO  [gate] run=VR-2141 mode=planar complete: measurements=1500 rejected=75 (5.00%)
+2026-09-26T05:31:24Z INFO  [worker:estimator-02] run=VR-2141 finished (37.3 ms)
+2026-09-26T05:33:32Z INFO  [worker:estimator-03] run=VR-2142 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:33:35Z WARN  [gate] run=VR-2142 k=63 rejected d2=7.343
+2026-09-26T05:33:43Z WARN  [gate] run=VR-2142 k=973 rejected d2=15.693
+2026-09-26T05:33:51Z WARN  [gate] run=VR-2142 k=1386 rejected d2=8.390
+2026-09-26T05:34:02Z INFO  [gate] run=VR-2142 mode=planar complete: measurements=1500 rejected=81 (5.40%)
+2026-09-26T05:34:03Z INFO  [worker:estimator-03] run=VR-2142 finished (33.9 ms)
+2026-09-26T05:35:38Z INFO  [worker:estimator-01] run=VR-2143 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:35:41Z WARN  [gate] run=VR-2143 k=238 rejected d2=9.820
+2026-09-26T05:35:49Z WARN  [gate] run=VR-2143 k=457 rejected d2=8.330
+2026-09-26T05:35:57Z WARN  [gate] run=VR-2143 k=1442 rejected d2=11.828
+2026-09-26T05:36:08Z INFO  [gate] run=VR-2143 mode=planar complete: measurements=1500 rejected=84 (5.60%)
+2026-09-26T05:36:09Z INFO  [worker:estimator-01] run=VR-2143 finished (29.5 ms)
+2026-09-26T05:37:52Z INFO  [worker:estimator-02] run=VR-2144 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:37:55Z WARN  [gate] run=VR-2144 k=30 rejected d2=6.054
+2026-09-26T05:38:03Z WARN  [gate] run=VR-2144 k=1151 rejected d2=8.607
+2026-09-26T05:38:11Z WARN  [gate] run=VR-2144 k=1339 rejected d2=6.685
+2026-09-26T05:38:22Z INFO  [gate] run=VR-2144 mode=planar complete: measurements=1500 rejected=85 (5.67%)
+2026-09-26T05:38:23Z INFO  [worker:estimator-02] run=VR-2144 finished (31.8 ms)
+2026-09-26T05:39:48Z INFO  [worker:estimator-03] run=VR-2145 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:39:51Z WARN  [gate] run=VR-2145 k=100 rejected d2=7.954
+2026-09-26T05:39:59Z WARN  [gate] run=VR-2145 k=535 rejected d2=6.040
+2026-09-26T05:40:07Z WARN  [gate] run=VR-2145 k=1187 rejected d2=8.682
+2026-09-26T05:40:18Z INFO  [gate] run=VR-2145 mode=planar complete: measurements=1500 rejected=70 (4.67%)
+2026-09-26T05:40:19Z INFO  [worker:estimator-03] run=VR-2145 finished (32.3 ms)
+2026-09-26T05:42:14Z INFO  [worker:estimator-01] run=VR-2146 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T05:42:17Z WARN  [gate] run=VR-2146 k=114 rejected d2=7.153
+2026-09-26T05:42:25Z WARN  [gate] run=VR-2146 k=509 rejected d2=7.883
+2026-09-26T05:42:33Z WARN  [gate] run=VR-2146 k=1168 rejected d2=6.094
+2026-09-26T05:42:41Z WARN  [gate] run=VR-2146 rejection rate 19.33% above alert level 10.0%
+2026-09-26T05:42:44Z INFO  [gate] run=VR-2146 mode=doppler complete: measurements=1500 rejected=290 (19.33%)
+2026-09-26T05:42:45Z INFO  [worker:estimator-01] run=VR-2146 finished (28.6 ms)
+2026-09-26T05:44:01Z INFO  [worker:estimator-02] run=VR-2147 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:44:04Z WARN  [gate] run=VR-2147 k=361 rejected d2=7.293
+2026-09-26T05:44:12Z WARN  [gate] run=VR-2147 k=669 rejected d2=8.776
+2026-09-26T05:44:20Z WARN  [gate] run=VR-2147 k=1392 rejected d2=6.082
+2026-09-26T05:44:31Z INFO  [gate] run=VR-2147 mode=planar complete: measurements=1500 rejected=74 (4.93%)
+2026-09-26T05:44:32Z INFO  [worker:estimator-02] run=VR-2147 finished (32.8 ms)
+2026-09-26T05:46:38Z INFO  [worker:estimator-03] run=VR-2148 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:46:41Z WARN  [gate] run=VR-2148 k=448 rejected d2=6.835
+2026-09-26T05:46:49Z WARN  [gate] run=VR-2148 k=1010 rejected d2=10.248
+2026-09-26T05:46:57Z WARN  [gate] run=VR-2148 k=1229 rejected d2=7.213
+2026-09-26T05:47:08Z INFO  [gate] run=VR-2148 mode=planar complete: measurements=1500 rejected=75 (5.00%)
+2026-09-26T05:47:09Z INFO  [worker:estimator-03] run=VR-2148 finished (32.2 ms)
+2026-09-26T05:48:52Z INFO  [worker:estimator-01] run=VR-2149 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:48:55Z WARN  [gate] run=VR-2149 k=211 rejected d2=6.237
+2026-09-26T05:49:03Z WARN  [gate] run=VR-2149 k=1173 rejected d2=15.603
+2026-09-26T05:49:11Z WARN  [gate] run=VR-2149 k=1488 rejected d2=11.158
+2026-09-26T05:49:22Z INFO  [gate] run=VR-2149 mode=planar complete: measurements=1500 rejected=77 (5.13%)
+2026-09-26T05:49:23Z INFO  [worker:estimator-01] run=VR-2149 finished (29.8 ms)
+2026-09-26T05:50:58Z INFO  [worker:estimator-02] run=VR-2150 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:51:01Z WARN  [gate] run=VR-2150 k=109 rejected d2=6.244
+2026-09-26T05:51:09Z WARN  [gate] run=VR-2150 k=113 rejected d2=6.243
+2026-09-26T05:51:17Z WARN  [gate] run=VR-2150 k=1148 rejected d2=12.822
+2026-09-26T05:51:28Z INFO  [gate] run=VR-2150 mode=planar complete: measurements=1500 rejected=77 (5.13%)
+2026-09-26T05:51:29Z INFO  [worker:estimator-02] run=VR-2150 finished (31.1 ms)
+2026-09-26T05:53:29Z INFO  [worker:estimator-03] run=VR-2151 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T05:53:32Z WARN  [gate] run=VR-2151 k=324 rejected d2=6.058
+2026-09-26T05:53:40Z WARN  [gate] run=VR-2151 k=864 rejected d2=7.752
+2026-09-26T05:53:48Z WARN  [gate] run=VR-2151 k=1131 rejected d2=7.137
+2026-09-26T05:53:56Z WARN  [gate] run=VR-2151 rejection rate 19.93% above alert level 10.0%
+2026-09-26T05:53:59Z INFO  [gate] run=VR-2151 mode=doppler complete: measurements=1500 rejected=299 (19.93%)
+2026-09-26T05:54:00Z INFO  [worker:estimator-03] run=VR-2151 finished (33.9 ms)
+2026-09-26T05:55:47Z INFO  [worker:estimator-01] run=VR-2152 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T05:55:50Z WARN  [gate] run=VR-2152 k=132 rejected d2=7.265
+2026-09-26T05:55:58Z WARN  [gate] run=VR-2152 k=1163 rejected d2=6.169
+2026-09-26T05:56:06Z WARN  [gate] run=VR-2152 k=1228 rejected d2=10.757
+2026-09-26T05:56:14Z WARN  [gate] run=VR-2152 rejection rate 20.73% above alert level 10.0%
+2026-09-26T05:56:17Z INFO  [gate] run=VR-2152 mode=doppler complete: measurements=1500 rejected=311 (20.73%)
+2026-09-26T05:56:18Z INFO  [worker:estimator-01] run=VR-2152 finished (31.0 ms)
+2026-09-26T05:57:32Z INFO  [worker:estimator-02] run=VR-2153 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T05:57:35Z WARN  [gate] run=VR-2153 k=447 rejected d2=7.208
+2026-09-26T05:57:43Z WARN  [gate] run=VR-2153 k=774 rejected d2=10.719
+2026-09-26T05:57:51Z WARN  [gate] run=VR-2153 k=1303 rejected d2=11.117
+2026-09-26T05:58:02Z INFO  [gate] run=VR-2153 mode=planar complete: measurements=1500 rejected=69 (4.60%)
+2026-09-26T05:58:03Z INFO  [worker:estimator-02] run=VR-2153 finished (30.9 ms)
+2026-09-26T05:59:38Z INFO  [worker:estimator-03] run=VR-2154 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T05:59:41Z WARN  [gate] run=VR-2154 k=37 rejected d2=8.519
+2026-09-26T05:59:49Z WARN  [gate] run=VR-2154 k=228 rejected d2=7.087
+2026-09-26T05:59:57Z WARN  [gate] run=VR-2154 k=1142 rejected d2=12.161
+2026-09-26T06:00:08Z INFO  [gate] run=VR-2154 mode=planar complete: measurements=1500 rejected=58 (3.87%)
+2026-09-26T06:00:09Z INFO  [worker:estimator-03] run=VR-2154 finished (32.5 ms)
+2026-09-26T06:01:41Z INFO  [worker:estimator-01] run=VR-2155 mode=doppler build=v2.4.1 starting (measurements=1500, dim=4)
+2026-09-26T06:01:44Z WARN  [gate] run=VR-2155 k=45 rejected d2=7.360
+2026-09-26T06:01:52Z WARN  [gate] run=VR-2155 k=214 rejected d2=10.413
+2026-09-26T06:02:00Z WARN  [gate] run=VR-2155 k=842 rejected d2=9.206
+2026-09-26T06:02:08Z WARN  [gate] run=VR-2155 rejection rate 17.87% above alert level 10.0%
+2026-09-26T06:02:11Z INFO  [gate] run=VR-2155 mode=doppler complete: measurements=1500 rejected=268 (17.87%)
+2026-09-26T06:02:12Z INFO  [worker:estimator-01] run=VR-2155 finished (27.1 ms)
+2026-09-26T06:04:15Z INFO  [worker:estimator-02] run=VR-2156 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T06:04:18Z WARN  [gate] run=VR-2156 k=463 rejected d2=16.089
+2026-09-26T06:04:26Z WARN  [gate] run=VR-2156 k=1379 rejected d2=7.086
+2026-09-26T06:04:34Z WARN  [gate] run=VR-2156 k=1481 rejected d2=6.150
+2026-09-26T06:04:45Z INFO  [gate] run=VR-2156 mode=planar complete: measurements=1500 rejected=73 (4.87%)
+2026-09-26T06:04:46Z INFO  [worker:estimator-02] run=VR-2156 finished (38.3 ms)
+2026-09-26T06:06:51Z INFO  [worker:estimator-03] run=VR-2157 mode=planar build=v2.4.1 starting (measurements=1500, dim=2)
+2026-09-26T06:06:54Z WARN  [gate] run=VR-2157 k=419 rejected d2=8.084
+2026-09-26T06:07:02Z WARN  [gate] run=VR-2157 k=1244 rejected d2=11.135
+2026-09-26T06:07:10Z WARN  [gate] run=VR-2157 k=1353 rejected d2=7.933
+2026-09-26T06:07:21Z INFO  [gate] run=VR-2157 mode=planar complete: measurements=1500 rejected=66 (4.40%)
+2026-09-26T06:07:22Z INFO  [worker:estimator-03] run=VR-2157 finished (33.2 ms)
+2026-09-26T06:09:29Z INFO  [worker:estimator-01] run=VR-2158 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T06:09:32Z WARN  [gate] run=VR-2158 k=376 rejected d2=6.848
+2026-09-26T06:09:40Z WARN  [gate] run=VR-2158 k=940 rejected d2=6.407
+2026-09-26T06:09:48Z WARN  [gate] run=VR-2158 k=1297 rejected d2=6.969
+2026-09-26T06:09:59Z INFO  [gate] run=VR-2158 mode=planar complete: measurements=1500 rejected=72 (4.80%)
+2026-09-26T06:10:00Z INFO  [worker:estimator-01] run=VR-2158 finished (32.2 ms)
+2026-09-26T06:11:37Z INFO  [worker:estimator-02] run=VR-2159 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T06:11:40Z WARN  [gate] run=VR-2159 k=538 rejected d2=6.815
+2026-09-26T06:11:48Z WARN  [gate] run=VR-2159 k=1111 rejected d2=7.702
+2026-09-26T06:11:56Z WARN  [gate] run=VR-2159 k=1231 rejected d2=6.854
+2026-09-26T06:12:07Z INFO  [gate] run=VR-2159 mode=planar complete: measurements=1500 rejected=79 (5.27%)
+2026-09-26T06:12:08Z INFO  [worker:estimator-02] run=VR-2159 finished (38.4 ms)
+2026-09-26T06:14:06Z INFO  [worker:estimator-03] run=VR-2160 mode=planar build=v2.3.2 starting (measurements=1500, dim=2)
+2026-09-26T06:14:09Z WARN  [gate] run=VR-2160 k=886 rejected d2=9.484
+2026-09-26T06:14:17Z WARN  [gate] run=VR-2160 k=1073 rejected d2=6.827
+2026-09-26T06:14:25Z WARN  [gate] run=VR-2160 k=1206 rejected d2=7.484
+2026-09-26T06:14:36Z INFO  [gate] run=VR-2160 mode=planar complete: measurements=1500 rejected=83 (5.53%)
+2026-09-26T06:14:37Z INFO  [worker:estimator-03] run=VR-2160 finished (33.6 ms)
+2026-09-26T06:15:21Z INFO  [supervisor] campaign VAL-2026-09 complete

@@ -1,0 +1,61 @@
+{
+  "checks": [
+    {
+      "id": "produced_implementation",
+      "kind": "file_exists",
+      "message": "matched 1: kalman_update.m",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "produced_test",
+      "kind": "file_exists",
+      "message": "matched 1: test_kalman_update.m",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "correct",
+      "kind": "numeric_tolerance",
+      "message": "max_abs_error=0 (tolerance 1e-06)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "model_driven",
+      "kind": "numeric_tolerance",
+      "message": "hidden_model_error=0 (tolerance 1e-06)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "test_passes_reference",
+      "kind": "threshold",
+      "message": "test_passes_reference=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "test_catches_defect",
+      "kind": "threshold",
+      "message": "test_catches_mutant=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "runtime_ms",
+      "kind": "metric",
+      "message": "runtime_ms=54.28886413574219",
+      "passed": null,
+      "value": 54.28886413574219
+    },
+    {
+      "id": "n_vectors",
+      "kind": "metric",
+      "message": "n_vectors=1500",
+      "passed": null,
+      "value": 1500
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,21 @@
+{# The engineering request, verbatim from the approved bundle's prompt.md. #}
+{% extends "_base.html.j2" %}
+{% block stage %}
+  <style>
+    .job {
+      border-left: 6px solid var(--accent);
+      background: linear-gradient(90deg, rgba(103, 232, 249, 0.06), transparent 40%);
+    }
+  </style>
+  <div class="panel job">
+    <p class="eyebrow">
+      The job &mdash; given to Claude verbatim
+{%- if data.pages and data.pages > 1 %} &middot; part {{ data.page }} of {{ data.pages }}{% endif %}
+    </p>
+    {#
+      Scale with length so a long brief is readable rather than clipped. The
+      duration config paces the same text, so the two stay in step.
+    #}
+    <div class="prose md fit {% if data.chars <= 320 %}prose--lede{% elif data.chars > 700 %}prose--dense{% endif %}">{{ data.html | safe }}</div>
+  </div>
+{% endblock %}
