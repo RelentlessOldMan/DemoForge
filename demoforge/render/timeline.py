@@ -352,10 +352,12 @@ def _scene_pages(
     """The view model for each page this event is shown on (usually one)."""
     if kind not in _TEXT_KINDS:
         return [_scene_data(kind, primary, merged, limits)]
-    pages = paginate(str(primary.data.get("text", "")), limits)
+    pages = _paginate(str(primary.data.get("text", "")), limits)
     return [
-        _text_data(text) | {"page": n + 1, "pages": len(pages)}
-        for n, text in enumerate(pages)
+        _text_data(page["text"])
+        | {"page": n + 1, "pages": len(pages), "resumes": page["resumes"],
+           "continues": page["continues"]}
+        for n, page in enumerate(pages)
     ]
 
 
@@ -402,23 +404,36 @@ def paginate(text: str, limits: Limits) -> list[str]:
     for one page is split by sentence, item or line. Nothing is dropped: the pages
     together hold every word of ``text``.
     """
+    return [page["text"] for page in _paginate(text, limits)]
+
+
+def _paginate(text: str, limits: Limits) -> list[dict[str, Any]]:
+    """The pages, each with the kind of split block ("table", "code") it resumes
+    from the page before and continues onto the page after, if any."""
     budget = max(1, limits.text_page_lines)
     width = max(10, limits.text_line_chars)
-    pages: list[str] = []
+    pages: list[dict[str, Any]] = []
     current: list[str] = []
+    resumes: str | None = None
+    continues: str | None = None
     used = 0
     for block in markdown.blocks(text):
-        for piece in _split_block(block, budget, width):
+        pieces = _split_block(block, budget, width)
+        for n, piece in enumerate(pieces):
             height = _height(piece, width)
             cost = height + (1 if current else 0)  # the gap between blocks
             if current and used + cost > budget:
-                pages.append("\n\n".join(current))
-                current, used, cost = [], 0, height
+                pages.append({"text": "\n\n".join(current), "resumes": resumes,
+                              "continues": continues})
+                current, used, cost, resumes = [], 0, height, None
+            if not current and n > 0:
+                resumes = block.kind
             current.append(piece)
             used += cost
+            continues = block.kind if n < len(pieces) - 1 else None
     if current:
-        pages.append("\n\n".join(current))
-    return pages or [text]
+        pages.append({"text": "\n\n".join(current), "resumes": resumes, "continues": None})
+    return pages or [{"text": text, "resumes": None, "continues": None}]
 
 
 def _height(source: str, width: int) -> int:

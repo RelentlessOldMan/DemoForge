@@ -1,0 +1,221 @@
+{
+  "capture_mode": "headless",
+  "created": "2026-10-16T19:41:55Z",
+  "demo_id": "matlab-python-port",
+  "extra": {
+    "auth_source": "none",
+    "claude_cli": "2.1.289 (Claude Code)",
+    "event_times": "wallclock",
+    "follow_ups": 3,
+    "isolation": {
+      "clean": false,
+      "findings": [
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 20,
+          "snippet": "TLAB)\\nthen:\\n    python check_agreement.py\\n\\\"\\\"\\\"\\n\\nimport json\\nimport sys\\nfrom pathlib import Path\\n\\nimport numpy as np\\n\\nfrom kalman_filter import kalm",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 23,
+          "snippet": "wrote 1500 rows to reference_output.csv x,y,vx,vy 0.28309133113141594,0.35574346435353976,0.14084145827433628,0.1769867981858407 0.3944527201611272,-0.011783680",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 72,
+          "snippet": "fixed seed) regenerates\\nthe same files.\\n\\\"\\\"\\\"\\n\\nimport json\\nimport shutil\\nfrom pathlib import Path\\n\\nimport numpy as np\\n\\nHERE = Path(__file__).resolve(",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 85,
+          "snippet": "based) where the error reaches 1e-9, if any\\n\\\"\\\"\\\"\\n\\nimport json\\nimport sys\\nfrom pathlib import Path\\n\\nimport numpy as np\\n\\nfrom kalman_filter import kalm",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 148,
+          "snippet": "port sys; sys.path.insert(0,'.')\\nimport numpy as np, json, scipy.linalg as sl\\nfrom pathlib import Path\\nfrom check_agreement import load_model\\ndef run(Z, mod",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 286,
+          "snippet": "where the error reaches 1e-9, if any 18\t\"\"\" 19\t 20\timport json 21\timport sys 22\tfrom pathlib import Path 23\t 24\timport numpy as np 25\t 26\tfrom kalman_filter imp",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 291,
+          "snippet": "> /tmp/sens.py <<'EOF'\\nimport sys; sys.path.insert(0,'.')\\nimport numpy as np\\nfrom pathlib import Path\\nfrom kalman_filter import _mrdivide, kalman_update\\nfr",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 350,
+          "snippet": "ro only if a gated case fails.\\n\\\"\\\"\\\"\\n\\nimport json\\nimport sys\\nimport zlib\\nfrom pathlib import Path\\n\\nimport numpy as np\\n\\nfrom kalman_filter import _kal",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 392,
+          "snippet": "f a gated case fails. 35\t\"\"\" 36\t 37\timport json 38\timport sys 39\timport zlib 40\tfrom pathlib import Path 41\t 42\timport numpy as np 43\t 44\tfrom kalman_filter imp",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 435,
+          "snippet": "d) regenerates 10\tthe same files. 11\t\"\"\" 12\t 13\timport json 14\timport shutil 15\tfrom pathlib import Path",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 471,
+          "snippet": "f a gated case fails. 36\t\"\"\" 37\t 38\timport json 39\timport sys 40\timport zlib 41\tfrom pathlib import Path 42\t 43\timport numpy as np 44\t 45\tfrom kalman_filter imp",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 5,
+          "snippet": "sarray(v) for k, v in json.loads((HERE / \"model.json\").read_text()).items()} 21\tZ = np.loadtxt(HERE / \"test_vectors.csv\", delimiter=\",\", skiprows=1) 22\tref = np",
+          "source": "user simulator turn-1"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 18,
+          "snippet": " = kalman_update(Z, model); 10\t 11\tfid = fopen('reference_output.csv', 'w'); 12\tfprintf(fid, 'x,y,vx,vy\\n'); 13\tfprintf(fid, '%.17g,%.17g,%.17g,%.17g\\n', X'); 1",
+          "source": "user simulator turn-1"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 7,
+          "snippet": "where the error reaches 1e-9, if any 18\t\"\"\" 19\t 20\timport json 21\timport sys 22\tfrom pathlib import Path 23\t 24\timport numpy as np 25\t 26\tfrom kalman_filter imp",
+          "source": "user simulator turn-2"
+        }
+      ],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2",
+        "user simulator turn-3"
+      ]
+    },
+    "isolation_at_approve": {
+      "clean": false,
+      "findings": [
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 20,
+          "snippet": "TLAB)\\nthen:\\n    python check_agreement.py\\n\\\"\\\"\\\"\\n\\nimport json\\nimport sys\\nfrom pathlib import Path\\n\\nimport numpy as np\\n\\nfrom kalman_filter import kalm",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 23,
+          "snippet": "wrote 1500 rows to reference_output.csv x,y,vx,vy 0.28309133113141594,0.35574346435353976,0.14084145827433628,0.1769867981858407 0.3944527201611272,-0.011783680",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 72,
+          "snippet": "fixed seed) regenerates\\nthe same files.\\n\\\"\\\"\\\"\\n\\nimport json\\nimport shutil\\nfrom pathlib import Path\\n\\nimport numpy as np\\n\\nHERE = Path(__file__).resolve(",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 85,
+          "snippet": "based) where the error reaches 1e-9, if any\\n\\\"\\\"\\\"\\n\\nimport json\\nimport sys\\nfrom pathlib import Path\\n\\nimport numpy as np\\n\\nfrom kalman_filter import kalm",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 148,
+          "snippet": "port sys; sys.path.insert(0,'.')\\nimport numpy as np, json, scipy.linalg as sl\\nfrom pathlib import Path\\nfrom check_agreement import load_model\\ndef run(Z, mod",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 286,
+          "snippet": "where the error reaches 1e-9, if any 18\t\"\"\" 19\t 20\timport json 21\timport sys 22\tfrom pathlib import Path 23\t 24\timport numpy as np 25\t 26\tfrom kalman_filter imp",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 291,
+          "snippet": "> /tmp/sens.py <<'EOF'\\nimport sys; sys.path.insert(0,'.')\\nimport numpy as np\\nfrom pathlib import Path\\nfrom kalman_filter import _mrdivide, kalman_update\\nfr",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 350,
+          "snippet": "ro only if a gated case fails.\\n\\\"\\\"\\\"\\n\\nimport json\\nimport sys\\nimport zlib\\nfrom pathlib import Path\\n\\nimport numpy as np\\n\\nfrom kalman_filter import _kal",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 392,
+          "snippet": "f a gated case fails. 35\t\"\"\" 36\t 37\timport json 38\timport sys 39\timport zlib 40\tfrom pathlib import Path 41\t 42\timport numpy as np 43\t 44\tfrom kalman_filter imp",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 435,
+          "snippet": "d) regenerates 10\tthe same files. 11\t\"\"\" 12\t 13\timport json 14\timport shutil 15\tfrom pathlib import Path",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 471,
+          "snippet": "f a gated case fails. 36\t\"\"\" 37\t 38\timport json 39\timport sys 40\timport zlib 41\tfrom pathlib import Path 42\t 43\timport numpy as np 44\t 45\tfrom kalman_filter imp",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 5,
+          "snippet": "sarray(v) for k, v in json.loads((HERE / \"model.json\").read_text()).items()} 21\tZ = np.loadtxt(HERE / \"test_vectors.csv\", delimiter=\",\", skiprows=1) 22\tref = np",
+          "source": "user simulator turn-1"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 18,
+          "snippet": " = kalman_update(Z, model); 10\t 11\tfid = fopen('reference_output.csv', 'w'); 12\tfprintf(fid, 'x,y,vx,vy\\n'); 13\tfprintf(fid, '%.17g,%.17g,%.17g,%.17g\\n', X'); 1",
+          "source": "user simulator turn-1"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 7,
+          "snippet": "where the error reaches 1e-9, if any 18\t\"\"\" 19\t 20\timport json 21\timport sys 22\tfrom pathlib import Path 23\t 24\timport numpy as np 25\t 26\tfrom kalman_filter imp",
+          "source": "user simulator turn-2"
+        }
+      ],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2",
+        "user simulator turn-3"
+      ]
+    },
+    "max_follow_ups": 3,
+    "redaction": "display paths rewritten (an unmapped home folder becomes ~), search-path listings replaced by '<search path removed>', Claude Code's saved-output paths replaced by '<output saved by Claude Code>', file owners in long listings shown as 'user', account details (rate limits, cost, session ids, tool list) and the text of Claude's private reasoning removed from the raw transcripts",
+    "run_id": "20261016T194155Z-e2d5ea88",
+    "user": "simulated from user.md",
+    "user_simulator_prompt": "sha256:74799a4134af26e3297058cdc5b10128f2118b0774a877d065e21cbefbe39c47"
+  },
+  "git_commit": "268e5ac1e7f05a274daefd410c978d1070ba09fb",
+  "git_dirty": false,
+  "input_hashes": {
+    "kalman_update.m": "6c88b4cc4fc89bc6b58c070966d958eca7f0dd11d02ef50d4f46521f051366e6",
+    "model.json": "d2b8eddc4805e74f9023d812568db28acbb4d3e19af8fe7a43197ef5791c04d9",
+    "test_vectors.csv": "1736e107dbbbea228535ebd52932ed1db91442870dba955e648748194e93c5fe"
+  },
+  "model": "claude-opus-5-5",
+  "os": "Windows 11",
+  "prompt_hash": "fd83235ffa4984a07fbcd7e014ae9e28e4db8c22ee3af7fcd1d4454f0f510fc0",
+  "runtimes": {
+    "octave": "C:\\Users\\you\\AppData\\Local\\Programs\\GNU Octave\\Octave-11.3.0\\mingw64\\bin\\octave-cli.exe",
+    "python": "python"
+  },
+  "user_hash": "c25cdfcda3e00c51f427c46d2951c10317a5002fadd3d1b26cea83c21366c2f2"
+}

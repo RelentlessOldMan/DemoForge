@@ -121,7 +121,7 @@ def _scene_beats(
         if prior is None:
             message_of[seq] = len(entries)
             entries.append({"role": "user", "text": "", "done": False})
-        full = _join(before, str(d.get("text", "")))
+        full = _join(before, d)
         typed_from = len(before)
         last_page = int(d.get("page", 1)) >= int(d.get("pages", 1))
         n = len(full) - typed_from
@@ -147,7 +147,7 @@ def _scene_beats(
             entries.append({"role": "assistant", "text": ""})
         idx = message_of[seq]
         before = entries[idx]["text"]
-        full = _join(before, str(d.get("text", "")))
+        full = _join(before, d)
         n = len(full) - len(before)
         reveal = _reveal_time(scene.duration, n, timing.stream_chars_per_second)
         for amount, dt in _steps(n, reveal, timing):
@@ -277,11 +277,22 @@ def _as_beats(
 
 
 # ---- text --------------------------------------------------------------
-def _join(before: str, page: str) -> str:
-    """A paged message is its pages, one after another, as the reader saw them."""
+def _join(before: str, page: dict[str, Any]) -> str:
+    """A paged message is its pages, one after another, as the reader saw them.
+
+    A table or code block split across pages is whole on each page (its header
+    row, its fences); in the transcript it reads on as the one recorded block.
+    """
+    rows = str(page.get("text", "")).split("\n")
+    if page.get("continues") == "code":
+        rows = rows[:-1]  # the closing fence comes with the last page
     if not before:
-        return page
-    return before + "\n\n" + page
+        return "\n".join(rows)
+    if page.get("resumes") == "table":
+        return before + "\n" + "\n".join(rows[2:])
+    if page.get("resumes") == "code":
+        return before + "\n" + "\n".join(rows[1:])
+    return before + "\n\n" + "\n".join(rows)
 
 
 def _word_prefix(text: str, amount: int) -> str:

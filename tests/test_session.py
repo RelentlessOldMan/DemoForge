@@ -245,6 +245,41 @@ def test_later_pages_are_paced_as_they_stream_not_reread_as_cards():
         assert s.duration < c.duration
 
 
+def _rows(n: int, first: int = 0) -> str:
+    return "\n".join(f"| {k:02d} | {k}e-13 |" for k in range(first, first + n))
+
+
+def _fenced(n: int, first: int = 0) -> str:
+    return "```\n" + "\n".join(f"case {k:02d}  {k}e-13" for k in range(first, first + n)) + "\n```"
+
+
+@pytest.mark.parametrize(
+    "body",
+    [
+        "| Case | Error |\n|---|---|\n" + _rows(80),
+        _fenced(80),
+        # Separate blocks meeting at a page break stay separate.
+        _fenced(4) + "\n\n" + _fenced(4, 4) + "\n\n" + _fenced(4, 8),
+        "| Case | Error |\n|---|---|\n" + _rows(4) + "\n\n| Case | Error |\n|---|---|\n" + _rows(4, 4),
+    ],
+    ids=["table", "code", "adjacent code", "adjacent tables"],
+)
+def test_a_block_split_across_pages_reads_on_as_the_recorded_block(body):
+    text = "Per case:\n\n" + body
+    events = [
+        Event(seq=0, t=0.0, type="prompt", data={"text": "Report back."}),
+        Event(seq=1, t=1.0, type="assistant_text", data={"text": text}),
+        Event(seq=2, t=2.0, type="completion", data={"subtype": "success"}),
+    ]
+    st = load_settings()
+    tl = build_timeline("demo", events, scenes=st.scenes, timing=st.timing)
+    assert sum(s.kind == "NarratedText" for s in tl.scenes) >= 2, "the blocks must page"
+    beats = session_beats(tl, st.timing)
+    assert audit_beats(tl, beats, events) == []
+    shown = [t for t in visible_text(beats[max(beats)][-1]) if t.startswith("Per case")]
+    assert shown == [text]
+
+
 def test_narration_on_a_paged_message_spans_all_its_pages():
     tl, pages, _ = _long()
     tl = with_narration(tl, {pages[0].index: "during:1"}, {"during:1": "Claude reports."})

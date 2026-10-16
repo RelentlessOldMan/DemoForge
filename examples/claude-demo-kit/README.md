@@ -17,7 +17,7 @@ The original design brief for this content set is in [`SPEC.md`](./SPEC.md).
 |---|---|---|---|
 | 1 | MATLAB algorithm implementation | spec → code → tests → review → fix | approved |
 | 2 | MATLAB optimization | vectorize, benchmark, prove equivalence | approved |
-| 3 | MATLAB → Python port | engineering migration, numerical equivalence | re-capturing |
+| 3 | MATLAB → Python port | engineering migration, numerical equivalence | approved |
 | 4 | Log investigation | autonomous multi-file correlation | re-capturing |
 | 5 | Excel investigation | cross-sheet formula debugging + correction | re-capturing |
 | 6 | CSV analysis & visualization | exploration, stats, anomaly detection, plots | re-capturing |
