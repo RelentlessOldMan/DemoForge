@@ -2,7 +2,8 @@
 % input/kalman_update.m that the Python-port demo verifies the agent's port against:
 %
 %   reference_states.csv      model.json over test_vectors.csv (the staged case)
-%   reference_states_alt.csv  the hidden model_alt.json (other F, Q, R, x0, P0) over a
+%   reference_states_alt.csv  the hidden model_alt.json (other F, Q, H, R, x0, P0; its
+%                             sensor measures in a rotated frame) over a
 %                             hidden stream derived from test_vectors.csv: rows 1..600,
 %                             axes swapped, y negated, offset by (3, -2). The agent never
 %                             sees this case; it catches ports that hard-code constants.

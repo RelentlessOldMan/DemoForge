@@ -8,9 +8,10 @@ and independently compares against the MATLAB reference, writing metrics.json:
     { max_abs_error, hidden_model_error, port_runtime_ms, n_vectors }
 
 hidden_model_error re-runs the port on a case the agent never saw: model_alt.json
-(other F, Q, R, x0, P0) over a stream derived from test_vectors.csv, against
-reference_states_alt.csv (both produced by gen_reference.m). It catches a port that
-hard-codes the model instead of reading it from ``model``.
+(other F, Q, H, R, x0, P0; its sensor measures in a rotated frame) over a stream
+derived from test_vectors.csv, against reference_states_alt.csv (both produced by
+gen_reference.m). It catches a port that hard-codes the model instead of reading it
+from ``model``.
 
 Exits non-zero if the port is missing, errors, or has the wrong shape.
 """

@@ -11,6 +11,11 @@ enabled: true
 prompt: prompt.md
 narration: narration.md
 
+# The person asking, played during capture by a second Claude session that reads each
+# answer and replies, up to max_follow_ups times. Never staged: the agent does not see it.
+user: user.md
+max_follow_ups: 3
+
 # Staged (by basename) into the agent's working copy. NOTE: the reference output
 # (checks/reference_states.csv) is deliberately NOT an input — the agent gets the
 # MATLAB source and the vectors, never the expected answer.
@@ -41,7 +46,7 @@ checks:
 
   - id: model_driven
     kind: numeric_tolerance
-    description: On a hidden second model (other F, Q, R, x0, P0) the port still matches MATLAB.
+    description: On a hidden second model (other F, Q, H, R, x0, P0) the port still matches MATLAB.
     metric: hidden_model_error
     max_abs_error: 1.0e-9
 

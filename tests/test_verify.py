@@ -203,6 +203,35 @@ def test_verify_demo3_python_with_reference(tmp_path):
     assert all("reference_states" not in p.name for p in demo.input_paths())
 
 
+@requires_numpy
+def test_demo3_port_that_hard_codes_the_sensor_fails_on_the_hidden_model(tmp_path):
+    """The public model's H is the plain position sensor, so a port that writes it in
+    instead of reading model["H"] matches the sample exactly. The hidden model's sensor
+    measures in a rotated frame, and must catch it."""
+    src = CLAUDE_DEMO_KIT / "demos" / "03_matlab_python_port"
+    root = tmp_path / "set"
+    (root / "demos").mkdir(parents=True)
+    shutil.copytree(src, root / "demos" / "03_matlab_python_port")
+    (root / "demoforge.toml").write_text(
+        f'[set]\nid = "t"\n\n[runtimes]\npython = {json.dumps(sys.executable)}\n',
+        encoding="utf-8",
+    )
+    port = tmp_path / "port"
+    port.mkdir()
+    code = (src / "reference" / "kalman_filter.py").read_text(encoding="utf-8")
+    line = 'H = np.asarray(model["H"], dtype=float)'
+    assert line in code
+    (port / "kalman_filter.py").write_text(
+        code.replace(line, "H = np.array([[1.0, 0, 0, 0], [0, 1.0, 0, 0]])"), encoding="utf-8"
+    )
+    cs = load_content_set(root)
+    outcome = verify_demo(cs.demos()[0], cs, artifacts_dirs=[port], work_dir=tmp_path / "work")
+    by_id = {c.id: c for c in outcome.results.checks}
+    assert by_id["equivalence"].passed
+    assert not by_id["model_driven"].passed
+    assert outcome.passed is False
+
+
 @requires_octave
 def test_verify_fails_when_fast_impl_missing(tmp_path):
     """Empty artifacts -> harness can't find kalman_update_fast.m -> fail."""
