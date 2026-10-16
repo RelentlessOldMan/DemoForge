@@ -143,10 +143,14 @@ def _cells(row: str) -> list[str]:
         row = row[1:]
     if row.endswith("|"):
         row = row[:-1]
-    return [c.strip() for c in row.split("|")]
+    # An escaped pipe is part of the cell, not a column break (GFM).
+    return [c.strip().replace("\\|", "|") for c in _CELL_BREAK.split(row)]
 
 
+_CELL_BREAK = re.compile(r"(?<!\\)\|")
 _CODE_SPAN = re.compile(r"`([^`]+)`")
+# A backslash before ASCII punctuation stands for that character itself (CommonMark).
+_ESCAPE = re.compile(r"\\([!-/:-@\[-`{-~])")
 _BOLD = re.compile(r"\*\*(.+?)\*\*|__(.+?)__")
 _ITALIC = re.compile(r"(?<![\w*])\*(?!\s)([^*]+?)(?<!\s)\*(?![\w*])")
 
@@ -163,7 +167,12 @@ def _inline(text: str) -> str:
         codes.append(f"<code>{html.escape(m.group(1))}</code>")
         return f"\x00{len(codes) - 1}\x00"
 
-    s = html.escape(_CODE_SPAN.sub(stash, text.replace("\x00", "")), quote=False)
+    def literal(m: re.Match) -> str:
+        codes.append(html.escape(m.group(1)))
+        return f"\x00{len(codes) - 1}\x00"
+
+    s = _ESCAPE.sub(literal, _CODE_SPAN.sub(stash, text.replace("\x00", "")))
+    s = html.escape(s, quote=False)
     s = _BOLD.sub(lambda m: f"<strong>{m.group(1) or m.group(2)}</strong>", s)
     s = _ITALIC.sub(lambda m: f"<em>{m.group(1)}</em>", s)
     return re.sub("\x00(\\d+)\x00", lambda m: codes[int(m.group(1))], s)
@@ -172,6 +181,7 @@ def _inline(text: str) -> str:
 def plain(text: str) -> str:
     """The words a reader sees, without Markdown symbols (for timing by length)."""
     s = _CODE_SPAN.sub(lambda m: m.group(1), text)
+    s = _ESCAPE.sub(lambda m: m.group(1), s)
     s = _BOLD.sub(lambda m: m.group(1) or m.group(2), s)
     s = re.sub(r"^\s*(```|~~~).*$", "", s, flags=re.M)
     s = re.sub(r"^\s*#{1,6}\s+", "", s, flags=re.M)

@@ -325,6 +325,15 @@ def _group(
         if merge_target is not None:
             if groups and groups[-1][1].type == merge_target:
                 groups[-1][2].append(ev)
+            else:
+                # Parallel tool calls can return a result after another step (a
+                # command's output after an edit made alongside it); it still belongs
+                # to the latest step of its kind that has had no result yet.
+                owner = next(
+                    (g for g in reversed(groups) if g[1].type == merge_target), None
+                )
+                if owner is not None and not owner[2]:
+                    owner[2].append(ev)
             continue  # nothing to merge onto: not shown
         style = scenes.style_for(ev.type)
         if style is None:

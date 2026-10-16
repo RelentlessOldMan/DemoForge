@@ -27,7 +27,12 @@ from demoforge.render.narration import (
     synthesize_narration,
     wav_duration_seconds,
 )
-from demoforge.render.timeline import build_timeline, stretch_for_narration, with_narration
+from demoforge.render.timeline import (
+    build_timeline,
+    narration_spans,
+    stretch_for_narration,
+    with_narration,
+)
 
 NARRATION = textwrap.dedent(
     """
@@ -301,13 +306,14 @@ def test_real_demo_narration_anchors_and_stretches_its_scenes(tmp_path):
 
     st = load_settings(cs.root)
     narration = load_narration(demo)
+    # Problem first: intro cards, then the run, then the result and the hand-off.
     moments = [k for k in narration.keys if not k.startswith("during:")]
-    assert moments == ["setup", "problem", "result", "transition"]
+    assert moments[0].startswith("intro:") and moments[-2:] == ["result", "transition"]
 
     tl = build_timeline(demo.id, bundle.read_events(), scenes=st.scenes, timing=st.timing)
     anchors = anchor_narration(tl, narration)
     by_key = {key: idx for idx, key in anchors.items()}
-    assert tl.scenes[by_key["setup"]].kind == "PromptCard"
+    assert tl.scenes[by_key["during:0"]].kind == "PromptCard"
     assert tl.scenes[by_key["result"]].kind == "ChapterEnd"
     # Each step commentary plays over the scene built from the event it names.
     for block in narration.blocks:
@@ -317,10 +323,13 @@ def test_real_demo_narration_anchors_and_stretches_its_scenes(tmp_path):
     clips = synthesize_narration(narration, SilentTTS(timing=st.timing), "amy", tmp_path)
     stretched = stretch_for_narration(with_narration(tl, anchors), clip_seconds(clips))
     assert stretched.total_seconds >= tl.total_seconds
-    # Every narrated scene is now at least as long as the words spoken over it.
+    # Every narrated span (a scene, or all pages of a long message) is now at least
+    # as long as the words spoken over it.
+    leaders = narration_spans(stretched.scenes)
     for s in stretched.scenes:
         if s.narration:
-            assert s.duration >= clips[s.narration].seconds - 1e-6
+            span = sum(x.duration for x in stretched.scenes if leaders[x.index] == s.index)
+            assert span >= clips[s.narration].seconds - 1e-6
 
 
 # ---- Kokoro provider --------------------------------------------------
@@ -533,3 +542,12 @@ def test_joined_clips_play_back_to_back_with_a_pause(tmp_path):
     assert joined.key == "intro"
     assert joined.seconds == pytest.approx(clips[0].seconds + clips[1].seconds + 0.5, abs=0.01)
     assert join_clips(clips, tmp_path / "out", key="intro", gap=0.5).cached
+
+
+def test_two_blocks_on_one_scene_fail_instead_of_one_vanishing():
+    tl = _timeline()
+    term = next(s for s in tl.scenes if s.kind == "TerminalRun" and len(s.event_seqs) > 1)
+    a, b = term.event_seqs[:2]
+    text = f"## during:{a}\n\nIt runs it.\n\n## during:{b}\n\nIt passes.\n"
+    with pytest.raises(DemoError, match="merge them into one block"):
+        anchor_narration(tl, parse_narration(text, demo_id="d"))

@@ -36,7 +36,7 @@ from demoforge.render.timeline import Scene, narration_spans
 from demoforge.render.timeline import Timeline
 
 # Bump when assembly changes its output for unchanged inputs.
-VIDEO_VERSION = "3"
+VIDEO_VERSION = "4"
 KEY_SUFFIX = ".key.json"
 
 
@@ -337,7 +337,6 @@ def _encode(
         "-f", "concat", "-safe", "0", "-i", str(concat),
         "-i", str(audio),
         "-map", "0:v:0", "-map", "1:a:0",
-        "-fps_mode", "cfr", "-r", str(video.fps),
         *_video_flags(video), *_audio_flags(video), *_determinism_flags(video),
         "-t", f"{seconds:.3f}",
         str(out_path),
@@ -350,7 +349,10 @@ def _video_flags(video: VideoEncode) -> list[str]:
         "-crf", str(video.crf),
         "-preset", video.preset,
         "-pix_fmt", video.pix_fmt,
-        "-vf", f"scale={video.width}:{video.height}",
+        # The fps filter repeats a held frame until the next one, and the last one
+        # until the end. `-fps_mode cfr` does not: it wrote a still card as a single
+        # frame, so the picture stopped early while the narration played on.
+        "-vf", f"fps={video.fps},scale={video.width}:{video.height}",
     ]
 
 

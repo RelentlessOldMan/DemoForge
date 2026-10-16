@@ -22,6 +22,7 @@ from demoforge.render.timeline import build_timeline, with_narration
 from demoforge.render.video import (
     _build_audio_track,
     _write_frame_concat,
+    assemble_card_clip,
     assemble_demo_video,
     concat_videos,
     ffmpeg_available,
@@ -167,6 +168,38 @@ def test_video_is_exactly_as_long_as_the_timeline_says(tmp_path):
     assert out.is_file() and out.stat().st_size > 0
     assert result.seconds == pytest.approx(tl.total_seconds)
     assert probe_seconds(out) == pytest.approx(tl.total_seconds, abs=0.05)
+
+
+def _picture_seconds(path: Path) -> float:
+    """How long the video stream itself lasts (not the container, which audio sets)."""
+    import subprocess
+
+    probe = resolve_ffmpeg().with_name(resolve_ffmpeg().name.replace("ffmpeg", "ffprobe"))
+    out = subprocess.run(
+        [str(probe), "-v", "error", "-select_streams", "v:0", "-count_frames",
+         "-show_entries", "stream=nb_read_frames,r_frame_rate", "-of", "csv=p=0", str(path)],
+        capture_output=True, text=True, check=True,
+    ).stdout.strip().split(",")
+    num, den = out[0].split("/")
+    return int(out[1]) * int(den) / int(num)
+
+
+@requires_ffmpeg
+def test_every_held_frame_stays_on_screen_until_its_scene_ends(tmp_path):
+    # A still is written once and must be repeated for its whole hold. Without that
+    # the picture ends early and the last scene's narration plays over nothing.
+    tl = _timeline()
+    out = tmp_path / "demo.mp4"
+    assemble_demo_video(tl, _frames(tmp_path, tl), out_path=out, video=VIDEO)
+    assert _picture_seconds(out) == pytest.approx(tl.total_seconds, abs=0.1)
+
+    card = tmp_path / "card.mp4"
+    assemble_card_clip(_png(tmp_path / "card.png"), 6.0, out_path=card, video=VIDEO)
+    assert _picture_seconds(card) == pytest.approx(6.0, abs=0.1)
+
+    whole = tmp_path / "presentation.mp4"
+    concat_videos([card, out], whole, video=VIDEO)
+    assert _picture_seconds(whole) == pytest.approx(6.0 + tl.total_seconds, abs=0.2)
 
 
 @requires_ffmpeg

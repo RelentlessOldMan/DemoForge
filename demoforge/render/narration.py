@@ -224,7 +224,17 @@ def anchor_narration(timeline: Timeline, narration: Narration) -> dict[int, str]
                 f"narration for {narration.demo_id}: block {block.key!r} refers to "
                 f"event {seq}, which is not in the captured run"
             )
-        assignments[by_seq[seq]] = block.key
+        index = by_seq[seq]
+        if index in assignments:
+            # One scene can speak one block (a command and its output share a scene);
+            # never drop the other one silently.
+            seqs = list(timeline.scenes[index].event_seqs)
+            raise DemoError(
+                f"narration for {narration.demo_id}: blocks {assignments[index]!r} and "
+                f"{block.key!r} both land on the scene built from events {seqs}; "
+                "merge them into one block"
+            )
+        assignments[index] = block.key
 
     if narration.get(MOMENT_SETUP):
         claim(0 if n else None, MOMENT_SETUP)

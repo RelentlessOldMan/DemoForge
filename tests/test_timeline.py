@@ -92,6 +92,29 @@ def test_command_output_merges_onto_its_command():
     assert term[0].data["has_output"] is True
 
 
+def test_output_returned_after_a_parallel_edit_still_lands_on_its_command():
+    # A command and an edit issued together; the edit's record lands first.
+    tl = _timeline([
+        Event(seq=0, t=0.0, type="command", data={"command": "octave smoke.m"}),
+        Event(seq=1, t=1.0, type="file_edit", data={"path": "NOTES.md", "edits": []}),
+        Event(seq=2, t=1.1, type="command_output", data={"output": "finite 1"}),
+    ])
+    term = [s for s in tl.scenes if s.kind == "TerminalRun"]
+    assert [s.event_seqs for s in term] == [(0, 2)]
+    assert term[0].data["output_lines"] == ["finite 1"]
+
+
+def test_a_second_output_never_lands_on_a_command_that_already_has_one():
+    tl = _timeline([
+        Event(seq=0, t=0.0, type="command", data={"command": "a"}),
+        Event(seq=1, t=0.5, type="command_output", data={"output": "one"}),
+        Event(seq=2, t=1.0, type="file_edit", data={"path": "N.md", "edits": []}),
+        Event(seq=3, t=1.1, type="command_output", data={"output": "stray"}),
+    ])
+    term = [s for s in tl.scenes if s.kind == "TerminalRun"]
+    assert [s.event_seqs for s in term] == [(0, 1)]
+
+
 def test_orphan_command_output_is_not_shown():
     """Output with no command before it has nothing to merge onto, so it is dropped."""
     tl = _timeline([Event(seq=0, t=0.0, type="command_output", data={"output": "x"})])

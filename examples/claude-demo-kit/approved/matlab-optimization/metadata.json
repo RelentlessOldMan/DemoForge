@@ -1,0 +1,51 @@
+{
+  "capture_mode": "headless",
+  "created": "2026-10-16T01:18:49Z",
+  "demo_id": "matlab-optimization",
+  "extra": {
+    "auth_source": "none",
+    "claude_cli": "2.1.289 (Claude Code)",
+    "event_times": "wallclock",
+    "follow_ups": 3,
+    "isolation": {
+      "clean": true,
+      "findings": [],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2",
+        "user simulator turn-3"
+      ]
+    },
+    "isolation_at_approve": {
+      "clean": true,
+      "findings": [],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2",
+        "user simulator turn-3"
+      ]
+    },
+    "max_follow_ups": 3,
+    "redaction": "display paths rewritten (an unmapped home folder becomes ~), search-path listings replaced by '<search path removed>', Claude Code's saved-output paths replaced by '<output saved by Claude Code>', file owners in long listings shown as 'user', account details (rate limits, cost, session ids, tool list) and the text of Claude's private reasoning removed from the raw transcripts",
+    "run_id": "20261016T011849Z-03c28e04",
+    "user": "simulated from user.md",
+    "user_simulator_prompt": "sha256:74799a4134af26e3297058cdc5b10128f2118b0774a877d065e21cbefbe39c47"
+  },
+  "git_commit": "db69c30f7a227464913237555b112011105821e8",
+  "git_dirty": false,
+  "input_hashes": {
+    "kalman_update.m": "e80671b64dfc3b3e966e1ea896975bc2722b7c4c35123acc4c50f4aae31482b7",
+    "model.json": "d2b8eddc4805e74f9023d812568db28acbb4d3e19af8fe7a43197ef5791c04d9",
+    "test_vectors.csv": "a24b5dede89a201ccb5125dbdef2df70cc8df41912671b23cc5235dcf13b9155"
+  },
+  "model": "claude-opus-5-5",
+  "os": "Windows 11",
+  "prompt_hash": "6bc29f8b89490c97599073270d2e3b139ca034b072218dcba898a95996a0180e",
+  "runtimes": {
+    "octave": "C:\\Users\\you\\AppData\\Local\\Programs\\GNU Octave\\Octave-11.3.0\\mingw64\\bin\\octave-cli.exe",
+    "python": "python"
+  },
+  "user_hash": "a1c16bad6c7ec38f74aac998dcb839163a3ca24261d8c4c96941a7323528d926"
+}

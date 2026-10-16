@@ -1,0 +1,75 @@
+{
+  "checks": [
+    {
+      "id": "produced_fast_impl",
+      "kind": "file_exists",
+      "message": "matched 1: kalman_update_fast.m",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "equivalence",
+      "kind": "numeric_tolerance",
+      "message": "max_abs_error=0 (tolerance 1e-09)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "timed_runs_consistent",
+      "kind": "numeric_tolerance",
+      "message": "timed_runs_max_abs_error=4.54747e-13 (tolerance 1e-09)",
+      "passed": true,
+      "value": 4.547473508864641e-13
+    },
+    {
+      "id": "speedup",
+      "kind": "threshold",
+      "message": "speedup=33.54096535860255 (min 3.0)",
+      "passed": true,
+      "value": 33.54096535860255
+    },
+    {
+      "id": "benchmark_left",
+      "kind": "file_exists",
+      "message": "matched 1: benchmark_kalman_update.m",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "report_written",
+      "kind": "file_exists",
+      "message": "matched 1: OPTIMIZATION.md",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "report_states_speedup",
+      "kind": "contains",
+      "message": "found pattern '(?i)\\\\d+(\\\\.\\\\d+)?\\\\s*(x|×)'",
+      "passed": true,
+      "value": true
+    },
+    {
+      "id": "original_runtime_ms",
+      "kind": "metric",
+      "message": "original_runtime_ms=13613.846063613892",
+      "passed": null,
+      "value": 13613.846063613892
+    },
+    {
+      "id": "optimized_runtime_ms",
+      "kind": "metric",
+      "message": "optimized_runtime_ms=405.8871269226074",
+      "passed": null,
+      "value": 405.8871269226074
+    },
+    {
+      "id": "n_vectors",
+      "kind": "metric",
+      "message": "n_vectors=1500",
+      "passed": null,
+      "value": 1500
+    }
+  ],
+  "passed": true
+}

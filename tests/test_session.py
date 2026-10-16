@@ -146,6 +146,22 @@ def test_the_audit_does_not_let_a_scene_show_what_happens_later():
     assert audit_beats(tl, beats, EVENTS)
 
 
+def test_output_recorded_after_a_parallel_edit_passes_the_audit_on_later_scenes():
+    # The command's output (seq 2) is shown with its command, so the edit's scene
+    # (seq 1) may keep it in the history; nothing is shown before it happened.
+    events = [
+        Event(seq=0, t=0.0, type="command", data={"command": "octave smoke.m"}),
+        Event(seq=1, t=1.0, type="file_edit",
+              data={"path": "NOTES.md", "edits": [{"old": "a", "new": "b"}]}),
+        Event(seq=2, t=1.1, type="command_output", data={"output": "smoke finite 1\n"}),
+        Event(seq=3, t=2.0, type="completion", data={"subtype": "success"}),
+    ]
+    st = load_settings()
+    tl = build_timeline("demo", events, scenes=st.scenes, timing=st.timing, clocked=True)
+    assert [s.event_seqs for s in tl.scenes if s.kind == "TerminalRun"] == [(0, 2)]
+    assert audit_beats(tl, session_beats(tl, st.timing), events) == []
+
+
 def test_replay_style_is_session_or_slides():
     timing = load_settings().timing
     assert timing.replay_style == "session"

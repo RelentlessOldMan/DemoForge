@@ -362,11 +362,14 @@ def audit_beats(
     """
     by_seq = {e.seq: _norm(" ".join(_strings(e.data))) for e in events}
     problems: list[str] = []
+    # The history is what earlier scenes showed, not every seq below this one: a
+    # command's output recorded after a parallel edit is shown with its command.
+    shown: set[int] = set()
     for scene in timeline.scenes:
+        shown.update(scene.event_seqs)
         if scene.index not in beats:
             continue
-        upto = max(scene.event_seqs) if scene.event_seqs else -1
-        haystack = " \u0000 ".join(v for k, v in sorted(by_seq.items()) if k <= upto)
+        haystack = " \u0000 ".join(v for k, v in sorted(by_seq.items()) if k in shown)
         for beat in beats[scene.index]:
             for text in visible_text(beat):
                 needle = _norm(text.rstrip("… "))

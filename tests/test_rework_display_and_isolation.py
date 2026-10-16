@@ -45,6 +45,17 @@ def test_markdown_bold_can_wrap_code_and_code_stays_literal():
     assert "**" not in out
 
 
+def test_markdown_escapes_show_the_character_and_an_escaped_pipe_stays_in_its_cell():
+    # Claude escapes the pipes of |x| inside a table, as Markdown requires.
+    out = markdown.to_html(
+        "| Stream | Largest \\|x\\| |\n|---|---|\n| one | 2.7e6 |\n\n"
+        "Fails near \\|x\\| ≈ 1e6, and `a\\|b` is code."
+    )
+    assert out.count("<th>") == 2 and "<th>Largest |x|</th>" in out
+    assert "near |x| ≈ 1e6" in out and "<code>a\\|b</code>" in out
+    assert "\\|" not in out.replace("<code>a\\|b</code>", "")
+
+
 def test_markdown_blocks_keep_lists_tables_and_code_whole():
     kinds = [b.kind for b in markdown.blocks("Intro.\n- a\n- b\n\n```\nx\n\ny\n```\n# Head")]
     assert kinds == ["p", "ul", "code", "h"]
