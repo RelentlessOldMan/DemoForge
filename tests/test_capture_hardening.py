@@ -6,6 +6,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 
 import pytest
 
@@ -261,3 +262,46 @@ def test_contains_absent_and_validation(tmp_path):
         validate_check(Check(id="t", kind="threshold", params={"metric": "x", "min": "fast"}))
     with pytest.raises(CheckError):
         validate_check(Check(id="f", kind="file_exists", params={"pattern": "C:/x/*"}))
+
+
+def test_nothing_the_agent_starts_outlives_its_turn(tmp_path):
+    # The "agent" detaches a long-running child, as Start-Process or nohup would,
+    # and returns at once.
+    pid_file = tmp_path / "child.pid"
+    flags = "creationflags=0x00000008" if os.name == "nt" else "start_new_session=True"
+    script = (
+        "import subprocess, sys\n"
+        f"p = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(120)'], {flags})\n"
+        f"open({str(pid_file)!r}, 'w').write(str(p.pid))\n"
+        "print('started')\n"
+    )
+    lines = runmod._stream_timed([sys.executable, "-c", script], "", tmp_path, dict(os.environ), 30)
+    assert [l for _, l in lines] == ["started"]
+    child = int(pid_file.read_text())
+    deadline = time.monotonic() + 5
+    while _alive(child) and time.monotonic() < deadline:
+        time.sleep(0.1)
+    assert not _alive(child)
+
+
+def _alive(pid: int) -> bool:
+    if os.name == "nt":
+        out = subprocess.run(["tasklist", "/FI", f"PID eq {pid}", "/NH"],
+                             capture_output=True, text=True).stdout
+        return str(pid) in out
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    return True
+
+
+def test_the_agent_is_told_nothing_runs_between_replies(tmp_path, monkeypatch):
+    seen = {}
+    monkeypatch.setattr(runmod.shutil, "which", lambda _b, path=None: str(tmp_path / "claude.exe"))
+    monkeypatch.setattr(runmod, "_stream_timed", lambda cmd, *a: seen.update(cmd=cmd) or [])
+    work = tmp_path / "w"
+    work.mkdir()
+    runmod.default_claude_invoker(env={"PATH": ""})("p", work)
+    note = seen["cmd"][seen["cmd"].index("--append-system-prompt") + 1]
+    assert "cannot check back" in note and "20 minutes" in note

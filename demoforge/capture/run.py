@@ -24,7 +24,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
-from demoforge.capture import isolation
+from demoforge.capture import isolation, turnjob
 from demoforge.capture.conversation import (
     SIMULATOR_PROMPT_HASH, Responder, converse, default_user_simulator,
 )
@@ -559,6 +559,8 @@ def default_claude_invoker(
 
     # One session per invoker, so a follow-up continues the same conversation.
     session_id = str(uuid.uuid4())
+    # The longest single command: two thirds of a turn, leaving time to report.
+    max_cmd_ms = int(timeout * 1000 * 2 / 3) if timeout else 0
 
     def invoke(prompt: str, work_dir: Path, *, resume: bool = False) -> list[tuple[float, str]]:
         child_env = dict(os.environ) if env is None else dict(env)
@@ -570,8 +572,8 @@ def default_claude_invoker(
         # job with it, so the agent would be left waiting on output that never comes.
         # Long commands run in the foreground instead, up to most of a turn.
         child_env["CLAUDE_CODE_DISABLE_BACKGROUND_TASKS"] = "1"
-        if timeout:
-            child_env["BASH_MAX_TIMEOUT_MS"] = str(int(timeout * 1000 * 2 / 3))
+        if max_cmd_ms:
+            child_env["BASH_MAX_TIMEOUT_MS"] = str(max_cmd_ms)
         # Resolve on the same PATH the child will get, so the CLI we find is the
         # CLI it runs.
         exe = shutil.which(claude_bin, path=child_env.get("PATH"))
@@ -589,6 +591,9 @@ def default_claude_invoker(
             # agent in ways a viewer can't see or reproduce.
             "--safe-mode",
             "--strict-mcp-config",
+            # Say how the session really works: nothing runs between replies.
+            *(["--append-system-prompt", turnjob.TURN_NOTE.format(minutes=max_cmd_ms // 60000)]
+              if max_cmd_ms else []),
             *(["--resume", session_id] if resume else ["--session-id", session_id]),
             # Permission rules keeping the file tools out of the repository
             # (capture/isolation.py); the post-capture audit covers the shell.
@@ -625,7 +630,9 @@ def _stream_timed(
         # Claude emits UTF-8 JSON; decode as such regardless of the console code
         # page (Windows defaults to cp1252, which mangles —, ×, emoji).
         text=True, encoding="utf-8", errors="replace",
+        **turnjob.popen_kwargs(),
     )
+    job = turnjob.TurnJob(proc)
     stderr: list[str] = []
     drain = threading.Thread(target=lambda: stderr.append(proc.stderr.read()), daemon=True)
     drain.start()
@@ -633,6 +640,7 @@ def _stream_timed(
 
     def _kill() -> None:
         timed_out.set()
+        job.close()
         proc.kill()
 
     timer = threading.Timer(timeout, _kill) if timeout else None
@@ -649,6 +657,8 @@ def _stream_timed(
     finally:
         if timer:
             timer.cancel()
+        # Whatever the agent left running ends with its turn (capture/turnjob.py).
+        job.close()
     drain.join(timeout=5)
     if timed_out.is_set():
         raise subprocess.TimeoutExpired(cmd, timeout)

@@ -90,11 +90,16 @@ understand the run, not to reproduce Claude's tokens exactly.
   and `--strict-mcp-config` turns off their MCP servers: those would steer the
   agent in ways a viewer cannot see or reproduce. API-billing variables are
   removed from the agent's environment so it runs on the CLI's own login.
-- **No background jobs.** A headless turn ends when the agent stops talking, and
-  a background job ends with it, so an agent that backgrounds a long benchmark
-  is left waiting for output that never arrives. Captures set
-  `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1` and raise `BASH_MAX_TIMEOUT_MS` to
-  two thirds of the turn's time limit, so long commands run in the foreground.
+- **Nothing runs between replies.** A headless turn ends when the agent stops
+  talking, and nothing wakes it later, so work still running then would never
+  reach the conversation. Captures make that explicit and enforce it:
+  `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1` removes background jobs,
+  `BASH_MAX_TIMEOUT_MS` lets one foreground command run for two thirds of the
+  turn's time limit, and `--append-system-prompt` tells the agent so
+  (`capture/turnjob.py` `TURN_NOTE`): finish long work before replying, or say it
+  won't fit and propose a run that does. The CLI runs in a Windows job object (a
+  process group elsewhere) that is closed when the turn ends, so a detached
+  `Start-Process` or `nohup` cannot outlive it.
 - **What is recorded.** The CLI's init event lists the operator's tools, skills,
   plugins and memory locations; those fields are dropped before anything is
   written. Each stream line is stamped with the seconds since launch as it
