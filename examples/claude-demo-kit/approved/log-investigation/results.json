@@ -1,0 +1,89 @@
+{
+  "checks": [
+    {
+      "id": "produced_report",
+      "kind": "file_exists",
+      "message": "matched 1: findings.md",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "report_names_test",
+      "kind": "contains",
+      "message": "found pattern '1847'",
+      "passed": true,
+      "value": true
+    },
+    {
+      "id": "findings_valid",
+      "kind": "threshold",
+      "message": "findings_valid=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "citations_exist",
+      "kind": "threshold",
+      "message": "citations_exist=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "cause_ok",
+      "kind": "threshold",
+      "message": "cause_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "evidence_enospc",
+      "kind": "threshold",
+      "message": "evidence_enospc=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "evidence_truncation",
+      "kind": "threshold",
+      "message": "evidence_truncation=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "evidence_nonfinite",
+      "kind": "threshold",
+      "message": "evidence_nonfinite=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "evidence_no_decoys",
+      "kind": "threshold",
+      "message": "evidence_no_decoys=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "ruled_out_not_cause",
+      "kind": "threshold",
+      "message": "ruled_out_not_cause=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "decoys_ruled_out",
+      "kind": "threshold",
+      "message": "decoys_ruled_out=3.0 (min 2.0)",
+      "passed": true,
+      "value": 3.0
+    },
+    {
+      "id": "n_evidence",
+      "kind": "metric",
+      "message": "n_evidence=14",
+      "passed": null,
+      "value": 14
+    }
+  ],
+  "passed": true
+}

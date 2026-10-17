@@ -1,0 +1,51 @@
+{
+  "capture_mode": "headless",
+  "created": "2026-10-16T23:26:15Z",
+  "demo_id": "log-investigation",
+  "extra": {
+    "auth_source": "none",
+    "claude_cli": "2.1.289 (Claude Code)",
+    "event_times": "wallclock",
+    "follow_ups": 1,
+    "isolation": {
+      "clean": true,
+      "findings": [],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2"
+      ]
+    },
+    "isolation_at_approve": {
+      "clean": true,
+      "findings": [],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2"
+      ]
+    },
+    "max_follow_ups": 3,
+    "redaction": "display paths rewritten (an unmapped home folder becomes ~), search-path listings replaced by '<search path removed>', Claude Code's saved-output paths replaced by '<output saved by Claude Code>', file owners in long listings shown as 'user', account details (rate limits, cost, session ids, tool list) and the text of Claude's private reasoning removed from the raw transcripts",
+    "run_id": "20261016T232615Z-9770be85",
+    "user": "simulated from user.md",
+    "user_simulator_prompt": "sha256:74799a4134af26e3297058cdc5b10128f2118b0774a877d065e21cbefbe39c47"
+  },
+  "git_commit": "39319c33a6c7330985d3d2866506c0cc070a8bdd",
+  "git_dirty": false,
+  "input_hashes": {
+    "data-ingest.log": "1a07d695920ea24001d1335dad061d884c3e87bada9a3d87fbf1b2156b6ad24b",
+    "estimator-worker.log": "b855ffa76d68dd20799ac511b67261f65727619c954e660e44741a2ae74078ce",
+    "scheduler.log": "575413e133e13efe35d6c6571bc1ce26d8b7673c23a4554f0ff5ee3a73e1f20a",
+    "system.log": "4ff908a2060dd92095a724e916c140875545dabb44352d2aca2d9aa5b3acacb2",
+    "validation-runner.log": "6a60c1c5e0f6f63470eb156cd17f08a7d7a7623b539174d4f3cc764d78bfe967"
+  },
+  "model": "claude-opus-5-5",
+  "os": "Windows 11",
+  "prompt_hash": "bcc953a57fab269180215a0b0f1ffb494171fe7e4b2a71873dc0fff610756874",
+  "runtimes": {
+    "octave": "C:\\Users\\you\\AppData\\Local\\Programs\\GNU Octave\\Octave-11.3.0\\mingw64\\bin\\octave-cli.exe",
+    "python": "python"
+  },
+  "user_hash": "f0a3f8cd061b642d29a91429bfd4c5c2e9d334c56db42fa83db50fec8dba72c8"
+}

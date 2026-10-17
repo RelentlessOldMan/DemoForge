@@ -1,0 +1,33 @@
+{
+  "test_id": 1847,
+  "root_cause_component": "storage",
+  "root_cause": "/var/validation reached 100% full during the batch, so data-ingest's write of batch_1847_vectors.csv failed with ENOSPC partway through, yet ingest still marked the truncated file READY and the estimator turned its partial last row into NaN, which made the filter diverge.",
+  "chain": ["storage", "data-ingest", "estimator", "runner"],
+  "evidence": [
+    {"file": "system.log", "line": 7, "note": "/var/validation already at 95% (19.0G/20.0G) when the nightly run started"},
+    {"file": "system.log", "line": 20, "note": "98% at 02:14:00; retention hook did not fire (trigger is 'over 98%')"},
+    {"file": "system.log", "line": 21, "note": "/var/validation at 100% (20.0G/20.0G) at 02:15:03"},
+    {"file": "data-ingest.log", "line": 101, "note": "Export of batch_1847_vectors.csv begins at 02:15:02"},
+    {"file": "data-ingest.log", "line": 102, "note": "Write of batch_1847_vectors.csv failed at offset 37104 with Errno 28 No space left on device"},
+    {"file": "data-ingest.log", "line": 103, "note": "Truncated file (1180 of 1500 rows, 36.2 KB) still marked status=READY"},
+    {"file": "data-ingest.log", "line": 110, "note": "Summary reports 0 errors because it only counts archive-side errors, hiding the local write failure"},
+    {"file": "scheduler.log", "line": 71, "note": "1847 dispatched to estimator-01 on the strength of the READY marker"},
+    {"file": "estimator-worker.log", "line": 170, "note": "estimator-01 read only 1181 rows (1180 complete plus 1 truncated) instead of 1500"},
+    {"file": "estimator-worker.log", "line": 171, "note": "Truncated row 1181 has empty field, filled with NaN"},
+    {"file": "estimator-worker.log", "line": 173, "note": "NaN measurement makes filter innovation non-finite at step 1181"},
+    {"file": "estimator-worker.log", "line": 174, "note": "Covariance non-finite; estimator aborts with 0 states emitted"},
+    {"file": "validation-runner.log", "line": 99, "note": "Test 1847 FAIL: worker error 'non-finite result', states=0 expected=1500"},
+    {"file": "system.log", "line": 23, "note": "Retention freed 6.1G only after the disk filled; later tests 1848-1850 exported and passed normally"}
+  ],
+  "ruled_out": [
+    {"item": "estimator-02 license heartbeat timeout", "file": "estimator-worker.log", "line": 167, "reason": "Happened on estimator-02, not estimator-01 which ran 1847; license reacquired with no task interrupted (line 168) and estimator-01 heartbeat was ok (line 166)"},
+    {"item": "estimator-01 test 1823 deadline retry", "file": "validation-runner.log", "line": 50, "reason": "7 minutes earlier, a different failure mode (slow response, not non-finite output), and 1823 passed on retry with normal numbers"},
+    {"item": "RT throttling of estimator-02", "file": "system.log", "line": 16, "reason": "Different worker at 02:08; all estimator-02 tests passed"},
+    {"item": "estimator-02 slow dispatch acks", "file": "scheduler.log", "line": 15, "reason": "Different worker; affected tests 1806, 1826 and 1838 all passed"},
+    {"item": "meas-archive read latency warnings", "file": "data-ingest.log", "line": 31, "reason": "Remote read slowness at 02:04 and 02:10 (also line 70); those exports completed with full row counts, and the 1847 error was a local ENOSPC write failure"},
+    {"item": "NIC link event", "file": "system.log", "line": 11, "reason": "At 02:03:44 with no link-down or network errors near 02:15; ingest kept exporting normally"},
+    {"item": "Estimator build or numerical regression", "file": "estimator-worker.log", "line": 182, "reason": "Same build on both workers; estimator-01 passed 1849 right after 1847 and 50/51 tests pass at ~3e-10 error; the NaN came from the truncated input"},
+    {"item": "Scheduler dispatch or health", "file": "scheduler.log", "line": 4, "reason": "All components healthy and dispatch followed the parity policy; the scheduler acted correctly on the READY marker it was given"},
+    {"item": "Clock drift", "file": "system.log", "line": 18, "reason": "Corrections in the millisecond range, unrelated to file contents"}
+  ]
+}
