@@ -45,6 +45,10 @@ CASES = [
     (f'=AVERAGEIF({R}B2:B5,"maneuver",{R}C2:C5)', 0.7), (f'=AVERAGEIFS({R}D2:D5,{R}E2:E5,"FAIL")', 130 / 3),
     (f'=MAXIFS({R}C2:C5,{R}B2:B5,"maneuver")', 0.8), (f'=MINIFS({R}D2:D5,{R}E2:E5,"FAIL")', 35.0),
     (f'=SUMPRODUCT(({R}C2:C5<=MaxErr)*({R}D2:D5<=Criteria!B4))', 1.0),
+    # a one-value function given a range applies per cell (rows 6-9 are empty)
+    (f'=SUMPRODUCT(({R}A2:A9<>"")*ISNUMBER({R}C2:C9)*({R}C2:C9<=MaxErr))', 2.0),
+    (f"=SUMPRODUCT(ISBLANK({R}F2:F5)*1)", 3.0), (f"=SUMPRODUCT(LEN({R}B2:B5))", 26.0),
+    (f"=SUMPRODUCT(ABS({R}C2:C5-0.5))", 0.7), (f"=SUMPRODUCT(N({R}C2:C3))", 1.0),
     # logic and errors
     ("=IF(AND(1<2,NOT(FALSE)),\"Y\",\"N\")", "Y"), ("=OR(FALSE,0,1)", True), ("=NOT(1)", False),
     ("=IFERROR(1/0,\"div\")", "div"), ("=IFS(1>2,\"a\",2>1,\"b\")", "b"),

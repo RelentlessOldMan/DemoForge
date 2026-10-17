@@ -538,6 +538,16 @@ def _round(x, n=0.0, mode="half"):
     return math.copysign(y / f, x)
 
 
+def _each(fn):
+    """A one-value function given a range applies to each cell, as in Excel's array
+    evaluation: SUMPRODUCT(ISNUMBER(F2:F41)*...) tests every cell, not the range."""
+    def lifted(v, *rest):
+        if isinstance(v, Array):
+            return Array([[fn(x, *rest) for x in row] for row in v.rows])
+        return fn(v, *rest)
+    return lifted
+
+
 def _sumproduct(*arrays):
     flats = [a.flat() if isinstance(a, Array) else [a] for a in arrays]
     n = len(flats[0])
@@ -699,17 +709,17 @@ FUNCTIONS = {
     "ROUND": lambda x, n=0.0: _round(x, n, "half"),
     "ROUNDUP": lambda x, n=0.0: _round(x, n, "up"),
     "ROUNDDOWN": lambda x, n=0.0: _round(x, n, "down"),
-    "ABS": lambda x: abs(_num(x)),
+    "ABS": _each(lambda x: abs(_num(x))),
     "ROWS": lambda a: float(a.shape[0] if isinstance(a, Array) else 1),
     "COLUMNS": lambda a: float(a.shape[1] if isinstance(a, Array) else 1),
-    "LEN": lambda s: float(len(_text(s))),
-    "UPPER": lambda s: _text(s).upper(),
-    "LOWER": lambda s: _text(s).lower(),
-    "TRIM": lambda s: " ".join(_text(s).split()),
+    "LEN": _each(lambda s: float(len(_text(s)))),
+    "UPPER": _each(lambda s: _text(s).upper()),
+    "LOWER": _each(lambda s: _text(s).lower()),
+    "TRIM": _each(lambda s: " ".join(_text(s).split())),
     "CONCATENATE": lambda *a: "".join(_text(x) for x in a),
     "CONCAT": lambda *a: "".join(_text(v) for x in a for v in (x.flat() if isinstance(x, Array) else [x])),
-    "ISNUMBER": lambda v: _is_num(v),
-    "ISBLANK": lambda v: v is None,
-    "ISERROR": lambda v: isinstance(v, XLError),
-    "N": lambda v: float(v) if _is_num(v) else (1.0 if v is True else 0.0),
+    "ISNUMBER": _each(_is_num),
+    "ISBLANK": _each(lambda v: v is None),
+    "ISERROR": _each(lambda v: isinstance(v, XLError)),
+    "N": _each(lambda v: float(v) if _is_num(v) else (1.0 if v is True else 0.0)),
 }
