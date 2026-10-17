@@ -6,6 +6,6 @@ capture writes is a frozen record; nothing downstream re-runs the agent.
 """
 
 from demoforge.capture.normalize import normalize
-from demoforge.capture.run import RunResult, approve_run, run_demo
+from demoforge.capture.run import RunResult, approve_run, reverify_run, run_demo
 
-__all__ = ["normalize", "run_demo", "approve_run", "RunResult"]
+__all__ = ["normalize", "run_demo", "approve_run", "reverify_run", "RunResult"]

@@ -97,6 +97,27 @@ def api_key_billed(auth_source: str | None) -> bool:
     return bool(auth_source) and auth_source.lower() != "none"
 
 
+def sandbox_env(env: dict[str, str], sandbox: Path) -> dict[str, str]:
+    """The agent's environment, with what it writes outside its folder kept in the sandbox.
+
+    Scratch files: a shared temp folder is outside the demo, outlives it, and collides
+    between captures that run at the same time (two demos backing up the same file name).
+
+    Python packages: a `pip install` would otherwise land in the machine's own Python
+    (the user site when the system one is read-only) and outlive the run. PIP_TARGET
+    sends it to the sandbox, and PYTHONPATH lets the agent import what it installed
+    there. Both go when the sandbox does. The machine's existing packages stay
+    importable, so a demo that relies on them still runs.
+    """
+    tmp = sandbox / "tmp"
+    site = sandbox / "site-packages"
+    tmp.mkdir(exist_ok=True)
+    site.mkdir(exist_ok=True)
+    paths = [str(site), *([env["PYTHONPATH"]] if env.get("PYTHONPATH") else [])]
+    return dict(env, TMP=str(tmp), TEMP=str(tmp), TMPDIR=str(tmp),
+                PIP_TARGET=str(site), PYTHONPATH=os.pathsep.join(paths))
+
+
 def run_demo(
     demo: Demo,
     content_set: ContentSet,
@@ -161,12 +182,7 @@ def run_demo(
         agent_work = sandbox / "working"
         agent_work.mkdir()
         if real:
-            # Scratch files go inside the sandbox too. A shared temp folder is
-            # outside the demo, outlives it, and collides between captures that
-            # run at the same time (two demos backing up the same file name).
-            tmp = sandbox / "tmp"
-            tmp.mkdir()
-            env = dict(env, TMP=str(tmp), TEMP=str(tmp), TMPDIR=str(tmp))
+            env = sandbox_env(env, sandbox)
             deny = isolation.deny_rules(_forbidden_roots(content_set))
             invoker = default_claude_invoker(env=env, deny=deny)
             if responder is None and demo.user:
@@ -340,6 +356,46 @@ def approve_run(
 
     _atomic_freeze(src_root, bundle.artifacts_dir, dest, scrub=scrub)
     return dest
+
+
+def reverify_run(
+    content_set: ContentSet,
+    demo_id: str,
+    *,
+    run_id: str | None = None,
+    octave_bin: str | None = None,
+) -> tuple[Path, VerifyOutcome]:
+    """Check a captured run again with the demo's current checks, and record that.
+
+    For when the checks were wrong, not the run: a harness bug found after capture.
+    The run is untouched (the agent's files, the transcript); only results.json is
+    replaced, and metadata.json keeps the earlier verdict beside the commit of the
+    checks that gave the new one, so an approved bundle shows it was re-checked.
+    """
+    src_root = _resolve_run(content_set, demo_id, run_id)
+    bundle = RunBundle(src_root)
+    work = src_root / "working"
+    if not bundle.exists() or not work.is_dir():
+        raise DemoError(f"{src_root} is not a run bundle with its working folder")
+    demo = next((d for d in content_set.demos() if d.id == demo_id), None)
+    if demo is None:
+        raise DemoError(f"unknown demo {demo_id!r}")
+
+    before = bundle.read_results() if bundle.results_path.exists() else None
+    verify_dir = src_root / "verify"
+    if verify_dir.exists():
+        shutil.rmtree(verify_dir)
+    outcome = verify_demo(demo, content_set, artifacts_dirs=[work], work_dir=verify_dir,
+                          octave_bin=octave_bin)
+    bundle.write_results(outcome.results)
+    _set_extra(bundle.root / "metadata.json", "reverified", {
+        "at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "checks_commit": _git_commit(demo.dir),
+        "checks_dirty": _git_dirty(demo.dir),
+        "passed_before": None if before is None else before.passed,
+        "failed_before": [] if before is None else [c.id for c in before.checks if c.passed is False],
+    })
+    return src_root, outcome
 
 
 def _bundle_isolation(demo: Demo, cs: ContentSet, root: Path) -> dict[str, Any]:

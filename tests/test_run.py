@@ -300,3 +300,82 @@ def test_run_and_approve_demo2(tmp_path):
     assert (dest / "artifacts" / "kalman_update_fast.m").exists()
     assert (dest / "results.json").exists()
     assert not (dest / "working").exists()  # scratch not frozen
+
+
+# ---- the agent's environment -------------------------------------------
+def _tiny_wheel(dest):
+    """A pure-Python wheel built by hand: pip installs it offline, with no build step."""
+    import zipfile
+
+    path = dest / "dfprobe-1.0-py3-none-any.whl"
+    files = {
+        "dfprobe/__init__.py": "MARK = 'from the sandbox'\n",
+        "dfprobe-1.0.dist-info/METADATA": "Metadata-Version: 2.1\nName: dfprobe\nVersion: 1.0\n",
+        "dfprobe-1.0.dist-info/WHEEL": "Wheel-Version: 1.0\nGenerator: test\nRoot-Is-Purelib: true\nTag: py3-none-any\n",
+    }
+    record = "".join(f"{name},,\n" for name in files) + "dfprobe-1.0.dist-info/RECORD,,\n"
+    with zipfile.ZipFile(path, "w") as z:
+        for name, text in files.items():
+            z.writestr(name, text)
+        z.writestr("dfprobe-1.0.dist-info/RECORD", record)
+    return path
+
+
+def test_a_pip_install_by_the_agent_stays_in_the_sandbox(tmp_path):
+    import subprocess
+    import sys
+
+    from demoforge.capture.run import sandbox_env
+
+    sandbox = tmp_path / "sandbox"
+    sandbox.mkdir()
+    base = {k: v for k, v in __import__("os").environ.items() if k not in ("PIP_TARGET", "PYTHONPATH")}
+    env = sandbox_env(base, sandbox)
+    assert env["TMP"] == env["TEMP"] == env["TMPDIR"] == str(sandbox / "tmp")
+
+    wheel = _tiny_wheel(tmp_path)
+    pip = subprocess.run(
+        [sys.executable, "-m", "pip", "install", "--no-index", "--no-deps",
+         "--disable-pip-version-check", str(wheel)],
+        env=env, capture_output=True, text=True,
+    )
+    assert pip.returncode == 0, pip.stderr
+    assert (sandbox / "site-packages" / "dfprobe" / "__init__.py").is_file()
+
+    # The agent can import what it installed; nothing outside the sandbox can.
+    probe = [sys.executable, "-c", "import dfprobe; print(dfprobe.__file__)"]
+    inside = subprocess.run(probe, env=env, capture_output=True, text=True)
+    assert inside.returncode == 0 and str(sandbox) in inside.stdout
+    outside = subprocess.run(probe, env=base, capture_output=True, text=True)
+    assert outside.returncode != 0
+
+
+def test_a_run_failed_by_a_checks_bug_is_rechecked_and_recorded(tmp_path):
+    from demoforge.capture import reverify_run
+
+    cs = _synth_set(tmp_path)
+    manifest = cs.demos_dir / "synth" / "demo.yaml"
+    # The checks are wrong: they look for a file the prompt never asked for.
+    manifest.write_text(manifest.read_text(encoding="utf-8").replace(
+        "pattern: result.out", "pattern: results.out"), encoding="utf-8")
+    result = run_demo(cs.demos()[0], cs, invoker=_invoker(True), when=WHEN, git_commit="x")
+    assert result.passed is False
+    with pytest.raises(DemoForgeError, match="did not pass"):
+        approve_run(cs, "synth", run_id=result.run_id)
+    events = result.bundle.events_path.read_bytes()
+
+    # The checks are fixed; the run is checked again, not captured again.
+    manifest.write_text(manifest.read_text(encoding="utf-8").replace(
+        "pattern: results.out", "pattern: result.out"), encoding="utf-8")
+    root, outcome = reverify_run(cs, "synth", run_id=result.run_id)
+    assert outcome.passed is True
+    assert result.bundle.read_results().passed is True
+    assert result.bundle.events_path.read_bytes() == events  # the run itself is untouched
+
+    note = json.loads(result.bundle.metadata_path.read_text(encoding="utf-8"))["extra"]["reverified"]
+    assert note["passed_before"] is False and note["failed_before"] == ["produced"]
+    assert note["at"]
+
+    dest = approve_run(cs, "synth", run_id=result.run_id)
+    frozen = json.loads((dest / "metadata.json").read_text(encoding="utf-8"))
+    assert frozen["extra"]["reverified"]["failed_before"] == ["produced"]

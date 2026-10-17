@@ -24,7 +24,7 @@ from demoforge.checks import validate_check
 from demoforge.discovery import ContentSet, load_content_set
 from demoforge.errors import ContentSetError, DemoError, DemoForgeError
 from demoforge.build import build
-from demoforge.capture import approve_run, run_demo
+from demoforge.capture import approve_run, reverify_run, run_demo
 from demoforge.model import Demo
 from demoforge.render import render_all
 from demoforge.render.slides import marp_available
@@ -70,6 +70,11 @@ def _build_parser() -> argparse.ArgumentParser:
     p_verify.add_argument(
         "--artifacts", metavar="DIR",
         help="dir of produced artifacts (default: the demo's reference/ solution)",
+    )
+    p_verify.add_argument(
+        "--run", metavar="RUN_ID",
+        help="check a captured run again with the current checks and record the new "
+             "result in it (for a checks bug found after capture)",
     )
     p_verify.set_defaults(func=cmd_verify)
 
@@ -292,6 +297,14 @@ def _print_video(summary: VideoSummary, cs: ContentSet) -> None:
 def cmd_verify(args: argparse.Namespace) -> int:
     cs = _resolve_content_set(args)
     demo = _find_demo(cs, args.demo)
+
+    if args.run:
+        if args.artifacts:
+            raise DemoError("pass --run or --artifacts, not both", path=demo.dir)
+        root, outcome = reverify_run(cs, demo.id, run_id=args.run)
+        _print_verify(outcome, demo, root / "working")
+        print(f"  recorded in {root.name}: results.json replaced, metadata.json extra.reverified")
+        return EXIT_OK if outcome.passed else EXIT_ERROR
 
     artifacts = Path(args.artifacts) if args.artifacts else (demo.dir / "reference")
     if not artifacts.is_dir():
