@@ -1,0 +1,131 @@
+{
+  "checks": [
+    {
+      "id": "produced_corrected_workbook",
+      "kind": "file_exists",
+      "message": "matched 1: validation_results_corrected.xlsx",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "produced_note",
+      "kind": "file_exists",
+      "message": "matched 1: review_note.md",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "formulas_evaluable",
+      "kind": "threshold",
+      "message": "unsupported_formula=0.0 (max 0.0)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "criteria_match_plan",
+      "kind": "threshold",
+      "message": "criteria_match_plan=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "run_data_intact",
+      "kind": "threshold",
+      "message": "run_data_intact=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "formulas_live",
+      "kind": "threshold",
+      "message": "formulas_live=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "verdict_reject",
+      "kind": "threshold",
+      "message": "verdict_reject=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "results_follow_plan",
+      "kind": "threshold",
+      "message": "result_mismatches=0.0 (min 0.0, max 0.0)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "summary_follows_plan",
+      "kind": "threshold",
+      "message": "summary_mismatches=0.0 (min 0.0, max 0.0)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "verdict_follows_plan",
+      "kind": "threshold",
+      "message": "verdict_mismatches=0.0 (min 0.0, max 0.0)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "findings_verdict",
+      "kind": "threshold",
+      "message": "findings_verdict_reject=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "findings_counts",
+      "kind": "threshold",
+      "message": "findings_counts_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "findings_failed_runs",
+      "kind": "threshold",
+      "message": "findings_failed_runs_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "findings_cite_limit_cell",
+      "kind": "threshold",
+      "message": "findings_cites_limit_cell=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "findings_citations_valid",
+      "kind": "threshold",
+      "message": "findings_citations_valid=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "recomputed_pass_rate",
+      "kind": "metric",
+      "message": "recomputed_pass_rate=0.85",
+      "passed": null,
+      "value": 0.85
+    },
+    {
+      "id": "n_failing_runs",
+      "kind": "metric",
+      "message": "n_failing_runs=6",
+      "passed": null,
+      "value": 6
+    },
+    {
+      "id": "n_runs",
+      "kind": "metric",
+      "message": "n_runs=40",
+      "passed": null,
+      "value": 40
+    }
+  ],
+  "passed": true
+}

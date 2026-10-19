@@ -1,0 +1,24 @@
+{
+  "campaign_verdict": "REJECT",
+  "runs_total": 40,
+  "runs_passed": 34,
+  "pass_rate": 0.85,
+  "failed_runs": ["VR-1901", "VR-1903", "VR-1904", "VR-1917", "VR-1929", "VR-1932"],
+  "issues": [
+    {
+      "sheet": "Criteria",
+      "cell": "B2",
+      "description": "Max peak position error is entered as 5 m. CVT-VAL-002 Rev A §4 sets it at 0.5 m, so the limit is 10x too loose. Six maneuver runs with errors of 0.75 to 1.003 m were scored PASS. With the correct limit they fail, the pass rate is 34/40 = 0.85, which is below the 0.95 minimum, and the verdict is REJECT, not ACCEPT."
+    },
+    {
+      "sheet": "Runs",
+      "cell": "H2:H41",
+      "description": "The Result formula only checks peak position error against Criteria!B2. It never checks Runtime_ms against the 50 ms limit in Criteria!B4. §3 says a run passes only when both its error and its runtime are within limits. For this campaign the omission changes nothing, because the highest runtime is 43.3 ms, but a run that is too slow would still be marked PASS."
+    },
+    {
+      "sheet": "Summary",
+      "cell": "B5:B11",
+      "description": "The summary formulas use fixed ranges ending at row 41 (Runs!A2:A41, H2:H41, F2:F41, G2:G41). Because the workbook is the campaign template, any campaign with more than 40 runs would silently leave the extra runs out of the totals, the pass rate and the verdict. This doesn't affect VAL-2026-05, which has exactly 40 runs."
+    }
+  ]
+}
