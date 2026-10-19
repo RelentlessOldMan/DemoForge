@@ -122,6 +122,7 @@ class Timing:
     title_card_seconds: float = 6.0
     chapter_card_seconds: float = 4.0
     outro_card_seconds: float = 9.0
+    contents_card_seconds: float = 10.0
     compress_idle: bool = True
     compress_notice_seconds: float = 10.0
     fps: int = 30
@@ -176,7 +177,12 @@ class Timing:
                 raise ConfigError(f"timing.yaml: {name} must be > 0")
         if self.fps <= 0:
             raise ConfigError("timing.yaml: fps must be > 0")
-        for name in ("title_card_seconds", "chapter_card_seconds", "outro_card_seconds"):
+        for name in (
+            "title_card_seconds",
+            "chapter_card_seconds",
+            "outro_card_seconds",
+            "contents_card_seconds",
+        ):
             if getattr(self, name) <= 0:
                 raise ConfigError(f"timing.yaml: {name} must be > 0")
 

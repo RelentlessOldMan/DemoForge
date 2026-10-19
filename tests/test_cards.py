@@ -16,6 +16,8 @@ from demoforge.render.cards import (
     Card,
     card_html,
     chapter_card,
+    clock,
+    contents_card,
     outro_card,
     title_card,
 )
@@ -86,6 +88,25 @@ def test_the_closing_card_counts_what_was_actually_rendered():
     assert "demoforge build --video" in html
     # The claim the card makes is the property the timeline enforces.
     assert "not re-enacted" in html
+
+
+def test_the_contents_card_lists_each_demo_with_where_it_starts():
+    card = contents_card(
+        CONFIG, TIMING, entries=[(1, "Implementation", 10.0), (2, "Optimization", 412.7)]
+    )
+    html = card_html(card, VIDEO)
+    assert "Skip to a demo" in html
+    assert "Implementation" in html and "Optimization" in html
+    assert ">0:10<" in html and ">6:52<" in html
+    assert card.duration == TIMING.contents_card_seconds
+
+
+def test_a_clock_time_rounds_down_and_shows_hours_only_when_needed():
+    assert clock(0.0) == "0:00"
+    assert clock(59.99) == "0:59"
+    assert clock(412.7) == "6:52"
+    assert clock(3600.0) == "1:00:00"
+    assert clock(3725.4) == "1:02:05"
 
 
 # ---- narration stretches, never clips ---------------------------------

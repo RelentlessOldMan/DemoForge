@@ -22,6 +22,7 @@ from demoforge.render.cards import (
     Card,
     card_html,
     chapter_card,
+    contents_card,
     outro_card,
     problem_card,
     title_card,
@@ -246,14 +247,21 @@ def _assemble_cards(
     is exactly what that block is written for ("next, Claude ports this to Python").
     The first chapter has no predecessor, so its card is silent and the title card
     carries the opening instead.
+
+    The contents card after the title lists where each chapter card starts. The
+    chapter cards are sized first, narration included, so those times are exact.
     """
     cards_dir = out / "video" / "_cards"
     total = len(summary.chapters)
     order: list[Path] = []
 
-    def emit(card: Card, audio=None) -> None:
+    def sized(card: Card, audio=None) -> Card:
         if audio is not None:
             card = card.with_duration(audio.seconds + st.timing.narration_tail_seconds)
+        return card
+
+    def emit(card: Card, audio=None) -> None:
+        card = sized(card, audio)
         image = _card_frame(card, st, cards_dir, renderer, force)
         clip = assemble_card_clip(
             image,
@@ -267,26 +275,37 @@ def _assemble_cards(
         summary.cards.append(clip)
         order.append(clip.path)
 
-    if cs.config.presentation.intro:
-        emit(title_card(cs.config, st.timing, demo_count=total))
-
+    chapter_cards: list[tuple[Card, object]] = []
     for i, chapter in enumerate(summary.chapters):
         previous = summary.chapters[i - 1] if i else None
         handoff = previous.audio.get(MOMENT_TRANSITION) if previous else None
         handoff_block = previous.narration.get(MOMENT_TRANSITION) if previous else None
-        emit(
-            chapter_card(
-                demo_id=chapter.demo_id,
-                title=chapter.title,
-                number=i + 1,
-                total=total,
-                set_title=cs.config.title,
-                timing=st.timing,
-                narration=(previous.demo_id, MOMENT_TRANSITION) if handoff else None,
-                caption=display_text(handoff_block.text) if handoff_block else "",
-            ),
-            audio=handoff,
+        card = chapter_card(
+            demo_id=chapter.demo_id,
+            title=chapter.title,
+            number=i + 1,
+            total=total,
+            set_title=cs.config.title,
+            timing=st.timing,
+            narration=(previous.demo_id, MOMENT_TRANSITION) if handoff else None,
+            caption=display_text(handoff_block.text) if handoff_block else "",
         )
+        chapter_cards.append((card, handoff))
+
+    if cs.config.presentation.intro:
+        title = title_card(cs.config, st.timing, demo_count=total)
+        emit(title)
+        if cs.config.presentation.contents and total > 1:
+            contents = contents_card(cs.config, st.timing, entries=[])
+            at = title.duration + contents.duration
+            entries = []
+            for i, (chapter, (card, audio)) in enumerate(zip(summary.chapters, chapter_cards)):
+                entries.append((i + 1, chapter.title, at))
+                at += sized(card, audio).duration + chapter.seconds
+            emit(contents_card(cs.config, st.timing, entries=entries))
+
+    for chapter, (card, audio) in zip(summary.chapters, chapter_cards):
+        emit(card, audio=audio)
         # The chapter opens with its own intro cards, already encoded.
         order.extend(chapter.parts)
 

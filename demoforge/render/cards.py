@@ -25,6 +25,7 @@ from demoforge.render.frames import _environment, font_face_css
 TITLE_TEMPLATE = "title_card.html.j2"
 CHAPTER_TEMPLATE = "chapter_card.html.j2"
 OUTRO_TEMPLATE = "outro_card.html.j2"
+CONTENTS_TEMPLATE = "contents_card.html.j2"
 PROBLEM_TEMPLATE = "problem_card.html.j2"
 
 
@@ -67,6 +68,41 @@ def title_card(config: ContentSetConfig, timing: Timing, *, demo_count: int) -> 
             "subtitle": config.subtitle,
             "description": config.description,
             "demo_count": demo_count,
+        },
+    )
+
+
+def clock(seconds: float) -> str:
+    """A video position as a viewer types it into a player: ``m:ss`` or ``h:mm:ss``.
+
+    Rounded down, so skipping to it never lands after the chapter has begun.
+    """
+    s = int(seconds)
+    h, m, s = s // 3600, s // 60 % 60, s % 60
+    return f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
+
+
+def contents_card(
+    config: ContentSetConfig,
+    timing: Timing,
+    *,
+    entries: list[tuple[int, str, float]],
+) -> Card:
+    """Where each demo starts in the presentation, so a viewer can skip to it.
+
+    ``entries`` are (number, title, start seconds), the starts measured from the
+    pieces actually joined, so every time on the card is where that chapter is.
+    """
+    return Card(
+        id="contents",
+        kind="ContentsCard",
+        template=CONTENTS_TEMPLATE,
+        duration=timing.contents_card_seconds,
+        data={
+            "title": config.title,
+            "entries": [
+                {"number": n, "title": t, "start": clock(start)} for n, t, start in entries
+            ],
         },
     )
 

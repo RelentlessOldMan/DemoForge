@@ -13,6 +13,10 @@
 > frame names the captured events behind it, and a card has no run behind it to
 > name. `cards.py` is the only place anything on screen is not event-derived, and
 > the closing card's figures are measured from the chapters actually rendered.
+> A contents card follows the title when there are two or more chapters, listing
+> where each chapter card starts so a viewer can skip to a demo; the times come
+> from the joined pieces' lengths, chapter cards sized after their narration
+> (`[presentation] contents = false` turns it off).
 >
 > Narration is **Kokoro-82M** run locally on the GPU (§10.1), out of process under
 > whichever interpreter has it installed, so the engine keeps no torch dependency.

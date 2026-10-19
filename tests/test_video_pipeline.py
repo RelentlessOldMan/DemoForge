@@ -13,6 +13,7 @@ from conftest import requires_ffmpeg
 from demoforge.capture import approve_run, run_demo
 from demoforge.discovery import load_content_set
 from demoforge.errors import DemoError
+from demoforge.render.cards import clock
 from demoforge.render.config import VideoEncode, load_settings
 from demoforge.render.timeline import read_timeline
 from demoforge.render.video_pipeline import PRESENTATION_NAME, build_videos
@@ -274,7 +275,7 @@ def test_the_presentation_is_bookended_and_chaptered(tmp_path):
     summary = _build(cs)
 
     ids = [c.path.stem for c in summary.cards]
-    assert ids == ["intro", "chapter-alpha", "chapter-beta", "outro"]
+    assert ids == ["intro", "contents", "chapter-alpha", "chapter-beta", "outro"]
     assert summary.presentation is not None
     # Cards add to the running time on top of the chapters.
     chapters = sum(c.seconds for c in summary.chapters)
@@ -291,6 +292,58 @@ def test_cards_can_be_switched_off_per_content_set(tmp_path):
     )
     summary = _build(load_content_set(cs.root))
     assert [c.path.stem for c in summary.cards] == ["chapter-alpha", "chapter-beta"]
+
+
+def test_the_contents_card_says_where_each_demo_really_starts(tmp_path):
+    """Each time on it is where that chapter's card begins in the joined video."""
+    import re
+
+    from demoforge.render.video import probe_seconds
+
+    cs = _set(tmp_path, approve=("alpha", "beta"))
+    # A handoff stretches beta's chapter card, so the times must follow the real lengths.
+    (cs.demos_dir / "alpha" / "narration.md").write_text(
+        "## setup\n\nA job.\n\n## transition\n\n"
+        "Next up, a completely different kind of engineering problem for Claude "
+        "to work through from first principles, with a long handoff to stretch it.\n",
+        encoding="utf-8",
+    )
+
+    class Recording(_StubRenderer):
+        def __init__(self) -> None:
+            super().__init__()
+            self.html: list[str] = []
+
+        def render(self, html, out_path):
+            self.html.append(html)
+            super().render(html, out_path)
+
+    renderer = Recording()
+    summary = _build(load_content_set(cs.root), renderer=renderer)
+    contents = next(h for h in renderer.html if "Skip to a demo" in h)
+    shown = re.findall(r'class="toc__at">([0-9:]+)<', contents)
+
+    cards = {c.path.stem: c.path for c in summary.cards}
+    alpha, beta = summary.chapters
+    order = [cards["intro"], cards["contents"], cards["chapter-alpha"], *alpha.parts]
+    beta_at = sum(probe_seconds(p) for p in order)
+    alpha_at = sum(probe_seconds(p) for p in order[:2])
+    assert shown == [clock(alpha_at), clock(beta_at)]
+
+
+def test_the_contents_card_can_be_switched_off(tmp_path):
+    cs = _set(tmp_path, approve=("alpha", "beta"))
+    (cs.root / "demoforge.toml").write_text(
+        '[set]\nid = "vid-set"\ntitle = "Video Set"\n\n[presentation]\ncontents = false\n',
+        encoding="utf-8",
+    )
+    summary = _build(load_content_set(cs.root))
+    assert "contents" not in [c.path.stem for c in summary.cards]
+
+
+def test_a_single_chapter_needs_no_contents_card(tmp_path):
+    summary = _build(_set(tmp_path))
+    assert [c.path.stem for c in summary.cards] == ["intro", "chapter-alpha", "outro"]
 
 
 def test_a_chapter_card_is_narrated_by_the_previous_demo_handoff(tmp_path):

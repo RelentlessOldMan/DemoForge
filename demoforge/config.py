@@ -31,6 +31,8 @@ class NarrationConfig:
 @dataclass(frozen=True)
 class PresentationConfig:
     intro: bool = True
+    # A card after the title listing where each demo starts, to skip to it.
+    contents: bool = True
     outro: bool = True
 
 
@@ -121,6 +123,7 @@ class ContentSetConfig:
             description=str(set_tbl.get("description", "")),
             presentation=PresentationConfig(
                 intro=bool(pres.get("intro", True)),
+                contents=bool(pres.get("contents", True)),
                 outro=bool(pres.get("outro", True)),
             ),
             narration=NarrationConfig(

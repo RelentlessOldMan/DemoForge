@@ -38,6 +38,7 @@ chapter_end_seconds: 6.0
 title_card_seconds: 6.0
 chapter_card_seconds: 4.0
 outro_card_seconds: 9.0
+contents_card_seconds: 10.0
 
 # Mark a scene time-compressed when the run really spent much longer there than the
 # replay spends showing it, so the on-screen affordance is driven by recorded time

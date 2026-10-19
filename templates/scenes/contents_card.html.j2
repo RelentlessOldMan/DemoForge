@@ -1,0 +1,41 @@
+{#
+  The contents card: where each demo starts in this presentation, so a viewer can
+  skip straight to the one they want. Every time on it is computed from the pieces
+  the build actually joined.
+#}
+{% extends "_card_base.html.j2" %}
+{% block card %}
+  <style>
+    .heading { font-size: 52px; font-weight: 600; margin: 0; }
+    .toc {
+      list-style: none;
+      padding: 0;
+      margin: 44px auto 0;
+      width: 1240px;
+      text-align: left;
+    }
+    .toc li {
+      display: flex;
+      align-items: baseline;
+      gap: 28px;
+      font-size: 34px;
+      line-height: 1.6;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+    }
+    .toc__n { font-family: var(--mono); color: var(--muted); width: 56px; }
+    .toc__t { flex: 1; }
+    .toc__at { font-family: var(--mono); color: var(--accent); }
+  </style>
+  <p class="eyebrow">{{ data.title }}</p>
+  <p class="heading">Skip to a demo</p>
+  <div class="rule"></div>
+  <ol class="toc">
+{% for e in data.entries %}
+    <li>
+      <span class="toc__n">{{ "%02d" | format(e.number) }}</span>
+      <span class="toc__t">{{ e.title }}</span>
+      <span class="toc__at">{{ e.start }}</span>
+    </li>
+{% endfor %}
+  </ol>
+{% endblock %}
