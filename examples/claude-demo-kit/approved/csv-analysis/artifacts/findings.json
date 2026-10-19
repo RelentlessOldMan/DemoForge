@@ -1,0 +1,31 @@
+{
+  "regression_start_date": "2026-05-31",
+  "explained_by": "version",
+  "culprit": "v2.3.0",
+  "baseline": "v2.2.0",
+  "magnitude_factor": 171.8,
+  "affected_workers": [
+    "estimator-01",
+    "estimator-02"
+  ],
+  "per_version": {
+    "v2.2.0": {
+      "runs": 1530,
+      "mean_max_abs_error": 3.9683071895424835e-10,
+      "median_max_abs_error": 2.9610000000000004e-10,
+      "fail_rate": 0.00065359477124183
+    },
+    "v2.3.0": {
+      "runs": 510,
+      "mean_max_abs_error": 7.401814901960784e-08,
+      "median_max_abs_error": 5.086e-08,
+      "fail_rate": 0.23137254901960785
+    },
+    "v2.3.1": {
+      "runs": 1020,
+      "mean_max_abs_error": 6.949334019607844e-08,
+      "median_max_abs_error": 4.776e-08,
+      "fail_rate": 0.19607843137254902
+    }
+  }
+}

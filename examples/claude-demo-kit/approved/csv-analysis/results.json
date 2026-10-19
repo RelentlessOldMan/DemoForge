@@ -1,0 +1,103 @@
+{
+  "checks": [
+    {
+      "id": "produced_plot",
+      "kind": "file_exists",
+      "message": "matched 1: regression_timeline.png",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "produced_report",
+      "kind": "file_exists",
+      "message": "matched 1: analysis.md",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "report_names_version",
+      "kind": "contains",
+      "message": "found pattern 'v2\\\\.3\\\\.0'",
+      "passed": true,
+      "value": true
+    },
+    {
+      "id": "findings_valid",
+      "kind": "threshold",
+      "message": "findings_valid=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "start_date_ok",
+      "kind": "threshold",
+      "message": "start_date_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "version_ok",
+      "kind": "threshold",
+      "message": "version_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "factor_ok",
+      "kind": "threshold",
+      "message": "factor_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "workers_ok",
+      "kind": "threshold",
+      "message": "workers_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "attribution_ok",
+      "kind": "threshold",
+      "message": "attribution_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "per_version_ok",
+      "kind": "threshold",
+      "message": "per_version_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "regression_version",
+      "kind": "metric",
+      "message": "regression_version=v2.3.0",
+      "passed": null,
+      "value": "v2.3.0"
+    },
+    {
+      "id": "error_factor",
+      "kind": "metric",
+      "message": "error_factor=171.8",
+      "passed": null,
+      "value": 171.8
+    },
+    {
+      "id": "worker_runtime_ratio",
+      "kind": "metric",
+      "message": "worker_runtime_ratio=1.172",
+      "passed": null,
+      "value": 1.172
+    },
+    {
+      "id": "n_rows",
+      "kind": "metric",
+      "message": "n_rows=3060",
+      "passed": null,
+      "value": 3060
+    }
+  ],
+  "passed": true
+}
