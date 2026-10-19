@@ -11,6 +11,11 @@ enabled: true
 prompt: prompt.md
 narration: narration.md
 
+# The person asking, played during capture by a second Claude session that reads each
+# answer and replies, up to max_follow_ups times. Never staged: the agent does not see it.
+user: user.md
+max_follow_ups: 3
+
 inputs:
   - input/CVT-SRS-003.pdf
   - input/gate_vectors.csv
