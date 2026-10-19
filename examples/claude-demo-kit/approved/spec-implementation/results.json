@@ -1,0 +1,75 @@
+{
+  "checks": [
+    {
+      "id": "produced_implementation",
+      "kind": "file_exists",
+      "message": "matched 1: measurement_gate.m",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "produced_tests",
+      "kind": "file_exists",
+      "message": "matched 1: test_measurement_gate.m",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "nis_correct",
+      "kind": "numeric_tolerance",
+      "message": "max_abs_error=0 (tolerance 1e-06)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "decisions_match",
+      "kind": "threshold",
+      "message": "accept_mismatches=0.0 (max 0.0)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "gamma_honoured",
+      "kind": "threshold",
+      "message": "hidden_mismatches=0.0 (max 0.0)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "handles_nonfinite",
+      "kind": "threshold",
+      "message": "nonfinite_handled=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "tests_pass_on_correct_gate",
+      "kind": "threshold",
+      "message": "agent_tests_pass_ref=0.0 (min 1.0)",
+      "passed": false,
+      "value": 0.0
+    },
+    {
+      "id": "tests_have_teeth",
+      "kind": "threshold",
+      "message": "mutants_killed=4.0 (min 4.0)",
+      "passed": true,
+      "value": 4.0
+    },
+    {
+      "id": "n_vectors",
+      "kind": "metric",
+      "message": "n_vectors=24",
+      "passed": null,
+      "value": 24
+    },
+    {
+      "id": "n_hidden",
+      "kind": "metric",
+      "message": "n_hidden=26",
+      "passed": null,
+      "value": 26
+    }
+  ],
+  "passed": false
+}
