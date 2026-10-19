@@ -68,14 +68,20 @@ def _invoker(prompt, work_dir):
     ]
 
 
-def _set(tmp_path: Path, *, approve: tuple[str, ...] = ("alpha",), narration: bool = True):
+def _set(
+    tmp_path: Path,
+    *,
+    approve: tuple[str, ...] = ("alpha",),
+    narration: bool = True,
+    prompt: str = "Produce result.out for {name}.\n",
+):
     """A content set with two demos; only the named ones get an approved capture."""
     root = tmp_path / "set"
     for name in ("alpha", "beta"):
         d = root / "demos" / name
         (d / "input").mkdir(parents=True)
         (d / "input" / "seed.txt").write_text("seed\n", encoding="utf-8")
-        (d / "prompt.md").write_text(f"Produce result.out for {name}.\n", encoding="utf-8")
+        (d / "prompt.md").write_text(prompt.format(name=name), encoding="utf-8")
         narration_line = "narration: narration.md\n" if narration else ""
         if narration:
             (d / "narration.md").write_text(
@@ -311,6 +317,22 @@ def test_the_closing_card_counts_the_real_captured_events(tmp_path):
 
     recorded = len(RunBundle(cs.approved_dir_for("alpha")).read_events())
     assert summary.event_count == recorded
+    assert summary.chapters[0].event_count == recorded
+
+
+def test_an_event_shown_over_several_scenes_is_counted_once(tmp_path):
+    # A long prompt is paged over several scenes, all built from the one event.
+    long_prompt = "".join(
+        f"Paragraph {i} of the request for {{name}}, long enough to fill a line.\n\n"
+        for i in range(60)
+    )
+    cs = _set(tmp_path, prompt=long_prompt)
+    summary = _build(cs)
+    from demoforge.model import RunBundle
+
+    scenes = summary.chapters[0].timeline.scenes
+    assert sum(len(s.event_seqs) for s in scenes) > len({q for s in scenes for q in s.event_seqs})
+    recorded = len(RunBundle(cs.approved_dir_for("alpha")).read_events())
     assert summary.chapters[0].event_count == recorded
 
 

@@ -107,8 +107,11 @@ class Chapter:
 
     @property
     def event_count(self) -> int:
-        """Recorded events behind this chapter — what the closing card counts."""
-        return sum(len(s.event_seqs) for s in self.timeline.scenes)
+        """Recorded events behind this chapter — what the closing card counts.
+
+        Each event once: a long prompt or answer is paged over several scenes.
+        """
+        return len({seq for s in self.timeline.scenes for seq in s.event_seqs})
 
 
 @dataclass
