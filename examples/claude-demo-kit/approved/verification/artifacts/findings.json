@@ -1,0 +1,15 @@
+{
+  "verdict": "defect_found",
+  "defects": [
+    {
+      "requirement": "R3",
+      "summary": "kalman_update hard-codes the initial state and covariance (x = zeros(n,1), P = eye(n)) and ignores model.x0 and model.P0, so its output is wrong for any model whose x0 or P0 differs from those defaults.",
+      "evidence": [
+        {"file": "kalman_update.m", "line": 18},
+        {"file": "kalman_update.m", "line": 19},
+        {"file": "kalman_filter_spec.md", "line": 67},
+        {"file": "model.json", "line": 6}
+      ]
+    }
+  ]
+}

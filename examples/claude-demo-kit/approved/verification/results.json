@@ -1,0 +1,96 @@
+{
+  "checks": [
+    {
+      "id": "produced_report",
+      "kind": "file_exists",
+      "message": "matched 1: verification_report.md",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "produced_tests",
+      "kind": "file_exists",
+      "message": "matched 1: test_kalman.m",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "tests_pass_correct_impl",
+      "kind": "threshold",
+      "message": "passes_correct=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "tests_catch_init_defects",
+      "kind": "threshold",
+      "message": "kills_init=3.0 (min 3.0)",
+      "passed": true,
+      "value": 3.0
+    },
+    {
+      "id": "tests_catch_other_mutants",
+      "kind": "threshold",
+      "message": "kills_other=6.0 (min 4.0)",
+      "passed": true,
+      "value": 6.0
+    },
+    {
+      "id": "findings_verdict",
+      "kind": "threshold",
+      "message": "findings_verdict_ok=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "findings_pins_defect",
+      "kind": "threshold",
+      "message": "findings_defect_pinned=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "findings_no_false_requirement",
+      "kind": "threshold",
+      "message": "findings_no_false_requirement=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "findings_citations_valid",
+      "kind": "threshold",
+      "message": "findings_citations_valid=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "report_names_initialisation",
+      "kind": "contains",
+      "message": "found pattern '(?i)(\\\\bx0\\\\b|\\\\bp0\\\\b|initiali[sz])'",
+      "passed": true,
+      "value": true
+    },
+    {
+      "id": "kills_other",
+      "kind": "metric",
+      "message": "kills_other=6",
+      "passed": null,
+      "value": 6
+    },
+    {
+      "id": "init_discrepancy",
+      "kind": "metric",
+      "message": "init_discrepancy=10.305995112666675",
+      "passed": null,
+      "value": 10.305995112666675
+    },
+    {
+      "id": "default_discrepancy",
+      "kind": "metric",
+      "message": "default_discrepancy=0",
+      "passed": null,
+      "value": 0
+    }
+  ],
+  "passed": true
+}

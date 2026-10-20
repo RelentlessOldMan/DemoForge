@@ -22,7 +22,7 @@ The original design brief for this content set is in [`SPEC.md`](./SPEC.md).
 | 5 | Excel investigation | cross-sheet formula debugging + correction | approved |
 | 6 | CSV analysis & visualization | exploration, stats, anomaly detection, plots | approved |
 | 7 | Spec (PDF) → implementation | interpret equations/tables, implement, verify | approved (7 of 8 checks: its test is stricter than the spec) |
-| 8 | Automated verification | find gaps + a planted defect | re-capturing |
+| 8 | Automated verification | find gaps + a planted defect | approved |
 | 9 | Requirements traceability | build a traceability matrix, find missing coverage | re-capturing |
 | 10 | Autonomous engineering investigation | finale: root-cause across many artifacts | re-capturing |
 

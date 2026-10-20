@@ -1,0 +1,75 @@
+{
+  "capture_mode": "headless",
+  "created": "2026-10-20T19:01:50Z",
+  "demo_id": "verification",
+  "extra": {
+    "auth_source": "none",
+    "claude_cli": "2.1.289 (Claude Code)",
+    "event_times": "wallclock",
+    "follow_ups": 0,
+    "isolation": {
+      "clean": false,
+      "findings": [
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 71,
+          "snippet": " and 0.157 (P0), against a tolerance of 1e-6.\\n\\nSuggested fix for the author: `x = model.x0(:); P = model.P0;`. I checked this fix on\\na scratch copy only (the",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 20,
+          "snippet": " 0.157 (P0), against a tolerance of 1e-6. 23\t 24\tSuggested fix for the author: `x = model.x0(:); P = model.P0;`. I checked this fix on 25\ta scratch copy only (t",
+          "source": "user simulator turn-1"
+        }
+      ],
+      "sessions": [
+        "agent",
+        "user simulator turn-1"
+      ]
+    },
+    "isolation_at_approve": {
+      "clean": false,
+      "findings": [
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 71,
+          "snippet": " and 0.157 (P0), against a tolerance of 1e-6.\\n\\nSuggested fix for the author: `x = model.x0(:); P = model.P0;`. I checked this fix on\\na scratch copy only (the",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 20,
+          "snippet": " 0.157 (P0), against a tolerance of 1e-6. 23\t 24\tSuggested fix for the author: `x = model.x0(:); P = model.P0;`. I checked this fix on 25\ta scratch copy only (t",
+          "source": "user simulator turn-1"
+        }
+      ],
+      "sessions": [
+        "agent",
+        "user simulator turn-1"
+      ]
+    },
+    "max_follow_ups": 3,
+    "redaction": "display paths rewritten (an unmapped home folder becomes ~), search-path listings replaced by '<search path removed>', Claude Code's saved-output paths replaced by '<output saved by Claude Code>', file owners in long listings shown as 'user', account details (rate limits, cost, session ids, tool list) and the text of Claude's private reasoning removed from the raw transcripts",
+    "run_id": "20261020T190150Z-920699ac",
+    "user": "simulated from user.md",
+    "user_simulator_prompt": "sha256:74799a4134af26e3297058cdc5b10128f2118b0774a877d065e21cbefbe39c47"
+  },
+  "git_commit": "59f14788d08733aafb80dd94db81d8dcc3224c01",
+  "git_dirty": false,
+  "input_hashes": {
+    "kalman_filter_spec.md": "b890919f83e5295cc8c5b9d94b260249d785543c48fc1b8633c9e425fb103db5",
+    "kalman_update.m": "21d63c9239b08df408857e637d6b933d07a7253a8ed8335f501f294a0ef5b613",
+    "model.json": "d2b8eddc4805e74f9023d812568db28acbb4d3e19af8fe7a43197ef5791c04d9",
+    "test_kalman_existing.m": "681e49f81606a55ab332fea18f81167b66af63216c763b62a49508a5cf904918",
+    "test_vectors.csv": "1736e107dbbbea228535ebd52932ed1db91442870dba955e648748194e93c5fe"
+  },
+  "model": "claude-opus-5-5",
+  "os": "Windows 11",
+  "prompt_hash": "f34396a9179a3b267aeb5751ad374730284bcd18d4615d0019bcef3f7cb93310",
+  "runtimes": {
+    "octave": "C:\\Users\\you\\AppData\\Local\\Programs\\GNU Octave\\Octave-11.3.0\\mingw64\\bin\\octave-cli.exe",
+    "python": "python"
+  },
+  "user_hash": "0d33686a8b8657425b33f889db473b8ea4507e172ac6ecf7fff20f2f12d5e122"
+}
