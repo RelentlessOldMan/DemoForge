@@ -154,6 +154,14 @@ def run_demo(
         if not demo.user_path.is_file():
             raise DemoError(f"user brief is missing: {demo.user_path}", path=demo.dir)
         brief = demo.user_path.read_text(encoding="utf-8")
+    elif (demo.dir / "user.md").is_file():
+        # A brief beside demo.yaml that demo.yaml never names would be silently
+        # ignored, capturing a one-shot run where a conversation was meant.
+        raise DemoError(
+            "user.md is present but demo.yaml does not declare it; add `user: user.md` "
+            "to capture a conversation, or remove the file",
+            path=demo.dir,
+        )
     if not follow_ups:
         responder = None
 

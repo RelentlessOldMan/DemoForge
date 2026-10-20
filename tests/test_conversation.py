@@ -2,9 +2,12 @@
 
 import json
 
+import pytest
+
 from demoforge.capture.conversation import UserView, converse, parse_reply, render_for_user
 from demoforge.capture.normalize import normalize
 from demoforge.capture.run import approve_run, run_demo
+from demoforge.errors import DemoError
 
 from test_capture_hardening import _PRODUCED, _set_with
 from test_run import WHEN
@@ -93,3 +96,19 @@ def test_run_demo_with_brief_records_the_conversation(tmp_path):
     single = run_demo(demo, cs, when=WHEN, git_commit="x", invoker=invoke,
                       responder=responder, follow_ups=False, run_id="single")
     assert "user_message" not in [e.type for e in single.events]
+
+
+def test_run_demo_refuses_an_undeclared_brief(tmp_path):
+    cs = _set_with(tmp_path, checks=_PRODUCED)
+    demo = cs.demos()[0]
+    (demo.dir / "user.md").write_text("You are the lead engineer.", encoding="utf-8")
+    called = []
+
+    def invoke(prompt, work_dir, **kw):
+        called.append(prompt)
+        return _turn("done")
+
+    with pytest.raises(DemoError, match="does not declare it"):
+        run_demo(demo, cs, when=WHEN, git_commit="x", invoker=invoke)
+    assert not called
+    assert not (cs.runs_dir / demo.id).exists()
