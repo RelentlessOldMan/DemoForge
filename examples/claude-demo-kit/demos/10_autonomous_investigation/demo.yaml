@@ -14,6 +14,11 @@ enabled: true
 prompt: prompt.md
 narration: narration.md
 
+# The person asking, played during capture by a second Claude session that reads each
+# answer and replies, up to max_follow_ups times. Never staged: the agent does not see it.
+user: user.md
+max_follow_ups: 3
+
 # The whole repository, staged as a directory tree. Most of it is not relevant to the
 # failure; deciding what is relevant is the job.
 inputs:
