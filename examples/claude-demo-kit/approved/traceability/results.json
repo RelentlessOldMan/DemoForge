@@ -1,0 +1,61 @@
+{
+  "checks": [
+    {
+      "id": "produced_matrix",
+      "kind": "file_exists",
+      "message": "matched 1: TraceabilityMatrix.xlsx",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "traced_all_requirements",
+      "kind": "threshold",
+      "message": "n_requirements_traced=6.0 (min 6.0)",
+      "passed": true,
+      "value": 6.0
+    },
+    {
+      "id": "status_correct",
+      "kind": "threshold",
+      "message": "status_correct=5.0 (min 6.0)",
+      "passed": false,
+      "value": 5.0
+    },
+    {
+      "id": "implemented_correct",
+      "kind": "threshold",
+      "message": "implemented_correct=6.0 (min 6.0)",
+      "passed": true,
+      "value": 6.0
+    },
+    {
+      "id": "flagged_missing_r6",
+      "kind": "threshold",
+      "message": "r6_gap_flagged=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "cited_tests_exist",
+      "kind": "threshold",
+      "message": "unknown_test_citations=0.0 (max 0.0)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "citations_consistent",
+      "kind": "threshold",
+      "message": "citations_consistent=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "n_data_rows",
+      "kind": "metric",
+      "message": "n_data_rows=6",
+      "passed": null,
+      "value": 6
+    }
+  ],
+  "passed": false
+}

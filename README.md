@@ -104,9 +104,9 @@ MATLAB/Octave code, investigating logs, spreadsheets, and CSVs, implementing fro
 verification, traceability, and an open-ended autonomous investigation.
 
 Each demo is captured as a real conversation: Claude does the job, and a second Claude
-session plays the engineer who reviews the answer and pushes back. Demos 1 to 8 are
-captured, approved and in the video. The other two are being re-captured the same way and
-are added in 1.0.x releases as each one is approved.
+session plays the engineer who reviews the answer and pushes back. Demos 1 to 9 are
+captured, approved and in the video. The last one is being re-captured the same way and
+is added in a 1.0.x release once it is approved.
 
 ## Layout
 

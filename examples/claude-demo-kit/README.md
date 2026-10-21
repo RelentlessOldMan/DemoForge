@@ -23,7 +23,7 @@ The original design brief for this content set is in [`SPEC.md`](./SPEC.md).
 | 6 | CSV analysis & visualization | exploration, stats, anomaly detection, plots | approved |
 | 7 | Spec (PDF) → implementation | interpret equations/tables, implement, verify | approved (7 of 8 checks: its test is stricter than the spec) |
 | 8 | Automated verification | find gaps + a planted defect | approved |
-| 9 | Requirements traceability | build a traceability matrix, find missing coverage | re-capturing |
+| 9 | Requirements traceability | build a traceability matrix, find missing coverage | approved (6 of 7 checks: Claude and the engineer judged R1 stricter than the check does) |
 | 10 | Autonomous engineering investigation | finale: root-cause across many artifacts | re-capturing |
 
 Only approved demos appear in the video. A demo without an approved run is reported as

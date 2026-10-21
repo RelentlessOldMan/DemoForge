@@ -1,0 +1,79 @@
+{
+  "capture_mode": "headless",
+  "created": "2026-10-20T22:34:27Z",
+  "demo_id": "traceability",
+  "extra": {
+    "auth_source": "none",
+    "claude_cli": "2.1.289 (Claude Code)",
+    "event_times": "wallclock",
+    "follow_ups": 1,
+    "isolation": {
+      "clean": false,
+      "findings": [
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 100,
+          "snippet": "45541\\\\build_matrix.py\", \"content\": \"import csv\\nfrom openpyxl import Workbook\\nfrom openpyxl.styles import Alignment, Font, PatternFill\\nfrom openpyxl.utils im",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 23,
+          "snippet": "1\timport csv 2\tfrom openpyxl import Workbook 3\tfrom openpyxl.styles import Alignment, Font, PatternFill 4\tfrom openpyxl.utils import get_column_letter 5\t 6\tWD =",
+          "source": "user simulator turn-2"
+        }
+      ],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2"
+      ]
+    },
+    "isolation_at_approve": {
+      "clean": false,
+      "findings": [
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 100,
+          "snippet": "{\"content\": \"import csv\\nfrom openpyxl import Workbook\\nfrom openpyxl.styles import Alignment, Font, PatternFill\\nfrom openpyxl.utils import get_column_letter\\n",
+          "source": "agent"
+        },
+        {
+          "reason": "contains a line of a hidden file",
+          "record": 23,
+          "snippet": "1\timport csv 2\tfrom openpyxl import Workbook 3\tfrom openpyxl.styles import Alignment, Font, PatternFill 4\tfrom openpyxl.utils import get_column_letter 5\t 6\tWD =",
+          "source": "user simulator turn-2"
+        }
+      ],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2"
+      ]
+    },
+    "max_follow_ups": 3,
+    "redaction": "display paths rewritten (an unmapped home folder becomes ~), search-path listings replaced by '<search path removed>', Claude Code's saved-output paths replaced by '<output saved by Claude Code>', file owners in long listings shown as 'user', account details (rate limits, cost, session ids, tool list) and the text of Claude's private reasoning removed from the raw transcripts",
+    "run_id": "20261020T223427Z-dbe37dfc",
+    "user": "simulated from user.md",
+    "user_simulator_prompt": "sha256:74799a4134af26e3297058cdc5b10128f2118b0774a877d065e21cbefbe39c47"
+  },
+  "git_commit": "d516bef4eb82754c96ee8e000c5d2119b2f7f6b2",
+  "git_dirty": false,
+  "input_hashes": {
+    "kalman_filter_spec.md": "090ba9cb07d4b4a969877ca0326361221759f6dbee74dabce2342719d2735046",
+    "kalman_update.m": "6c88b4cc4fc89bc6b58c070966d958eca7f0dd11d02ef50d4f46521f051366e6",
+    "model.json": "d2b8eddc4805e74f9023d812568db28acbb4d3e19af8fe7a43197ef5791c04d9",
+    "requirements.csv": "a12aae4ae753b587820ada0508f5f91354fd01b7dbb373d86067204de2a27fd1",
+    "test_kalman.m": "55532b67fb941bbf5980fd6429b09a5cf44e5d73184e75de7544db43b42bb170",
+    "test_results.txt": "4820f55b1857fc1ce4f262917dfaf7b08a02a7fbcbca6748641531cf45ceb1b8",
+    "test_vectors.csv": "1736e107dbbbea228535ebd52932ed1db91442870dba955e648748194e93c5fe"
+  },
+  "model": "claude-opus-5-5",
+  "os": "Windows 11",
+  "prompt_hash": "635bfa39fdc98c0b4a70b1ee3dda12a218b19a1e75601098e8cf45291cb20586",
+  "runtimes": {
+    "octave": "C:\\Users\\you\\AppData\\Local\\Programs\\GNU Octave\\Octave-11.3.0\\mingw64\\bin\\octave-cli.exe",
+    "python": "python"
+  },
+  "user_hash": "1d5ee9790b31fa91d6a27264dbdfe5883884a1e13f940f040d57eebc85d095da"
+}
