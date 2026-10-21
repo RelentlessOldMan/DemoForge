@@ -1,0 +1,30 @@
+{
+  "root_cause": "Shown: measurement_gate.m ignores the gamma it is passed and compares the NIS against a hard-coded 5.991 instead of the configured 13.277 for Doppler, which explains the ~20 % Doppler rejection rate (1 % specified). Inferred, unconfirmed until the recorded streams are replayed on the fixed build: that these extra rejections drive the Doppler runs past the 0.5 m limit.",
+  "cause": {"file": "src/measurement_gate.m", "line": 28},
+  "discriminator": {"field": "mode", "value": "doppler"},
+  "failing_runs": ["VR-2101", "VR-2102", "VR-2103", "VR-2105", "VR-2106", "VR-2113", "VR-2114", "VR-2118", "VR-2119", "VR-2122", "VR-2126", "VR-2131", "VR-2138", "VR-2146", "VR-2151", "VR-2152", "VR-2155"],
+  "wrong_value": {"in_use": 5.991, "correct": 13.277},
+  "evidence": [
+    {"file": "src/measurement_gate.m", "line": 15, "quote": "GATE_CHI2 = 5.991;"},
+    {"file": "src/measurement_gate.m", "line": 28, "quote": "accept = (d2 <= GATE_CHI2);"},
+    {"file": "config/estimator_config.json", "line": 22, "quote": "\"doppler\": 13.277"},
+    {"file": "src/cvt_model.m", "line": 42, "quote": "model.gamma = cfg.gate.gamma.(mode);"},
+    {"file": "src/kalman_update.m", "line": 42, "quote": "if gated && ~measurement_gate(y, S, model.gamma)"},
+    {"file": "logs/estimator-worker.log", "line": 5, "quote": "run=VR-2101 k=501 rejected d2=6.208"},
+    {"file": "logs/estimator-worker.log", "line": 9, "quote": "run=VR-2101 mode=doppler complete: measurements=1500 rejected=307 (20.47%)"},
+    {"file": "logs/estimator-worker.log", "line": 26, "quote": "run=VR-2104 k=588 rejected d2=7.544"},
+    {"file": "logs/estimator-worker.log", "line": 29, "quote": "run=VR-2104 mode=planar complete: measurements=1500 rejected=75 (5.00%)"},
+    {"file": "data/gate_vectors.csv", "line": 13, "quote": "doppler,4,13.277,0.3970,0.8513,-0.4675,-2.1309"},
+    {"file": "data/validation_runs.csv", "line": 2, "quote": "VR-2101,doppler,4,v2.4.1,estimator-01,1.3194,28.4,FAIL"},
+    {"file": "tests/test_measurement_gate.m", "line": 7, "quote": "GAMMA = 5.991;"},
+    {"file": "docs/requirements.csv", "line": 10, "quote": "G3,The gate shall use the supplied gamma"},
+    {"file": "tests/test_kalman.m", "line": 36, "quote": "md = model;"}
+  ],
+  "ruled_out": [
+    "Return of the v2.3.0 covariance regression (S reused from the previous step): kalman_update.m line 41 forms S = H*P*H' + R from the current predicted P on every step. Planar runs on v2.4.1 (20/20 pass, mean error 0.251 m) match the v2.3.2 baseline (20/20, 0.224 m). The 'By Build' tab in the workbook is confounded because every Doppler run is v2.4.1. That regression also showed up as an error of about 7e-8, not 1 m.",
+    "estimator-02 being slow: no run failed on runtime (the largest is 39.6 ms against the 50 ms limit). Failures are spread over all three workers (estimator-01: 8, estimator-02: 5, estimator-03: 4), and estimator-02 has fewer failures than estimator-01. Doppler runs fail on every worker.",
+    "Doppler sensor noisier than the configured R (so a plan change would be needed): if R were too small, NIS values would be inflated and rejections would spread above 13.277. Instead the minimum rejected d2 in every run is just above 5.991, 59 of the 60 logged Doppler rejections are below 13.277, and the per-run rejection rate (17.9-21.1 %) matches the chi-squared(4) tail above 5.991 (19.99 %). That is what correctly modelled noise gated at the wrong threshold looks like. Planar shows the same: about 5 % rejected, the chi-squared(2) tail above 5.991, not the 1 % expected at 9.210. Not settled: whether the fixed build meets 0.5 m on the field streams. A Gaussian simulation at the configured Q and R gives about 1.1 m peak error even with no gate, but it also contradicts the planar field results (0.07-0.41 m), so it does not represent the streams. This needs a replay of the recorded streams on the fixed build, not a change to the limit.",
+    "Wrong or missing gamma in configuration (the v2.4.1 config change): estimator_config.json has the correct Appendix A values (planar 9.210, doppler 13.277 at 99 %), and cvt_model passes them through. The gate then ignores them.",
+    "Infrastructure (late heartbeat, upload retry, /var/spool/cvt disk warning, TLS expiry notice): none of these coincide with the failures, and failures follow the mode, not the time or the worker."
+  ]
+}

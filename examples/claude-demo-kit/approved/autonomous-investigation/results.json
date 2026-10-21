@@ -1,0 +1,159 @@
+{
+  "checks": [
+    {
+      "id": "produced_report",
+      "kind": "file_exists",
+      "message": "matched 1: root_cause.md",
+      "passed": true,
+      "value": 1
+    },
+    {
+      "id": "findings_valid",
+      "kind": "threshold",
+      "message": "findings_valid=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "citations_real",
+      "kind": "threshold",
+      "message": "invalid_citations=0.0 (max 0.0)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "enough_citations",
+      "kind": "threshold",
+      "message": "n_citations=14.0 (min 4.0)",
+      "passed": true,
+      "value": 14.0
+    },
+    {
+      "id": "evidence_covers_chain",
+      "kind": "threshold",
+      "message": "key_evidence_groups=4.0 (min 4.0)",
+      "passed": true,
+      "value": 4.0
+    },
+    {
+      "id": "cause_located",
+      "kind": "threshold",
+      "message": "cause_correct=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "discriminator_correct",
+      "kind": "threshold",
+      "message": "discriminator_correct=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "failing_runs_exact",
+      "kind": "threshold",
+      "message": "failing_runs_match=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "wrong_value_correct",
+      "kind": "threshold",
+      "message": "value_correct=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "alternatives_ruled_out",
+      "kind": "threshold",
+      "message": "ruled_out_count=5.0 (min 2.0)",
+      "passed": true,
+      "value": 5.0
+    },
+    {
+      "id": "fix_correct",
+      "kind": "threshold",
+      "message": "fix_mismatches=0.0 (max 0.0)",
+      "passed": true,
+      "value": 0.0
+    },
+    {
+      "id": "fix_fails_closed",
+      "kind": "threshold",
+      "message": "fix_nonfinite=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "tests_pass_on_correct_gate",
+      "kind": "threshold",
+      "message": "agent_tests_pass_ref=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "tests_catch_shipped_bug",
+      "kind": "threshold",
+      "message": "agent_tests_fail_shipped=1.0 (min 1.0)",
+      "passed": true,
+      "value": 1.0
+    },
+    {
+      "id": "tests_catch_hardcoded_doppler",
+      "kind": "metric",
+      "message": "tests_catch_hardcoded_doppler=1",
+      "passed": null,
+      "value": 1
+    },
+    {
+      "id": "cause_id",
+      "kind": "metric",
+      "message": "cause_id=gate_threshold",
+      "passed": null,
+      "value": "gate_threshold"
+    },
+    {
+      "id": "discriminator",
+      "kind": "metric",
+      "message": "discriminator=mode",
+      "passed": null,
+      "value": "mode"
+    },
+    {
+      "id": "fail_rate_doppler",
+      "kind": "metric",
+      "message": "fail_rate_doppler=0.85",
+      "passed": null,
+      "value": 0.85
+    },
+    {
+      "id": "fail_rate_planar",
+      "kind": "metric",
+      "message": "fail_rate_planar=0",
+      "passed": null,
+      "value": 0
+    },
+    {
+      "id": "reject_rate_doppler",
+      "kind": "metric",
+      "message": "reject_rate_doppler=19.8",
+      "passed": null,
+      "value": 19.8
+    },
+    {
+      "id": "reject_rate_planar",
+      "kind": "metric",
+      "message": "reject_rate_planar=5.03",
+      "passed": null,
+      "value": 5.03
+    },
+    {
+      "id": "campaign_pass_rate",
+      "kind": "metric",
+      "message": "campaign_pass_rate=0.7167",
+      "passed": null,
+      "value": 0.7167
+    }
+  ],
+  "passed": true
+}

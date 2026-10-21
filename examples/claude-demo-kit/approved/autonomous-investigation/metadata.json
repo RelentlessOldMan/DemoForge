@@ -1,0 +1,70 @@
+{
+  "capture_mode": "headless",
+  "created": "2026-10-21T20:37:02Z",
+  "demo_id": "autonomous-investigation",
+  "extra": {
+    "auth_source": "none",
+    "claude_cli": "2.1.289 (Claude Code)",
+    "event_times": "wallclock",
+    "follow_ups": 2,
+    "isolation": {
+      "clean": true,
+      "findings": [],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2",
+        "user simulator turn-3"
+      ]
+    },
+    "isolation_at_approve": {
+      "clean": true,
+      "findings": [],
+      "sessions": [
+        "agent",
+        "user simulator turn-1",
+        "user simulator turn-2",
+        "user simulator turn-3"
+      ]
+    },
+    "max_follow_ups": 3,
+    "redaction": "display paths rewritten (an unmapped home folder becomes ~), search-path listings replaced by '<search path removed>', Claude Code's saved-output paths replaced by '<output saved by Claude Code>', file owners in long listings shown as 'user', account details (rate limits, cost, session ids, tool list) and the text of Claude's private reasoning removed from the raw transcripts",
+    "run_id": "20261021T203702Z-1493da36",
+    "user": "simulated from user.md",
+    "user_simulator_prompt": "sha256:74799a4134af26e3297058cdc5b10128f2118b0774a877d065e21cbefbe39c47"
+  },
+  "git_commit": "2191ba683f38a04d33357b838fa08cc58ee7430a",
+  "git_dirty": false,
+  "input_hashes": {
+    "README.md": "9f2b9660718f7e357800648011149692da3ba6b907e6a73a634a8c22b4ffe39c",
+    "config/estimator_config.json": "2cdf9d46ccc5359113853ede8d30bf1ed4ebb27207d213b47bf07352fe7f55cf",
+    "config/model.json": "52a5370e9c3858d5d1ef558087904bde2219aaec1d31c4e78402e42b2b4fccc5",
+    "data/gate_vectors.csv": "ca09f74347899f5297d6e5535c223bb9910becfb85fb2adec4dc8feef2b5ac30",
+    "data/validation_runs.csv": "be86cfb8947ccab46bda534b1cef1d31408a9d133615f6d9ef99748885a9fc2b",
+    "data/validation_summary.xlsx": "60b24f7b91ee5cf049788b3960e14e208f5ba0d271a78d64aaaa412af6491679",
+    "docs/CHANGELOG.md": "b30ea7aa38629ddf128f446726441ca8aa5cf5e50a16b4e05a82f51a7eb1070f",
+    "docs/CVT-SRS-003.pdf": "aae6168e57c33bfc9a84af56352b46c6e0760352b735155ccbece1e11e0c8953",
+    "docs/kalman_filter_spec.md": "6234c3925c2b2482af67e7959d7cdbce3a4f5369dfbe30e4d2d7e2fc7e35de25",
+    "docs/requirements.csv": "3c02dc0e8e904f2df6096c7a179aca7aed4e3c43017d17f9ee5f8bd46f4e52df",
+    "docs/validation_plan.md": "76276e1c33d574dbce0d61a953e489d71f9ce62e07a6bcf84d71d456f63a456b",
+    "logs/estimator-worker.log": "30fdf1f454ec31f35aa381b25c2ecfaf39590ff7caefb982ff79efdc4a07bfab",
+    "logs/scheduler.log": "1a71157b87bb2ca20069dce21d0ef4338a55f256522a22e9e6ea83ee84251d3f",
+    "logs/validation-runner.log": "8c32dd9ac491500bb079b2510d4f1d645a80dea6c71089249ba502835bafbf44",
+    "notes/handover_notes.md": "2741c663a1ecff2026111a95146f0ac7afbfc730934932ea3cb0f1c7d2f5f8aa",
+    "src/cvt_model.m": "608c1fc9ebeaa81c03343073b3b61c5b6d4901494b45122a004425fd3cf1e8b9",
+    "src/kalman_filter.py": "045c02c20431923f12d4dcac4eac2e13ee6941af7ebd8b0d704f156dc7319098",
+    "src/kalman_update.m": "af666c5518abf0a1b7d661c56fdec1b9a05dcf3d93f71162c6fa8410da61377d",
+    "src/measurement_gate.m": "954790f9655fc39a906f9a2d367ae92ba61c1b526c4a1a97e0a15f314b196d0b",
+    "tests/test_kalman.m": "147cf6bbc8d7836f555569729e5ce9247a66bfa16590abcbd36141a3439e8f9a",
+    "tests/test_measurement_gate.m": "6736196ea89f15cd1876fa36bb795757eac96a957b2ce6037cd8874cb30be96f",
+    "tests/test_results.txt": "4e2ded6b9f0ca22c9ac74482317329ce99953d60bb1d4be275e6521a7406a569"
+  },
+  "model": "claude-opus-5-5",
+  "os": "Windows 11",
+  "prompt_hash": "7138ca656669755b45b194b6b36cae0883c2f4cd2e2a732bbbf1f60030157fad",
+  "runtimes": {
+    "octave": "C:\\Users\\you\\AppData\\Local\\Programs\\GNU Octave\\Octave-11.3.0\\mingw64\\bin\\octave-cli.exe",
+    "python": "python"
+  },
+  "user_hash": "f275b140d90ad7a20ec6180f721b3f6663d542e9a273913a8b220750961fd08b"
+}
