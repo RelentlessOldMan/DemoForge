@@ -371,7 +371,15 @@ def audit_beats(
     event up to and including the scene's own. A line shortened to fit ends in
     ``…``; the part before it must still be recorded text. Returns the failures.
     """
-    by_seq = {e.seq: _norm(" ".join(_strings(e.data))) for e in events}
+    # A file's path is shown with forward slashes (timeline._path_data), so its
+    # recorded path counts in that spelling too.
+    by_seq = {
+        e.seq: _norm(" ".join([
+            *_strings(e.data),
+            *([str(e.data["path"]).replace("\\", "/")] if e.data.get("path") else []),
+        ]))
+        for e in events
+    }
     problems: list[str] = []
     # The history is what earlier scenes showed, not every seq below this one: a
     # command's output recorded after a parallel edit is shown with its command.

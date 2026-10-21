@@ -346,3 +346,18 @@ def test_a_narrated_message_lasts_as_long_as_its_narration_but_can_still_stream(
     # No narration: the reading pace stands.
     silent = stretch_for_narration(tl, {}, tail=0.75, floors=floors)
     assert [s.duration for s in silent.scenes] == [s.duration for s in tl.scenes]
+
+
+def test_a_windows_path_outside_the_work_dir_passes_the_audit_as_shown():
+    # The card shows such a path whole, with forward slashes; it is still the
+    # recorded path, so the audit must accept it.
+    events = [*EVENTS[:3],
+              Event(seq=3, t=10.0, type="file_write",
+                    data={"path": r"C:\sandbox\tmp\build.py", "content": "print('x')\n"}),
+              *EVENTS[4:]]
+    st = load_settings()
+    tl = build_timeline("demo", events, scenes=st.scenes, timing=st.timing, clocked=True)
+    beats = session_beats(tl, st.timing)
+    assert any("C:/sandbox/tmp/build.py" in t for bs in beats.values() for b in bs
+               for t in visible_text(b))
+    assert audit_beats(tl, beats, events) == []
