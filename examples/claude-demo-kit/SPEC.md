@@ -1033,3 +1033,23 @@ The strongest reaction should not be:
 It should be:
 
 > "I can think of several things I could use this for in my own engineering work."
+
+---
+
+# 22. As Built
+
+The sections above are the original brief and are kept as written. The finished suite
+(release 1.0.7, all ten demos) departs from it in three places, all deliberately:
+
+- **Demos are conversations, not one-shot prompts.** Each demo's `user.md` briefs a
+  second Claude session that plays the engineer who asked: it reads each answer and
+  replies, with questions, doubts or corrections, up to `max_follow_ups` times. It sees
+  only what the person asking would have, never the hidden checks. Its own tool calls
+  are recorded in the run bundle under `user_simulator/`, so this can be audited.
+- **The finale's prompt names its deliverables.** Demo 10 asks for `root_cause.md` and
+  a `findings.json` with a fixed schema (cause file and line, discriminator, failing
+  runs, wrong value, cited evidence), plus a fix and tests if the code is at fault. That
+  is what lets the independent checks verify the answer by property. The prompt still
+  says nothing about where to look or what the cause is.
+- **MATLAB code runs on GNU Octave.** Every `.m` file is executed and checked on Octave,
+  and the prompts say so. Where this brief says MATLAB, read MATLAB/Octave.
