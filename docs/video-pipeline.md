@@ -288,7 +288,7 @@ swapping any one of them is a config change (§1.5).
 |---|---|---|
 | playwright | 1.61.0 (chromium-1228) | scene HTML → PNG frames |
 | Inter / JetBrains Mono | 4.1 / 2.304 | bundled frame typography (SIL OFL 1.1) |
-| Jinja2 | 3.1.3 | scene templates |
+| Jinja2 | 3.1.6 | scene templates |
 | ffmpeg | 7.0.1 | clip + audio assembly |
 | Kokoro | 0.9.4 + misaki 0.9.4 (torch 2.11.0+cu128) | narration audio, local GPU |
 | Piper | *(not installed — kept as a plugin)* | alternative narration |

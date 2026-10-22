@@ -403,7 +403,7 @@ Committed vs. ignored: `demoforge/`, `examples/<set>/demos/`, `examples/<set>/ap
 | Spec-source PDFs | Markdown/LaTeX → pandoc | ✅ 3.1 |
 | Slides | Marp CLI (via npx) | ✅ 4.5.1 (marp-core 4.4.0) |
 | Scene frames | Playwright + Chromium | ✅ 1.61.0 / chromium-1228 |
-| Scene templates | Jinja2 | ✅ 3.1.3 |
+| Scene templates | Jinja2 | ✅ 3.1.6 |
 | TTS | Kokoro-82M + misaki, local GPU (`KokoroTTS`) | ✅ 0.9.4 — `SilentTTS` fallback |
 | Video mux | ffmpeg | ✅ 7.0.1 |
 | PDF rasterization (demo inputs) | Poppler (`pdftoppm`) | ✅ 25.07 — PATH-pinned, see below |
