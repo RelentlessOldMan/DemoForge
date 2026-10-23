@@ -11,20 +11,20 @@ of that time is spent inside this one routine.
 
 ## intro:Why it's slow
 
-The routine was translated line for line from an older program in C. Every
+It's slow because the routine was translated line for line from an older program in C. Every
 multiplication and addition of every matrix is spelled out as its own little loop,
 one number at a time. Correct, but MATLAB is at its slowest when it's made to work
 that way.
 
 ## intro:What they need
 
-A faster version that can be dropped in place of the old one, for whatever filter
+They need a faster version that can be dropped in place of the old one, for whatever filter
 settings it is given. And it must not change the answers: every number has to agree
 with the old routine to within one billionth.
 
 ## intro:Why that's hard
 
-Computers round off every result to a fixed number of digits, so adding the same
+That's harder than it sounds, because computers round off every result to a fixed number of digits, so adding the same
 numbers in a different order can change the last digit. Fast code usually does add
 them in a different order. Those tiny differences can grow on a long run, so "the
 same answers" has to be proven, not assumed. And speed figures are easy to get wrong:

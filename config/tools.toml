@@ -36,3 +36,7 @@ invoke = "npx @marp-team/marp-cli"
 
 [ffmpeg]
 version = "7.0"
+
+[poppler]
+# pdftoppm draws the pages of a PDF Claude read, for the replay (render/shown.py).
+version = "25.07.0"

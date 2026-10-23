@@ -13,7 +13,7 @@ demo order. Adding a demo adds its card; nothing is hand-authored.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
@@ -38,25 +38,30 @@ class Card:
     template: str
     duration: float
     data: dict[str, Any] = field(default_factory=dict)
-    # A narration block to play over it, named as (demo_id, block key). The
-    # `transition` block of the previous demo is what a chapter card is for.
+    # A narration block to play over it, named as (owner, block key): a demo id,
+    # or the set's id for the set's own narration. The `transition` block of the
+    # previous demo is what a chapter card is for.
     narration: tuple[str, str] | None = None
+    # The lower-right label a viewer quotes back, e.g. "Demo 3 · Slide 2 / 104".
+    corner: str = ""
 
     def with_duration(self, seconds: float) -> "Card":
         """A copy at least ``seconds`` long — narration extends a card, never clips it."""
         if seconds <= self.duration:
             return self
-        return Card(
-            id=self.id,
-            kind=self.kind,
-            template=self.template,
-            duration=round(seconds, 3),
-            data=self.data,
-            narration=self.narration,
-        )
+        return replace(self, duration=round(seconds, 3))
+
+    def with_corner(self, corner: str) -> "Card":
+        return replace(self, corner=corner)
 
 
-def title_card(config: ContentSetConfig, timing: Timing, *, demo_count: int) -> Card:
+def title_card(
+    config: ContentSetConfig,
+    timing: Timing,
+    *,
+    demo_count: int,
+    narration: tuple[str, str] | None = None,
+) -> Card:
     """The opening card: what this content set is."""
     return Card(
         id="intro",
@@ -69,6 +74,39 @@ def title_card(config: ContentSetConfig, timing: Timing, *, demo_count: int) -> 
             "description": config.description,
             "demo_count": demo_count,
         },
+        narration=narration,
+    )
+
+
+def about_card(
+    config: ContentSetConfig,
+    timing: Timing,
+    *,
+    part: int,
+    heading: str,
+    paragraphs: list[str],
+    narration: tuple[str, str] | None = None,
+) -> Card:
+    """A card of the set's own introduction, after the title: what the video is.
+
+    Like a demo's intro card, its words are the narration's own, so screen and
+    voice agree, and it lasts long enough to read without sound.
+    """
+    chars = sum(len(p) for p in paragraphs)
+    return Card(
+        id=f"about-{part}",
+        kind="AboutCard",
+        template=PROBLEM_TEMPLATE,
+        duration=round(max(timing.scene_min_seconds, chars / timing.reading_chars_per_second), 3),
+        data={
+            "eyebrow": config.title,
+            "title": heading,
+            "number": None,
+            "heading": heading,
+            "paragraphs": list(paragraphs),
+            "figure": None,
+        },
+        narration=narration,
     )
 
 
@@ -87,6 +125,7 @@ def contents_card(
     timing: Timing,
     *,
     entries: list[tuple[int, str, float]],
+    narration: tuple[str, str] | None = None,
 ) -> Card:
     """Where each demo starts in the presentation, so a viewer can skip to it.
 
@@ -104,6 +143,7 @@ def contents_card(
                 {"number": n, "title": t, "start": clock(start)} for n, t, start in entries
             ],
         },
+        narration=narration,
     )
 
 
@@ -191,6 +231,7 @@ def outro_card(
     demo_count: int,
     event_count: int,
     seconds: float,
+    narration: tuple[str, str] | None = None,
 ) -> Card:
     """The closing card (§9), stating how the video was made — with real counts.
 
@@ -208,6 +249,7 @@ def outro_card(
             "event_count": event_count,
             "minutes": round(seconds / 60.0, 1),
         },
+        narration=narration,
     )
 
 
@@ -227,6 +269,7 @@ def card_html(
         kind=card.kind,
         data=card.data,
         duration=card.duration,
+        corner=card.corner,
         font_css=font_face_css(fonts_dir),
         width=video.width,
         height=video.height,

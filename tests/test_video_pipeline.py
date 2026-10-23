@@ -363,6 +363,108 @@ def test_a_chapter_card_is_narrated_by_the_previous_demo_handoff(tmp_path):
     assert by_id["chapter-beta"].seconds > by_id["chapter-alpha"].seconds
 
 
+_LONG = (
+    "A sentence long enough that its timed silence outlasts the card's own minimum, "
+    "so that the narration, not the default, decides how long the card stays up. "
+)
+
+
+def _set_narration(cs, *, outro: bool = False) -> None:
+    blocks = [
+        ("title", _LONG),
+        ("intro:What this is", _LONG + _LONG),
+        ("contents", _LONG),
+        ("opening", "First, the alpha demo. " + _LONG),
+    ]
+    if outro:
+        blocks.append(("outro", "That's all. " + _LONG))
+    text = "".join(f"## {key}\n\n{body}\n\n" for key, body in blocks)
+    (cs.root / "narration.md").write_text(text, encoding="utf-8")
+
+
+class _Recording(_StubRenderer):
+    def __init__(self) -> None:
+        super().__init__()
+        self.html: list[str] = []
+
+    def render(self, html, out_path):
+        self.html.append(html)
+        super().render(html, out_path)
+
+
+def test_the_sets_own_narration_speaks_over_the_opening_cards(tmp_path):
+    """No silent opening: title, the set's intro, contents and the first chapter card."""
+    import re
+
+    from demoforge.render.video import probe_seconds
+
+    cs = _set(tmp_path, approve=("alpha", "beta"))
+    _set_narration(cs)
+    renderer = _Recording()
+    summary = _build(load_content_set(cs.root), renderer=renderer)
+    st = _settings(cs).timing
+
+    by_id = {c.path.stem: c for c in summary.cards}
+    assert list(by_id)[:4] == ["intro", "about-1", "contents", "chapter-alpha"]
+    assert by_id["intro"].seconds > st.title_card_seconds
+    assert by_id["contents"].seconds > st.contents_card_seconds
+    assert by_id["chapter-alpha"].seconds > st.chapter_card_seconds
+
+    # The set's intro card shows what the voice says, and the first chapter card
+    # carries its opening line as a caption, as later cards carry their handoff.
+    assert any("What this is" in h and _LONG.strip()[:40] in h for h in renderer.html)
+    assert any("First, the alpha demo." in h for h in renderer.html)
+
+    # The contents times still land where each chapter card starts.
+    contents = next(h for h in renderer.html if "Skip to a demo" in h)
+    shown = re.findall(r'class="toc__at">([0-9:]+)<', contents)
+    alpha, _beta = summary.chapters
+    before = [by_id[k].path for k in ("intro", "about-1", "contents")]
+    alpha_at = sum(probe_seconds(p) for p in before)
+    beta_at = alpha_at + sum(probe_seconds(p) for p in [by_id["chapter-alpha"].path, *alpha.parts])
+    assert shown == [clock(alpha_at), clock(beta_at)]
+
+    # Every opening card says where it is.
+    for n in (1, 2, 3):
+        assert sum(f"Opening · Slide {n} / 3" in h for h in renderer.html) == 1
+
+
+def test_the_closing_card_takes_the_last_demos_transition(tmp_path):
+    cs = _set(tmp_path, approve=("alpha", "beta"))
+    (cs.demos_dir / "beta" / "narration.md").write_text(
+        f"## setup\n\nA job.\n\n## transition\n\nThat's the set. {_LONG}\n",
+        encoding="utf-8",
+    )
+    summary = _build(load_content_set(cs.root))
+    outro = {c.path.stem: c for c in summary.cards}["outro"]
+    assert outro.seconds > _settings(cs).timing.outro_card_seconds
+
+
+def test_a_sets_outro_block_wins_over_the_last_transition(tmp_path):
+    cs = _set(tmp_path, approve=("alpha", "beta"))
+    _set_narration(cs, outro=True)
+    summary = _build(load_content_set(cs.root))
+    outro = {c.path.stem: c for c in summary.cards}["outro"]
+    assert outro.seconds > _settings(cs).timing.outro_card_seconds
+
+
+def test_an_unknown_block_in_the_sets_narration_is_an_error(tmp_path):
+    cs = _set(tmp_path, approve=("alpha", "beta"))
+    (cs.root / "narration.md").write_text("## during:3\n\nNot here.\n", encoding="utf-8")
+    with pytest.raises(DemoError, match="unknown block"):
+        _build(load_content_set(cs.root))
+
+
+def test_intro_cards_and_replay_share_one_slide_count(tmp_path):
+    cs = _set(tmp_path)
+    renderer = _Recording()
+    summary = _build(cs, renderer=renderer)
+    chapter = summary.chapters[0]
+    total = len(chapter.intro) + len(chapter.timeline.scenes)
+    assert any(f"Demo 1 · Slide 1 / {total}" in h for h in renderer.html)
+    assert any(f"Slide {total} / {total}" in h for h in renderer.html)
+
+
 def test_the_closing_card_counts_the_real_captured_events(tmp_path):
     cs = _set(tmp_path)
     summary = _build(cs)

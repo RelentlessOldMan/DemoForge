@@ -28,13 +28,13 @@ each dot is one reading, and instead of following a smooth path, they zig-zag.
 
 ## intro:What they need
 
-Working code that follows the specification exactly, written in MATLAB. And an
-automatic test that their build system runs on every change, which must stop with an
+They need working code that follows the specification exactly, written in MATLAB.
+And an automatic test that their build system runs on every change, which must stop with an
 error if anyone ever breaks the filter.
 
 ## intro:Why that's hard
 
-Nobody can check fifteen hundred rows of numbers by eye. And a test that always
+That's harder than it sounds. Nobody can check fifteen hundred rows of numbers by eye. And a test that always
 passes is worse than no test, because it gives false confidence. So the question
 isn't just whether the code runs. It's whether we can prove it's right, and whether
 we'll know if it ever stops being right.

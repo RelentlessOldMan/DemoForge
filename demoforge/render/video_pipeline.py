@@ -20,6 +20,7 @@ from demoforge.errors import DemoError
 from demoforge.model import Demo, RunBundle
 from demoforge.render.cards import (
     Card,
+    about_card,
     card_html,
     chapter_card,
     contents_card,
@@ -30,17 +31,23 @@ from demoforge.render.cards import (
 from demoforge.render.config import PresentationSettings, load_settings
 from demoforge.render.figures import figure_view
 from demoforge.render.session import audit_beats, session_beats, streamed_floors
+from demoforge.render.shown import with_read_views
 from demoforge.render.manifest import write_manifest
 from demoforge.render.frames import (
     ChromiumRenderer,
     Frame,
     FrameRenderer,
     context_for,
+    corner_label,
     frame_key,
     render_frames,
 )
 from demoforge.render.narration import (
     MOMENT_TRANSITION,
+    SET_CONTENTS,
+    SET_OPENING,
+    SET_OUTRO,
+    SET_TITLE,
     AudioClip,
     Narration,
     NarrationBlock,
@@ -50,6 +57,7 @@ from demoforge.render.narration import (
     join_clips,
     load_lexicon,
     load_narration,
+    load_set_narration,
     make_provider,
     synthesize_narration,
 )
@@ -89,6 +97,8 @@ class Chapter:
     narration: Narration = field(default_factory=lambda: Narration(demo_id=""))
     intro: list[VideoResult] = field(default_factory=list)
     replay: VideoResult | None = None
+    # The demo's place in the whole set, as its cards and corner labels show it.
+    number: int = 0
 
     @property
     def parts(self) -> list[Path]:
@@ -125,6 +135,9 @@ class VideoSummary:
     skipped: list[str] = field(default_factory=list)
     narration_provider: str = ""
     narration_note: str = ""
+    # The set's own narration and its audio, spoken over the presentation's cards.
+    set_narration: Narration = field(default_factory=lambda: Narration(demo_id=""))
+    set_audio: dict[str, AudioClip] = field(default_factory=dict)
 
     @property
     def seconds(self) -> float:
@@ -188,6 +201,12 @@ def build_videos(
     lexicon = load_lexicon(content_set.root / "config" / "lexicon.json")
     summary.narration_provider = provider.id
     summary.narration_note = getattr(provider, "reason", "")
+    if presentation:
+        summary.set_narration = load_set_narration(content_set.root, content_set.config.id)
+        summary.set_audio = synthesize_narration(
+            summary.set_narration, provider, content_set.config.narration.voice,
+            out / "audio", lexicon, force,
+        )
 
     # One browser serves the chapters and the cards around them.
     if renderer is not None:
@@ -245,15 +264,23 @@ def _assemble_cards(
 
     A chapter card is narrated by the *previous* demo's ``transition`` block — which
     is exactly what that block is written for ("next, Claude ports this to Python").
-    The first chapter has no predecessor, so its card is silent and the title card
-    carries the opening instead.
+    The set's own ``narration.md`` speaks over the rest: the title, the set's intro
+    cards after it, the contents, and the first chapter card, which has no
+    predecessor. The closing card takes the set's ``outro``, else the last demo's
+    transition, which is written as the set's last word.
 
-    The contents card after the title lists where each chapter card starts. The
-    chapter cards are sized first, narration included, so those times are exact.
+    The contents card lists where each chapter card starts. Every card before a
+    chapter is sized first, narration included, so those times are exact.
     """
     cards_dir = out / "video" / "_cards"
     total = len(summary.chapters)
     order: list[Path] = []
+    said = summary.set_narration
+    set_id = cs.config.id
+
+    def spoken(key: str) -> tuple[tuple[str, str] | None, AudioClip | None]:
+        clip = summary.set_audio.get(key)
+        return ((set_id, key), clip) if clip is not None else (None, None)
 
     def sized(card: Card, audio=None) -> Card:
         if audio is not None:
@@ -278,31 +305,57 @@ def _assemble_cards(
     chapter_cards: list[tuple[Card, object]] = []
     for i, chapter in enumerate(summary.chapters):
         previous = summary.chapters[i - 1] if i else None
-        handoff = previous.audio.get(MOMENT_TRANSITION) if previous else None
-        handoff_block = previous.narration.get(MOMENT_TRANSITION) if previous else None
+        if previous is not None:
+            handoff = previous.audio.get(MOMENT_TRANSITION)
+            block = previous.narration.get(MOMENT_TRANSITION)
+            named = (previous.demo_id, MOMENT_TRANSITION) if handoff else None
+        else:
+            named, handoff = spoken(SET_OPENING)
+            block = said.get(SET_OPENING)
         card = chapter_card(
             demo_id=chapter.demo_id,
             title=chapter.title,
-            number=i + 1,
+            number=chapter.number or i + 1,
             total=total,
             set_title=cs.config.title,
             timing=st.timing,
-            narration=(previous.demo_id, MOMENT_TRANSITION) if handoff else None,
-            caption=display_text(handoff_block.text) if handoff_block else "",
-        )
+            narration=named,
+            caption=display_text(block.text) if block and handoff else "",
+        ).with_corner(f"Demo {chapter.number or i + 1} / {total}")
         chapter_cards.append((card, handoff))
 
     if cs.config.presentation.intro:
-        title = title_card(cs.config, st.timing, demo_count=total)
-        emit(title)
+        opening: list[tuple[Card, AudioClip | None]] = []
+        named, audio = spoken(SET_TITLE)
+        opening.append((title_card(cs.config, st.timing, demo_count=total, narration=named), audio))
+        for part, block in enumerate(said.intro, start=1):
+            named, audio = spoken(block.key)
+            opening.append((about_card(
+                cs.config, st.timing, part=part, heading=block.heading,
+                paragraphs=[display_text(block.text)], narration=named,
+            ), audio))
         if cs.config.presentation.contents and total > 1:
-            contents = contents_card(cs.config, st.timing, entries=[])
-            at = title.duration + contents.duration
+            named, audio = spoken(SET_CONTENTS)
+            opening.append((contents_card(cs.config, st.timing, entries=[], narration=named), audio))
+        slides = len(opening)
+        opening = [
+            (c.with_corner(f"Opening · Slide {n} / {slides}"), a)
+            for n, (c, a) in enumerate(opening, start=1)
+        ]
+        if opening[-1][0].kind == "ContentsCard":
+            at = sum(sized(c, a).duration for c, a in opening)
             entries = []
-            for i, (chapter, (card, audio)) in enumerate(zip(summary.chapters, chapter_cards)):
-                entries.append((i + 1, chapter.title, at))
+            for chapter, (card, audio) in zip(summary.chapters, chapter_cards):
+                entries.append((chapter.number, chapter.title, at))
                 at += sized(card, audio).duration + chapter.seconds
-            emit(contents_card(cs.config, st.timing, entries=entries))
+            last, audio = opening[-1]
+            opening[-1] = (
+                contents_card(cs.config, st.timing, entries=entries, narration=last.narration)
+                .with_corner(last.corner),
+                audio,
+            )
+        for card, audio in opening:
+            emit(card, audio=audio)
 
     for chapter, (card, audio) in zip(summary.chapters, chapter_cards):
         emit(card, audio=audio)
@@ -310,6 +363,11 @@ def _assemble_cards(
         order.extend(chapter.parts)
 
     if cs.config.presentation.outro:
+        named, audio = spoken(SET_OUTRO)
+        if audio is None and summary.chapters:
+            last = summary.chapters[-1]
+            audio = last.audio.get(MOMENT_TRANSITION)
+            named = (last.demo_id, MOMENT_TRANSITION) if audio else None
         emit(
             outro_card(
                 cs.config,
@@ -317,7 +375,9 @@ def _assemble_cards(
                 demo_count=total,
                 event_count=summary.event_count,
                 seconds=sum(c.seconds for c in summary.chapters),
-            )
+                narration=named,
+            ).with_corner("Closing"),
+            audio=audio,
         )
     return order
 
@@ -348,8 +408,9 @@ def _chapter(
     number: int = 1,
 ) -> Chapter:
     bundle = cs.display_bundle(demo.id)
+    events = with_read_views(bundle.read_events(), bundle.transcript_jsonl_path)
     timeline = build_timeline(
-        demo.id, bundle.read_events(), scenes=st.scenes, timing=st.timing,
+        demo.id, events, scenes=st.scenes, timing=st.timing,
         clocked=bundle.read_metadata().extra.get("event_times") == "wallclock",
     )
 
@@ -372,14 +433,16 @@ def _chapter(
     demo_out = out / "video" / demo.id
     write_timeline(timeline, demo_out / "timeline.json")
 
+    groups = _intro_groups(narration)
     context = context_for(
-        cs.config.title, demo.title, timeline, bundle.read_results(), demo.checks
+        cs.config.title, demo.title, timeline, bundle.read_results(), demo.checks,
+        demo_number=number, intro_slides=len(groups), event_total=len(events),
     )
     # The replay as one animated Claude Code window, unless the set asks for slides.
     beats = session_beats(timeline, st.timing) if st.timing.replay_style == "session" else None
     if beats:
         # The animation reveals recorded text; it must never show anything else.
-        problems = audit_beats(timeline, beats, bundle.read_events())
+        problems = audit_beats(timeline, beats, events)
         if problems:
             raise DemoError(
                 f"{demo.id}: the animated replay would show text that is not in the "
@@ -395,7 +458,7 @@ def _chapter(
         beats=beats,
     )
     intro = _intro_cards(
-        demo, narration, audio, number, st, out, renderer, ffmpeg, force
+        demo, groups, audio, number, context.slide_total, st, out, renderer, ffmpeg, force
     )
     replay = assemble_demo_video(
         timeline,
@@ -430,21 +493,12 @@ def _chapter(
         narration=narration,
         intro=intro,
         replay=replay,
+        number=number,
     )
 
 
-def _intro_cards(
-    demo: Demo,
-    narration: Narration,
-    audio: dict[str, AudioClip],
-    number: int,
-    st: PresentationSettings,
-    out: Path,
-    renderer: FrameRenderer,
-    ffmpeg: Path | str | None,
-    force: bool,
-) -> list[VideoResult]:
-    """The demo's introduction as cards, each spoken by its own words, in file order.
+def _intro_groups(narration: Narration) -> list[list[NarrationBlock]]:
+    """The intro blocks, one list per card, in file order.
 
     Each ``intro:<heading>`` block gets a card of its own. The older unheaded
     ``setup`` and ``problem`` blocks share one card, as they always have.
@@ -456,7 +510,25 @@ def _intro_cards(
             groups[-1].append(b)
         else:
             groups.append([b])
+    return groups
 
+
+def _intro_cards(
+    demo: Demo,
+    groups: list[list[NarrationBlock]],
+    audio: dict[str, AudioClip],
+    number: int,
+    slide_total: int,
+    st: PresentationSettings,
+    out: Path,
+    renderer: FrameRenderer,
+    ffmpeg: Path | str | None,
+    force: bool,
+) -> list[VideoResult]:
+    """The demo's introduction as cards, each spoken by its own words, in file order.
+
+    They are the demo's first slides, so the replay's numbering carries on after them.
+    """
     cards_dir = out / "video" / demo.id / "cards"
     clips: list[VideoResult] = []
     for part, group in enumerate(groups, start=1):
@@ -475,7 +547,7 @@ def _intro_cards(
                 figure_view(demo.dir, figure.source, display_text(figure.caption))
                 if figure else None
             ),
-        )
+        ).with_corner(corner_label(demo_number=number, slide=part, slide_total=slide_total))
         spoken = [audio[b.key] for b in group if b.key in audio]
         clip_audio = None
         if len(spoken) == 1:

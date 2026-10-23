@@ -1,5 +1,6 @@
 {#
-  One card of the demo's introduction: an intro narration block, as text.
+  One card of the demo's introduction: an intro narration block, as text. The
+  set's own introduction (an `eyebrow`, no demo number) uses it as well.
 
   A card, not a scene: it explains the problem to the viewer and never says what the
   agent did, so it carries no captured-event claim. The words are the narration's
@@ -42,9 +43,15 @@
     figcaption .cap { font-size: 28px; margin: 0 0 8px; }
     figcaption .src { font-size: 22px; color: var(--muted); margin: 0; font-family: var(--mono); }
   </style>
+{% if data.eyebrow is defined and data.eyebrow %}
+  <p class="eyebrow">{{ data.eyebrow }}</p>
+{% else %}
   <p class="eyebrow">The problem{% if data.heading %} · {{ data.heading }}{% endif %}</p>
+{% endif %}
   <div class="head" style="margin-top: 22px">
+{% if data.number %}
     <span class="num">{{ "%02d" | format(data.number) }}</span>
+{% endif %}
     <p class="title">{{ data.title }}</p>
   </div>
   <div class="rule"></div>

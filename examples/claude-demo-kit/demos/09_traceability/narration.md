@@ -12,7 +12,7 @@ never fed into the estimate. The code passes all three of its tests.
 
 ## intro:What they need
 
-A traceability matrix: a table that links every requirement to the code that
+They need a traceability matrix: a table that links every requirement to the code that
 implements it and the tests that prove it, with a status for each. In regulated
 engineering, the release decision rests on that table. Anything not implemented, or
 not verified, has to be fixed or explicitly signed off.

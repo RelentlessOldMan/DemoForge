@@ -22,7 +22,7 @@ import hashlib
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Iterator, Protocol
+from typing import TYPE_CHECKING, Any, Iterator, Protocol, Sequence
 
 from demoforge.errors import DemoForgeError
 from demoforge.render.config import VideoEncode
@@ -57,6 +57,55 @@ class FrameContext:
     demo_id: str
     scene_count: int
     results: tuple[dict[str, Any], ...] = ()
+    # For the corner label a viewer quotes back: the demo's place in the set, the
+    # intro cards shown before the replay, and how many events the record holds.
+    demo_number: int = 0
+    intro_slides: int = 0
+    event_total: int = 0
+
+    @property
+    def slide_total(self) -> int:
+        return self.intro_slides + self.scene_count
+
+
+def event_label(seqs: Sequence[int], total: int) -> str:
+    """``Event 14 / 25`` for the recorded events behind a slide, counted from 1.
+
+    The record numbers its events from 0 (``seq``, and ``during:<seq>`` in a
+    narration file), but a viewer counts from 1, so the screen shows ``seq + 1``.
+    Empty when the slide is built from no event: a card never claims one.
+    """
+    shown = sorted({s + 1 for s in seqs})
+    if not shown:
+        return ""
+    of = f" / {total}" if total else ""
+    if len(shown) == 1:
+        return f"Event {shown[0]}{of}"
+    if shown == list(range(shown[0], shown[-1] + 1)):
+        return f"Events {shown[0]}–{shown[-1]}{of}"
+    return f"Events {', '.join(map(str, shown))}{of}"
+
+
+def corner_label(
+    *, demo_number: int = 0, slide: int = 0, slide_total: int = 0,
+    seqs: Sequence[int] = (), event_total: int = 0, prefix: str = "",
+) -> str:
+    """The lower-right label, e.g. ``Demo 3 · Event 14 / 25 · Slide 17 / 104``.
+
+    Slides are numbered within the demo, so a demo's own video and the full
+    presentation show the same numbers, and adding a demo renumbers nothing else.
+    """
+    parts = []
+    if prefix:
+        parts.append(prefix)
+    elif demo_number:
+        parts.append(f"Demo {demo_number}")
+    events = event_label(seqs, event_total)
+    if events:
+        parts.append(events)
+    if slide:
+        parts.append(f"Slide {slide} / {slide_total}" if slide_total else f"Slide {slide}")
+    return " · ".join(parts)
 
 
 @dataclass(frozen=True)
@@ -128,6 +177,13 @@ def _template_vars(
         "demo_title": context.demo_title,
         "demo_id": context.demo_id,
         "scene_count": context.scene_count,
+        "corner": corner_label(
+            demo_number=context.demo_number,
+            slide=context.intro_slides + scene.index + 1,
+            slide_total=context.slide_total,
+            seqs=scene.event_seqs,
+            event_total=context.event_total,
+        ),
         "results": [dict(r) for r in context.results],
         "width": video.width,
         "height": video.height,
@@ -384,6 +440,10 @@ def context_for(
     timeline: Timeline,
     results: Any = None,
     demo_checks: Any = None,
+    *,
+    demo_number: int = 0,
+    intro_slides: int = 0,
+    event_total: int = 0,
 ) -> FrameContext:
     """Build a :class:`FrameContext` from a demo and its approved results."""
     limits = check_limits(demo_checks)
@@ -397,4 +457,7 @@ def context_for(
         demo_id=timeline.demo_id,
         scene_count=len(timeline.scenes),
         results=checks,
+        demo_number=demo_number,
+        intro_slides=intro_slides,
+        event_total=event_total,
     )

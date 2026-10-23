@@ -12,7 +12,7 @@ code against the spec.
 
 ## intro:What they need
 
-A verdict they can act on. If something is wrong, which requirement it breaks and which
+They need a verdict they can act on. If something is wrong, which requirement it breaks and which
 lines cause it, so the fix can go back to the code's author, with the code itself left
 untouched. And a stronger test: one that fails on code that doesn't meet the spec, and
 passes on code that does.

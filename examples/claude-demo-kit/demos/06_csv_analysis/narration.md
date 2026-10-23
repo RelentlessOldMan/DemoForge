@@ -12,19 +12,19 @@ than it used to.
 
 ## intro:What they have
 
-An export of two months of nightly results, May and June: one row per test case per
+They have an export of two months of nightly results, May and June: one row per test case per
 night, with the date, the worker, the software version, the error, and the run time.
 And a handful of theories: flaky tests, or one of the worker machines.
 
 ## intro:What they need
 
-An answer the team update can rest on. When did it start, what does it line up with,
+They need an answer the team update can rest on. When did it start, what does it line up with,
 how big is the effect, and which theories does the data rule out? Plus a plot for the
 update, and the key numbers in a small file the tracker reads.
 
 ## intro:Why that's hard
 
-Nobody has actually gone through the numbers. The differences that stand out in a
+So far, nobody has actually gone through the numbers. The differences that stand out in a
 dataset aren't always the ones that matter: one worker is clearly slower than the
 other. Is that the cause, or just a difference? Only the data can say.
 

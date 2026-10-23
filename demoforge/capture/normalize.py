@@ -10,6 +10,8 @@ Only observable interaction is mapped. Internal model reasoning is never emitted
 
 from __future__ import annotations
 
+import base64
+from dataclasses import dataclass
 from typing import Any, Iterable
 
 from demoforge.model import Event
@@ -202,3 +204,62 @@ def with_file_changes(events: list[Event], objs: Iterable[dict[str, Any]]) -> li
         if e.seq in by_seq else e
         for e in events
     ]
+
+
+@dataclass(frozen=True)
+class Shown:
+    """A picture or document a read handed Claude, exactly as the record holds it."""
+
+    media_type: str
+    data: bytes
+
+
+def read_attachments(events: list[Event], objs: Iterable[dict[str, Any]]) -> dict[int, Shown]:
+    """What each read showed Claude beyond text, keyed by the read event's seq.
+
+    When Claude reads a picture or a PDF, the tool result in the raw transcript holds
+    the very bytes it was given. Each read event is paired, in order, with the
+    matching tool call; the pairing must be exact (same count, same file name), or
+    this refuses. A read whose result was only text is left out.
+    """
+    calls: list[tuple[str, str]] = []
+    shown: dict[str, Shown] = {}
+    for obj in objs:
+        if obj.get("type") not in ("assistant", "user"):
+            continue
+        for block in _content(obj):
+            btype = block.get("type")
+            if btype == "tool_use" and _TOOL_EVENT.get(block.get("name", "")) == "file_read":
+                tool_input = block.get("input") or {}
+                path = str(tool_input.get("file_path") or tool_input.get("path") or "")
+                calls.append((str(block.get("id", "")), path))
+            elif btype == "tool_result":
+                found = _attachment(block.get("content"))
+                if found is not None:
+                    shown[str(block.get("tool_use_id", ""))] = found
+    reads = [e for e in events if e.type == "file_read"]
+    if len(reads) != len(calls):
+        raise ValueError(f"{len(reads)} read events but {len(calls)} read calls")
+    out: dict[int, Shown] = {}
+    for ev, (tid, path) in zip(reads, calls):
+        if _basename(path) != _basename(str(ev.data.get("path", ""))):
+            raise ValueError(f"event {ev.seq} does not match its read call ({path!r})")
+        if tid in shown:
+            out[ev.seq] = shown[tid]
+    return out
+
+
+def _attachment(content: Any) -> Shown | None:
+    for part in content if isinstance(content, list) else ():
+        if not isinstance(part, dict) or part.get("type") not in ("image", "document"):
+            continue
+        source = part.get("source")
+        if isinstance(source, dict) and source.get("type") == "base64" and source.get("data"):
+            fallback = "image/png" if part["type"] == "image" else "application/pdf"
+            return Shown(str(source.get("media_type") or fallback),
+                         base64.b64decode(source["data"]))
+    return None
+
+
+def _basename(path: str) -> str:
+    return path.replace("\\", "/").rsplit("/", 1)[-1]

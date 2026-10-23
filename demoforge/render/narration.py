@@ -41,6 +41,15 @@ MOMENT_PROBLEM = "problem"
 MOMENT_RESULT = "result"
 MOMENT_TRANSITION = "transition"
 DURING_PREFIX = "during:"
+# The set's own narration (``narration.md`` beside ``demoforge.toml``), spoken over
+# the presentation's cards: the title, the set's ``intro:<heading>`` cards after it,
+# the contents, and the first chapter card, which no earlier demo hands off to. The
+# closing card takes ``outro`` if the set writes one, else the last demo's transition.
+SET_TITLE = "title"
+SET_CONTENTS = "contents"
+SET_OPENING = "opening"
+SET_OUTRO = "outro"
+SET_NARRATION_FILE = "narration.md"
 # `intro:<heading>` blocks explain the problem to the viewer, one card each, before
 # any of the run is shown. `setup` and `problem` are the older, unheaded form.
 INTRO_PREFIX = "intro:"
@@ -189,6 +198,24 @@ def load_narration(demo: Demo) -> Narration:
     if path is None or not path.is_file():
         return Narration(demo_id=demo.id)
     return parse_narration(path.read_text(encoding="utf-8"), demo_id=demo.id)
+
+
+def load_set_narration(set_root: Path, set_id: str = "") -> Narration:
+    """Read the set's own ``narration.md``; absent means the cards stay unspoken."""
+    path = set_root / SET_NARRATION_FILE
+    if not path.is_file():
+        return Narration(demo_id=set_id)
+    narration = parse_narration(path.read_text(encoding="utf-8"), demo_id=set_id)
+    known = {SET_TITLE, SET_CONTENTS, SET_OPENING, SET_OUTRO}
+    stray = [b.key for b in narration.blocks if b.key not in known and not b.is_intro]
+    if stray:
+        raise DemoError(
+            f"{path}: unknown block(s) {', '.join(map(repr, stray))}; the set's "
+            f"narration takes {', '.join(sorted(known))} and intro:<heading>"
+        )
+    if any(b.figure for b in narration.blocks):
+        raise DemoError(f"{path}: the set's cards hold no figures")
+    return narration
 
 
 # ---- anchoring --------------------------------------------------------

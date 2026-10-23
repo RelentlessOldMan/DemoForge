@@ -13,21 +13,21 @@ believable.
 
 ## intro:What the spec says
 
-A formula for how surprising a reading is, computed without inverting a matrix. A
+The spec gives a formula for how surprising a reading is, computed without inverting a matrix. A
 cut-off the caller passes in, taken from a statistics table. And one hard rule: the
 gate was added after a corrupted reading poisoned the filter, so a malformed reading
 must never be let through, and must never crash the gate.
 
 ## intro:What they need
 
-The gate itself, written in MATLAB to the exact interface the spec defines. And a test
+They need the gate itself, written in MATLAB to the exact interface the spec defines. And a test
 the team can run in continuous integration, under GNU Octave, that fails the build if
 the gate doesn't meet section seven point three. There's also a bench capture: two dozen
 real readings from the two measurement modes.
 
 ## intro:Why that's hard
 
-The test has to be strict enough to catch a gate that's subtly wrong, and fair enough
+The hard part is the test. It has to be strict enough to catch a gate that's subtly wrong, and fair enough
 to pass every gate that meets the spec. And a specification never covers everything.
 Where it's silent, someone has to notice, and decide what to do.
 

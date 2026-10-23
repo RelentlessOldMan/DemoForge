@@ -15,6 +15,8 @@ from demoforge.render.config import VideoEncode, load_settings
 from demoforge.render.frames import (
     FrameContext,
     context_for,
+    corner_label,
+    event_label,
     format_number,
     frame_key,
     render_frames,
@@ -89,9 +91,31 @@ def test_a_missing_templates_dir_is_reported(tmp_path):
 def test_each_frame_names_the_events_it_was_built_from():
     tl = _timeline()
     for scene, html in scene_markup(tl, _context(tl), VIDEO):
-        assert "captured events" in html
-        for seq in scene.event_seqs:
-            assert str(seq) in html
+        assert event_label(scene.event_seqs, 0) in html
+        assert f"Slide {scene.index + 1} / {len(tl.scenes)}" in html
+
+
+def test_event_labels_count_from_one():
+    assert event_label([0], 25) == "Event 1 / 25"
+    assert event_label([13, 14, 15], 25) == "Events 14–16 / 25"
+    assert event_label([3, 7], 25) == "Events 4, 8 / 25"
+    assert event_label([], 25) == ""
+
+
+def test_the_corner_label_numbers_slides_within_the_demo():
+    assert corner_label(
+        demo_number=3, slide=17, slide_total=104, seqs=[13], event_total=25
+    ) == "Demo 3 · Event 14 / 25 · Slide 17 / 104"
+    # A card is built from no event, so it never claims one.
+    assert corner_label(demo_number=3, slide=2, slide_total=104) == "Demo 3 · Slide 2 / 104"
+
+
+def test_replay_slides_are_numbered_after_the_intro_cards():
+    tl = _timeline()
+    ctx = context_for("Set", "A Demo", tl, demo_number=2, intro_slides=4, event_total=99)
+    first = scene_html(tl.scenes[0], ctx, VIDEO)
+    assert f"Slide 5 / {4 + len(tl.scenes)}" in first
+    assert "Demo 2" in first and "/ 99" in first
 
 
 def test_a_terminal_frame_shows_the_real_recorded_output():

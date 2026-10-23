@@ -162,6 +162,8 @@ def _scene_beats(
         entries.append(entry)
         lines = entry.pop("all_lines")
         more = entry.pop("all_more")
+        views = entry.pop("all_views")
+        views_note = entry.pop("all_views_note")
         budget = scene.duration
         # The call itself appears first, with a counter while the recorded command
         # ran, so the viewer sees that something is happening before its output.
@@ -177,6 +179,8 @@ def _scene_beats(
                 )
             frames.append((lead / lead_steps, _visible(entries), None))
         entry["running"] = ""
+        entry["views"] = views
+        entry["views_note"] = views_note
         budget -= lead
         reveal = _reveal_time(budget, len(lines), timing.output_lines_per_second)
         for amount, dt in _steps(len(lines), reveal, timing):
@@ -196,6 +200,8 @@ def _tool_entry(scene: Scene) -> dict[str, Any]:
     tool = str(d.get("tool") or scene.label or scene.kind)
     lines: list[dict[str, str]] = []
     more = ""
+    views: list[str] = []
+    note = ""
     if scene.kind == "TerminalRun":
         arg = str(d.get("command", ""))
         if d.get("command_cut"):
@@ -215,6 +221,13 @@ def _tool_entry(scene: Scene) -> dict[str, Any]:
             more = f"… {dropped} further line{'' if dropped == 1 else 's'}, kept in the record"
     elif scene.kind == "FileGlance":
         arg = str(d.get("rel") or d.get("name") or d.get("query") or "")
+        # A picture or a PDF the read handed Claude, as the record holds it (shown.py).
+        views = [str(v) for v in d.get("views", ()) or ()]
+        pages = int(d.get("pages", 0) or 0)
+        if pages:
+            note = f"the {pages} page{'' if pages == 1 else 's'} Claude was given"
+        elif views:
+            note = "the image Claude was shown"
     elif scene.kind == "ArtifactReveal":
         arg = str(d.get("rel") or d.get("name") or "")
     elif scene.kind == "ResultBadge":
@@ -230,8 +243,12 @@ def _tool_entry(scene: Scene) -> dict[str, Any]:
         "lines": [],
         "more": "",
         "running": "",
+        "views": [],
+        "views_note": "",
         "all_lines": lines,
         "all_more": more,
+        "all_views": views,
+        "all_views_note": note,
     }
 
 

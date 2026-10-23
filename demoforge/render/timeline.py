@@ -370,7 +370,9 @@ def _scene_data(
     if kind == "TerminalRun":
         return _terminal_data(d, merged, limits)
     if kind == "FileGlance":
-        return _path_data(d) | {"query": str(d.get("query", ""))}
+        return _path_data(d) | {"query": str(d.get("query", "")),
+                                "views": list(d.get("views", ())),
+                                "pages": int(d.get("pages", 0) or 0)}
     if kind == "DiffReveal":
         return _path_data(d) | _change_data(primary.type, d, limits)
     if kind == "ArtifactReveal":

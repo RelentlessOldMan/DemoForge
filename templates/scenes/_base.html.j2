@@ -1,8 +1,9 @@
 {#
   Base scene frame (docs/video-pipeline.md §5.3).
 
-  Every replay frame inherits this chrome. The footer prints the recorded event
-  sequence numbers the frame was built from — the never-fabricate rule made visible
+  Every replay frame inherits this chrome. The footer prints the recorded events
+  the frame was built from (as `Event seq+1 / total`, in the corner label a viewer
+  quotes back, beside the slide number) — the never-fabricate rule made visible
   on screen rather than only asserted in tests — and the time-compression notice,
   so a squeezed step is labelled instead of hidden.
 
@@ -210,6 +211,7 @@
     background: rgba(9, 13, 26, 0.6);
   }
   .status__trace { flex: 1; }
+  .status__progress { color: var(--text); font-size: 18px; }
   .status__compressed {
     color: var(--warn);
     border: 1px solid rgba(251, 191, 36, 0.45);
@@ -240,14 +242,14 @@
 
   <footer class="status">
     <span class="status__trace">
-      captured events {{ event_seqs | join(", ") }} &middot; {{ demo_id }}
+      {{ demo_id }}{% if not corner %} &middot; captured events {{ event_seqs | join(", ") }}{% endif %}
     </span>
 {% if compressed %}
     <span class="status__compressed">
       &#9193; time-compressed &mdash; this step took {{ real_seconds | round(0) | int }}s in the real run
     </span>
 {% endif %}
-    <span class="status__progress">{{ index + 1 }} / {{ scene_count }}</span>
+    <span class="status__progress">{{ corner or ((index + 1) ~ " / " ~ scene_count) }}</span>
   </footer>
 <script>
   // Safety net: the timeline paginates text and caps terminal lines to fit, but

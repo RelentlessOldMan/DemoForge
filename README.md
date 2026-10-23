@@ -95,6 +95,7 @@ run  ─►  approve  ─►  render  ─►  build
 
 Full design: [`docs/architecture.md`](docs/architecture.md) and
 [`docs/video-pipeline.md`](docs/video-pipeline.md).
+What each demo is, what Claude did and how it turned out: [`docs/demos.md`](docs/demos.md).
 
 ### ClaudeDemoKit
 
@@ -117,7 +118,7 @@ demoforge/            the engine (no domain knowledge)
   render/             records, slides, frames, narration, video
 config/               tool pins, scene + timing settings
 templates/            slide and scene templates (Jinja2/HTML)
-docs/                 architecture and video-pipeline design
+docs/                 architecture, video pipeline, the demos
 examples/
   claude-demo-kit/
     demos/NN_name/    demo.yaml, prompt.md, narration.md, input/, checks/

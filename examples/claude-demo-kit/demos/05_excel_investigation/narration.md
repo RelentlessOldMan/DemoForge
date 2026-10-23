@@ -24,7 +24,7 @@ campaign, so whatever is fixed has to give the right answer next time too.
 
 ## intro:Why that's hard
 
-The spreadsheet agrees with itself. Every run says PASS, the pass rate is a hundred
+The trouble is, the spreadsheet agrees with itself. Every run says PASS, the pass rate is a hundred
 percent, and the verdict follows. A mistake in a spreadsheet doesn't show on the
 screen; it hides in one cell or one formula, and only shows when you check it against
 the plan.

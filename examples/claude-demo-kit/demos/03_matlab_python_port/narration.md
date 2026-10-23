@@ -11,12 +11,12 @@ and wants to run the filter there too.
 
 ## intro:What they need
 
-A Python version that gives the same answers as the MATLAB original: every number
+They need a Python version that gives the same answers as the MATLAB original: every number
 within one billionth. Then results from either one can be trusted the same way.
 
 ## intro:Why that's hard
 
-MATLAB and Python look alike but differ in quiet ways: where they start counting, how
+The catch is that MATLAB and Python look alike but differ in quiet ways: where they start counting, how
 they lay out numbers, and how they solve equations behind the scenes. A translation
 can look perfect and still drift in the last digits, and in a filter, small
 differences can grow. And one sample recording only proves so much. The data team

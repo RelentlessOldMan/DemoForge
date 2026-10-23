@@ -24,6 +24,11 @@
       margin: 12px 0 0;
       overflow-wrap: anywhere;
     }
+    .glance__views { display: flex; gap: 14px; margin-top: 28px; min-height: 0; }
+    .glance__views img {
+      flex: 0 1 auto; min-width: 0; max-height: 600px; object-fit: contain;
+      border-radius: 6px; background: #fff;
+    }
   </style>
   <div class="panel glance">
     <div class="glance__mark">{% if data.query %}&#8981;{% else %}&#9906;{% endif %}</div>
@@ -35,4 +40,7 @@
 {% endif %}
     </div>
   </div>
+{% if data.views is defined and data.views %}
+  <div class="glance__views">{% for v in data.views %}<img src="{{ v }}" alt="">{% endfor %}</div>
+{% endif %}
 {% endblock %}

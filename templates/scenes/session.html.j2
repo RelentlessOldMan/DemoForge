@@ -77,6 +77,17 @@
     .e--tool .elbow { color: var(--muted); }
     .e--tool .running { margin: 6px 0 0 34px; color: var(--warn); }
     .e--tool .more { margin: 4px 0 0 34px; color: var(--muted); font-style: italic; }
+    .e--tool .views { margin: 10px 0 0 34px; display: flex; gap: 14px; align-items: flex-start; }
+    .e--tool .views img {
+      flex: 0 1 auto;
+      min-width: 0;
+      max-height: 390px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .e--tool .views--pages img { max-height: 330px; }
+    .e--tool .note { color: var(--muted); font-style: italic; }
     .input {
       flex: none;
       margin: 0 24px 18px;
@@ -117,9 +128,12 @@
       <div class="e e--assistant"><span class="bullet">&#9679;</span><div class="md">{{ e.html | safe }}</div></div>
 {% else %}
       <div class="e e--tool">
-        <div class="head"><span class="bullet">&#9679;</span><span><span class="name">{{ e.tool }}</span>{% if e.arg %}(<span class="arg">{{ e.arg }}</span>){% endif %}</span></div>
+        <div class="head"><span class="bullet">&#9679;</span><span><span class="name">{{ e.tool }}</span>{% if e.arg %}(<span class="arg">{{ e.arg }}</span>){% endif %}{% if e.views_note is defined and e.views_note %}<span class="note"> &middot; {{ e.views_note }}</span>{% endif %}</span></div>
 {% if e.running %}
         <div class="running">{{ e.running }}</div>
+{% endif %}
+{% if e.views is defined and e.views %}
+        <div class="views{% if e.views | length > 1 %} views--pages{% endif %}">{% for v in e.views %}<img src="{{ v }}" alt="">{% endfor %}</div>
 {% endif %}
 {% if e.lines %}
         <div class="out">

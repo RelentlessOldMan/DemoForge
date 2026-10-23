@@ -167,7 +167,14 @@ per scene. Each conversation scene becomes a few *beats*, one PNG each:
 - a command appears as `Bash(...)`; if the record measured it taking ≥ 1 s, a counter
   climbs to that recorded time, then its output prints line by line;
 - writes and edits print their signed code lines; the window keeps the conversation
-  so far and scrolls as it grows. The results panel (`ChapterEnd`) stays a still card.
+  so far and scrolls as it grows. The results panel (`ChapterEnd`) stays a still card;
+- a read that handed Claude a picture or a PDF shows it under the `Read(...)` line,
+  marked "the image Claude was shown" or "the N pages Claude was given"
+  (`render/shown.py`). The bytes come from the read's tool result in the raw
+  transcript (`capture/normalize.py` `read_attachments`, paired with the read events
+  in order, refusing on any mismatch), so a plot Claude redraws is shown as it was at
+  each look. PDF pages are drawn by poppler's `pdftoppm` at a fixed 60 dpi. Files
+  Claude made but never looked at are not shown: the record holds no picture of them.
 
 Rules that keep it honest and in sync:
 - **Durations are untouched.** A scene's beats always sum to exactly its duration, so
@@ -190,6 +197,14 @@ Pacing long messages (session style only):
   speech needs. An un-narrated message keeps its reading time.
 
 Set `replay_style: slides` to get the one-card-per-scene style back.
+
+### 5.5 Slide numbers
+Every frame carries a label in its lower right corner. In a demo's replay it reads
+"Event 14 / 25, Slide 17 / 104": the event is the record's `seq + 1` out of the
+demo's events, and the slide counts that demo's cards and scenes, intro cards
+included. The set's opening cards (title, about cards, contents) read
+"Opening · Slide n / N". Numbering is per demo, so a demo's own video and the full
+presentation share frames, and adding a demo renumbers nothing.
 
 ## 6. Narration
 
@@ -218,6 +233,11 @@ Set `replay_style: slides` to get the one-card-per-scene style back.
 - **Cache:** audio keyed by `hash(provider_id, voice, normalized_text)` in
   `output/audio/` (git-ignored, rebuildable). Rebuilding the video does **not** re-synthesize unchanged
   narration (spec §13). Changing one sentence re-synthesizes only that block.
+- **The set's own narration:** `examples/<set>/narration.md` speaks over the
+  presentation's opening and closing cards: `title`, one `intro:<heading>` per about
+  card (shown after the title, before the contents), `contents`, `opening` (the
+  first chapter card) and an optional `outro`. Without `outro`, the closing card
+  takes the last demo's `transition`. Any other block is an error.
 - **Sync:** narration blocks anchor to scenes by ref; the video assembler stretches a
   scene's duration to at least cover its narration block (narration drives minimum
   pacing, so speech is never cut off).
@@ -290,6 +310,7 @@ swapping any one of them is a config change (§1.5).
 | Inter / JetBrains Mono | 4.1 / 2.304 | bundled frame typography (SIL OFL 1.1) |
 | Jinja2 | 3.1.6 | scene templates |
 | ffmpeg | 7.0.1 | clip + audio assembly |
+| poppler (`pdftoppm`) | 25.07.0 | pages of a PDF Claude read, for the replay |
 | Kokoro | 0.9.4 + misaki 0.9.4 (torch 2.11.0+cu128) | narration audio, local GPU |
 | Piper | *(not installed — kept as a plugin)* | alternative narration |
 

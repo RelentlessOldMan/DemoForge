@@ -11,7 +11,7 @@ fifty passed.
 
 ## intro:What they have
 
-Logs: the running diaries that each part of the system writes as it works. There are
+All they have to go on is the logs: the running diaries that each part of the system writes as it works. There are
 five of them. One from the scheduler that hands out tests, one from the service that
 prepares each test's data, one from the workers that run the filter, one from the
 runner that judges the results, and one from the machine itself.

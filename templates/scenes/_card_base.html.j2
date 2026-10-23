@@ -52,6 +52,16 @@
     border-radius: 2px;
     margin: 36px auto;
   }
+  /* Where this card is, for a viewer quoting it back: e.g. "Demo 3 · Slide 2 / 104". */
+  .corner {
+    position: fixed;
+    right: 56px;
+    bottom: 22px;
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--muted);
+    text-align: right;
+  }
   .eyebrow {
     font-family: var(--mono);
     font-size: 20px;
@@ -66,5 +76,8 @@
   <div class="card">
 {% block card %}{% endblock %}
   </div>
+{% if corner %}
+  <div class="corner">{{ corner }}</div>
+{% endif %}
 </body>
 </html>
