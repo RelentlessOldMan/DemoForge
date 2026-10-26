@@ -247,6 +247,9 @@ checks:
 
 # Declarative narration (text in repo; TTS is cached — see video spec)
 narration: narration.md
+# Optional: a few paragraphs on what the demo is, shown on the page that ships with
+# a split presentation's videos (video spec §7)
+summary: summary.md
 
 # Who the person asking is (optional). With it, capture is a conversation: a
 # simulated user reads each answer and may reply, up to max_follow_ups times (§3.1).

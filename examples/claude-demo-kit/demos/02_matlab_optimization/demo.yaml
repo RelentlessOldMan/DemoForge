@@ -8,6 +8,8 @@ enabled: true
 
 prompt: prompt.md
 narration: narration.md
+# What the demo is, in a few paragraphs, for the page that ships with the videos.
+summary: summary.md
 
 # The person asking, played during capture by a second Claude session that reads each
 # answer and replies, up to max_follow_ups times. Never staged: the agent does not see it.

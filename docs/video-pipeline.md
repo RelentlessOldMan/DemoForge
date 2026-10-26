@@ -260,6 +260,12 @@ Pure ffmpeg, driven by a generated `timeline.json` — no editor, no GUI.
    than compressed, into `output/video/<set title>.zip` under a `<set title>/` folder,
    with fixed timestamps so the same parts always make the same zip. The manifest
    records the zip's hash and each part's.
+7. A split presentation also gets an `index.html`, zipped first beside the videos, for
+   anyone handed the folder: what the set is for (its `intro:` narration), a contents
+   list, and each demo with its length, its file, its checks passed and its `summary`
+   file (`summary:` in demo.yaml, optional). Each video plays on the page from its
+   relative name, and the file link opens it as-is. The page loads nothing from the
+   network, so it works from a file share or an unzipped folder.
 
 Pinned encoding flags (codec, CRF, pixfmt, fps) live in `config/video.yaml` so output
 bytes are stable across machines with the same ffmpeg build.

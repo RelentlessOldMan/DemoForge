@@ -10,7 +10,7 @@ Claude Demo Kit: Claude doing real engineering work.
 
 ## intro:What this is
 
-This video holds ten short demonstrations of Claude working as an engineer. Each one
+These videos hold ten short demonstrations of Claude working as an engineer. Each one
 starts with a task like one a team would hand a colleague: write code to a
 specification, make it faster, move it to another language, chase down a failure,
 review a spreadsheet, analyse a dataset, check work against its requirements. All ten

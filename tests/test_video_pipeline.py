@@ -555,14 +555,41 @@ def test_a_split_presentation_ships_numbered_files_in_one_zip(tmp_path):
     assert total == pytest.approx(summary.seconds, abs=0.5)
 
     with zipfile.ZipFile(summary.package) as zf:
-        assert zf.namelist() == [f"Video Set/{n}" for n in names]
+        assert zf.namelist() == [f"Video Set/{n}" for n in ["index.html", *names]]
         assert all(i.compress_type == zipfile.ZIP_STORED for i in zf.infolist())
         for part in summary.parts:
             assert zf.read(f"Video Set/{part.path.name}") == part.path.read_bytes()
 
     manifest = json.loads((summary.package.parent / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["video"] == "Video Set.zip"
-    assert [f["name"] for f in manifest["files"]] == names
+    assert [f["name"] for f in manifest["files"]] == ["index.html", *names]
+
+
+def test_the_zip_carries_a_page_for_the_videos(tmp_path):
+    import re
+
+    cs = _set(tmp_path, approve=("alpha", "beta"))
+    alpha = cs.demos_dir / "alpha"
+    (alpha / "summary.md").write_text(
+        "<!-- not shown -->\n**The problem.** A job that\nwraps across lines.\n\n"
+        "**The outcome.** It `worked`.\n",
+        encoding="utf-8",
+    )
+    yaml = alpha / "demo.yaml"
+    yaml.write_text(yaml.read_text(encoding="utf-8") + "summary: summary.md\n", encoding="utf-8")
+    summary = _build(_split(cs))
+
+    page = (summary.package.parent / "parts" / "index.html").read_text(encoding="utf-8")
+    # Every video is linked and played by its name in the same folder.
+    for name in ("00_intro.mp4", "01_alpha.mp4", "02_beta.mp4"):
+        assert f'src="{name}"' in page and f'href="{name}"' in page
+    assert "http" not in re.sub(r'xmlns="[^"]*"', "", page)
+    # The set's own introduction, and each demo's summary and checks.
+    assert "We hand Claude" not in page  # a demo's narration is not its summary
+    assert "A job that wraps across lines." in page and "<code>worked</code>" in page
+    assert "not shown" not in page
+    assert page.count("1 of 1 checks passed") == 2
+    assert "Demo Alpha" in page and "Demo Beta" in page
 
 
 def test_a_split_contents_card_names_each_demos_file(tmp_path):

@@ -32,6 +32,7 @@ from demoforge.render.config import PresentationSettings, load_settings
 from demoforge.render.figures import figure_view
 from demoforge.render.session import audit_beats, session_beats, streamed_floors
 from demoforge.render.shown import with_read_views
+from demoforge.render.index_page import INDEX_NAME, IndexPart, demo_part, write_index
 from demoforge.render.manifest import write_manifest, write_package
 from demoforge.render.frames import (
     ChromiumRenderer,
@@ -266,7 +267,22 @@ def _finish(
         concat_videos(paths, parts_dir / f"{name}.mp4", video=st.video, ffmpeg=ffmpeg, force=force)
         for name, paths in groups
     ]
-    files = [r.path for r in summary.parts]
+    videos = {r.path.stem: r for r in summary.parts}
+    pages = []
+    if OPENING_PART in videos:
+        opening = videos[OPENING_PART]
+        pages.append(IndexPart(number=0, title="Introduction", file=opening.path.name,
+                               seconds=opening.seconds))
+    demo_videos = [videos[name] for name, _ in groups if name != OPENING_PART]
+    for i, (chapter, video) in enumerate(zip(summary.chapters, demo_videos)):
+        pages.append(demo_part(
+            content_set, chapter.demo_id, number=chapter.number or i + 1,
+            title=chapter.title, file=video.path, seconds=video.seconds,
+        ))
+    index = write_index(
+        content_set, pages, parts_dir / INDEX_NAME, set_narration=summary.set_narration
+    )
+    files = [index, *(r.path for r in summary.parts)]
     # Anything left from an earlier build with other parts must not ship.
     for stale in parts_dir.glob("*.mp4"):
         if stale not in files:

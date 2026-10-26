@@ -86,6 +86,8 @@ class Demo:
     runtime: str = "none"
     checks: tuple[Check, ...] = ()
     narration: str | None = None
+    # A few paragraphs on what the demo is, for the page that ships with the videos.
+    summary: str | None = None
     presentation: Presentation = field(default_factory=Presentation)
     # DemoForge-owned verification harness (NOT staged into the agent's working
     # copy). Run after the agent finishes to produce `metrics_from` independently.
@@ -105,6 +107,10 @@ class Demo:
     @property
     def narration_path(self) -> Path | None:
         return self.dir / self.narration if self.narration else None
+
+    @property
+    def summary_path(self) -> Path | None:
+        return self.dir / self.summary if self.summary else None
 
     @property
     def user_path(self) -> Path | None:
@@ -191,6 +197,7 @@ class Demo:
             runtime=runtime,
             checks=checks,
             narration=(str(data["narration"]) if data.get("narration") else None),
+            summary=(str(data["summary"]) if data.get("summary") else None),
             presentation=Presentation.from_dict(data.get("presentation")),
             harness=(str(data["harness"]) if data.get("harness") else None),
             metrics_from=str(data.get("metrics_from", "metrics.json")),

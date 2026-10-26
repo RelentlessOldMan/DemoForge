@@ -1,0 +1,160 @@
+{#
+  The page that ships beside a split presentation's videos. Opened straight from
+  a folder or a file share, so it loads nothing from the network: system fonts,
+  inline styles, and videos linked by their relative file names.
+#}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<style>
+  :root {
+    --bg: #f7f8fa; --panel: #ffffff; --text: #18202c; --muted: #5b6676;
+    --line: #dde2e9; --accent: #0e7490; --good: #15803d; --warn: #b45309;
+    --shadow: 0 1px 3px rgba(16, 24, 40, 0.08);
+    --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --mono: "Cascadia Mono", Consolas, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1120; --panel: #121a2b; --text: #e5e9f0; --muted: #94a3b8;
+      --line: #23304a; --accent: #5eead4; --good: #4ade80; --warn: #fbbf24;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 var(--sans);
+  }
+  a { color: var(--accent); }
+  code { font-family: var(--mono); font-size: 0.9em; }
+  .layout {
+    max-width: 1240px; margin: 0 auto; padding: 0 16px 64px;
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px;
+  }
+  @media (min-width: 1080px) {
+    .layout { grid-template-columns: 260px minmax(0, 1fr); padding: 0 32px 80px; }
+    .toc { position: sticky; top: 24px; align-self: start; max-height: calc(100vh - 48px); overflow: auto; }
+  }
+  header.top { grid-column: 1 / -1; padding: 48px 0 8px; }
+  .eyebrow {
+    margin: 0; font: 600 13px/1 var(--mono); letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  h1 { margin: 12px 0 6px; font-size: clamp(32px, 5vw, 46px); line-height: 1.15; }
+  .subtitle { margin: 0; font-size: 20px; color: var(--muted); }
+  .stats { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
+  .toc { font-size: 15px; }
+  .toc h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; }
+  .toc li a {
+    display: grid; grid-template-columns: 30px 1fr auto; gap: 8px;
+    padding: 7px 8px; border-radius: 6px; text-decoration: none; color: var(--text);
+  }
+  .toc li a:hover { background: var(--panel); box-shadow: var(--shadow); }
+  .toc .n, .toc .len { font-family: var(--mono); color: var(--muted); font-size: 13px; padding-top: 2px; }
+  main { min-width: 0; }
+  section { margin: 0 0 28px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 24px; box-shadow: var(--shadow);
+  }
+  .about h2, .demo h2 { margin: 0 0 4px; font-size: 26px; line-height: 1.25; }
+  .about h3 { margin: 18px 0 4px; font-size: 18px; }
+  .about p { margin: 0; }
+  .howto { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); }
+  .demo .num { font-family: var(--mono); color: var(--accent); margin-right: 10px; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 16px;
+    color: var(--muted); font-size: 15px;
+  }
+  .meta .file { font-family: var(--mono); font-size: 14px; }
+  .pass { color: var(--good); font-weight: 600; }
+  .partial { color: var(--warn); font-weight: 600; }
+  video {
+    display: block; width: 100%; aspect-ratio: 16 / 9; background: #000;
+    border-radius: 8px; margin: 0 0 18px;
+  }
+  .summary .md-p { margin: 0 0 12px; }
+  .summary .md-p:last-child { margin-bottom: 0; }
+  footer { color: var(--muted); font-size: 14px; margin-top: 36px; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <header class="top">
+    <p class="eyebrow">{{ title }}</p>
+    <h1>{{ subtitle or title }}</h1>
+    <p class="stats">{{ demos | length }} demos · {{ total }} in all · every video is in this folder</p>
+  </header>
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+{% if about %}
+      <li><a href="#about"><span class="n"></span><span>About these videos</span><span class="len"></span></a></li>
+{% endif %}
+{% if opening %}
+      <li><a href="#intro"><span class="n">00</span><span>Introduction</span><span class="len">{{ clock(opening.seconds) }}</span></a></li>
+{% endif %}
+{% for d in demos %}
+      <li><a href="#demo-{{ d.number }}"><span class="n">{{ "%02d" | format(d.number) }}</span><span>{{ d.title }}</span><span class="len">{{ clock(d.seconds) }}</span></a></li>
+{% endfor %}
+    </ol>
+  </nav>
+
+  <main>
+{% if about %}
+    <section id="about" class="card about">
+      <h2>About these videos</h2>
+{% for a in about %}
+      <h3>{{ a.heading }}</h3>
+      <p>{{ a.text }}</p>
+{% endfor %}
+      <p class="howto">Each demo is its own video in this folder, narrated and captioned, so it
+        works with the sound off. Play it on this page, or open the file in any video player.
+        Start with the introduction, or go straight to the demo you want: each one stands on its own.</p>
+    </section>
+{% endif %}
+
+{% if opening %}
+    <section id="intro" class="card demo">
+      <h2><span class="num">00</span>Introduction</h2>
+      <p class="meta"><span>{{ clock(opening.seconds) }}</span><a class="file" href="{{ opening.file }}">{{ opening.file }}</a></p>
+      <video controls preload="metadata" src="{{ opening.file }}"></video>
+    </section>
+{% endif %}
+
+{% for d in demos %}
+    <section id="demo-{{ d.number }}" class="card demo">
+      <h2><span class="num">{{ "%02d" | format(d.number) }}</span>{{ d.title }}</h2>
+      <p class="meta">
+        <span>{{ clock(d.seconds) }}</span>
+        <a class="file" href="{{ d.file }}">{{ d.file }}</a>
+{% if d.checks_total %}
+        <span class="{{ 'pass' if d.checks_passed == d.checks_total else 'partial' }}">{{ d.checks_passed }} of {{ d.checks_total }} checks passed</span>
+{% endif %}
+      </p>
+      <video controls preload="metadata" src="{{ d.file }}"></video>
+{% if d.summary_html %}
+      <div class="summary">{{ d.summary_html | safe }}</div>
+{% endif %}
+    </section>
+{% endfor %}
+
+    <footer>Checks are DemoForge's own tests of each demo's results, run after the session.
+      Claude never saw them.</footer>
+  </main>
+</div>
+<script>
+  // One video at a time: starting one pauses whichever was playing.
+  document.addEventListener("play", function (e) {
+    document.querySelectorAll("video").forEach(function (v) { if (v !== e.target) v.pause(); });
+  }, true);
+</script>
+</body>
+</html>
