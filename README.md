@@ -11,9 +11,11 @@ as a structured run bundle. You approve the runs you want to keep, and it freeze
 then on it rebuilds records, slides, and video from source control as often as you like,
 with the same result every time.
 
-▶️ **[Watch the ClaudeDemoKit presentation](https://github.com/RelentlessOldMan/DemoForge/releases/latest/download/ClaudeDemoKit.mp4)**
-(narrated and captioned, so it works with the sound off; MP4 from the
-[latest release](https://github.com/RelentlessOldMan/DemoForge/releases/latest)).
+▶️ **[Download the ClaudeDemoKit presentation](https://github.com/RelentlessOldMan/DemoForge/releases/latest/download/ClaudeDemoKit.zip)**
+(narrated and captioned, so it works with the sound off). The zip from the
+[latest release](https://github.com/RelentlessOldMan/DemoForge/releases/latest) holds
+eleven MP4s: `00_intro.mp4`, then one per demo from `01_matlab_implementation.mp4` to
+`10_autonomous_investigation.mp4`. Watch them in order, or just the demo you want.
 
 ## Why
 
@@ -67,7 +69,7 @@ own CLAUDE.md, skills, plugins, hooks or MCP servers, and on your CLI login rath
 any API key in the environment.
 
 To publish a new video, run `.\release.ps1 v1.0.1 "notes"`. It pushes `main` and creates a GitHub
-Release with the rendered video attached as `ClaudeDemoKit.mp4`, plus the build's
+Release with the rendered videos attached as `ClaudeDemoKit.zip`, plus the build's
 `manifest.json` (the commit, run ids and hashes it was built from). The video is never
 committed. The script refuses a video that wasn't built from the current, clean commit.
 

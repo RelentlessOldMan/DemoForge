@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
+import zipfile
 from pathlib import Path
 
 from demoforge.discovery import ContentSet
@@ -28,9 +30,35 @@ def bundle_digest(root: Path) -> str:
     return hash_text("\n".join(parts))
 
 
+def write_package(files: list[Path], out_path: Path, *, folder: str) -> Path:
+    """Zip a split presentation's files into one download, under ``folder/``.
+
+    Stored, not deflated: MP4 does not compress, and storing keeps unzipping
+    instant. Every entry carries a fixed timestamp, so the same files always make
+    the same zip, byte for byte.
+    """
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = out_path.with_name(out_path.name + ".tmp")
+    with zipfile.ZipFile(tmp, "w", compression=zipfile.ZIP_STORED) as zf:
+        for f in files:
+            info = zipfile.ZipInfo(f"{folder}/{f.name}", date_time=(1980, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_STORED
+            info.external_attr = 0o644 << 16
+            with f.open("rb") as src, zf.open(info, "w", force_zip64=True) as dst:
+                shutil.copyfileobj(src, dst, 1 << 20)
+    os.replace(tmp, out_path)
+    return out_path
+
+
 def write_manifest(
     cs: ContentSet, video: Path, demo_ids: list[str], narration_provider: str | None,
+    *, files: list[Path] | None = None,
 ) -> Path:
+    """Record what ``video`` was built from; ``files`` are a split presentation's parts.
+
+    For a split presentation ``video`` is the zip that ships, and each part's own
+    hash is listed too.
+    """
     commit, dirty = _git_state(cs.root)
     demos = []
     for demo_id in demo_ids:
@@ -50,6 +78,8 @@ def write_manifest(
         "narration_provider": narration_provider,
         "demos": demos,
     }
+    if files is not None:
+        payload["files"] = [{"name": f.name, "sha256": hash_file(f)} for f in files]
     path = video.with_name(MANIFEST_NAME)
     tmp = path.with_name(path.name + ".tmp")
     tmp.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")

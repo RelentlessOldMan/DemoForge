@@ -1,4 +1,6 @@
 # Cut a GitHub Release carrying the rendered presentation video.
+# A split presentation (split = true in the set's demoforge.toml) ships as one zip
+# of numbered MP4s; otherwise the single presentation.mp4 ships.
 #
 #   .\release.ps1 v1.1 "What changed in this video"
 #
@@ -11,7 +13,7 @@ param(
     [Parameter(Mandatory)][string]$Version,
     [string]$Notes = "",
     [string]$Set = "examples/claude-demo-kit",
-    [string]$AssetName = "ClaudeDemoKit.mp4"
+    [string]$AssetName = ""
 )
 $ErrorActionPreference = "Stop"
 
@@ -27,19 +29,23 @@ $behind = git rev-list --count "HEAD..origin/main"
 if ([int]$behind -gt 0) { throw "main is $behind commit(s) behind origin/main; pull first." }
 
 $videoDir = Join-Path $Set "output/video"
-$video = Join-Path $videoDir "presentation.mp4"
 $manifestPath = Join-Path $videoDir "manifest.json"
-if (-not (Test-Path $video)) { throw "No $video - run: python -m demoforge --set $Set build --video" }
-if (-not (Test-Path $manifestPath)) { throw "No $manifestPath - rebuild the video so it records what it was built from." }
+if (-not (Test-Path $manifestPath)) { throw "No $manifestPath - run: python -m demoforge --set $Set build --video" }
 
 $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
+# The manifest names what the build made: presentation.mp4, or the split zip.
+$video = Join-Path $videoDir $manifest.video
+if (-not (Test-Path $video)) { throw "No $video - rebuild the video." }
+if (-not $AssetName) {
+    $AssetName = if ($manifest.video -like "*.zip") { $manifest.video } else { "ClaudeDemoKit.mp4" }
+}
 $head = git rev-parse HEAD
 if ($manifest.git_commit -ne $head) {
     throw "The video was built from $($manifest.git_commit), not HEAD ($head). Rebuild it."
 }
 if ($manifest.git_dirty) { throw "The video was built from a dirty tree. Commit, then rebuild it." }
 $sha = (Get-FileHash $video -Algorithm SHA256).Hash.ToLower()
-if ($manifest.video_sha256 -ne $sha) { throw "presentation.mp4 does not match its manifest. Rebuild it." }
+if ($manifest.video_sha256 -ne $sha) { throw "$($manifest.video) does not match its manifest. Rebuild it." }
 if ($manifest.narration_provider -like "silent*") { throw "The video's narration track is silence. Rebuild with a voice installed." }
 
 $staged = Join-Path ([IO.Path]::GetTempPath()) $AssetName

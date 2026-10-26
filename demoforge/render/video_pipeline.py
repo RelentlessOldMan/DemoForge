@@ -32,7 +32,7 @@ from demoforge.render.config import PresentationSettings, load_settings
 from demoforge.render.figures import figure_view
 from demoforge.render.session import audit_beats, session_beats, streamed_floors
 from demoforge.render.shown import with_read_views
-from demoforge.render.manifest import write_manifest
+from demoforge.render.manifest import write_manifest, write_package
 from demoforge.render.frames import (
     ChromiumRenderer,
     Frame,
@@ -69,6 +69,7 @@ from demoforge.render.timeline import (
     write_timeline,
 )
 from demoforge.render.video import (
+    KEY_SUFFIX,
     VideoResult,
     assemble_card_clip,
     assemble_demo_video,
@@ -76,6 +77,9 @@ from demoforge.render.video import (
 )
 
 PRESENTATION_NAME = "presentation.mp4"
+# A split presentation's numbered files, and the zip that carries them as one download.
+PARTS_DIR = "parts"
+OPENING_PART = "00_intro"
 
 # A demo's introduction is spoken over its own cards, before the replay, rather than
 # over the first replay scenes: a viewer should understand the problem for
@@ -132,6 +136,9 @@ class VideoSummary:
     chapters: list[Chapter] = field(default_factory=list)
     cards: list[VideoResult] = field(default_factory=list)
     presentation: VideoResult | None = None
+    # A split presentation: its numbered files, and the zip holding them all.
+    parts: list[VideoResult] = field(default_factory=list)
+    package: Path | None = None
     skipped: list[str] = field(default_factory=list)
     narration_provider: str = ""
     narration_note: str = ""
@@ -238,17 +245,38 @@ def _finish(
     ffmpeg: Path | str | None,
     force: bool = False,
 ) -> None:
-    """Cards + final concat, while the browser is still open."""
+    """Cards + final concat, while the browser is still open.
+
+    One long video, or, for a split presentation, one file per part (the opening,
+    then each demo) zipped into a single download.
+    """
     if not summary.chapters:
         return
-    parts = _assemble_cards(content_set, summary, st, out, renderer, ffmpeg, force)
-    summary.presentation = concat_videos(
-        parts, out / "video" / PRESENTATION_NAME, video=st.video, ffmpeg=ffmpeg,
-        force=force,
+    groups = _assemble_cards(content_set, summary, st, out, renderer, ffmpeg, force)
+    demo_ids = [c.demo_id for c in summary.chapters]
+    if not content_set.config.presentation.split:
+        summary.presentation = concat_videos(
+            [p for _, paths in groups for p in paths], out / "video" / PRESENTATION_NAME,
+            video=st.video, ffmpeg=ffmpeg, force=force,
+        )
+        write_manifest(content_set, summary.presentation.path, demo_ids, summary.narration_provider)
+        return
+    parts_dir = out / "video" / PARTS_DIR
+    summary.parts = [
+        concat_videos(paths, parts_dir / f"{name}.mp4", video=st.video, ffmpeg=ffmpeg, force=force)
+        for name, paths in groups
+    ]
+    files = [r.path for r in summary.parts]
+    # Anything left from an earlier build with other parts must not ship.
+    for stale in parts_dir.glob("*.mp4"):
+        if stale not in files:
+            stale.unlink()
+            stale.with_suffix(stale.suffix + KEY_SUFFIX).unlink(missing_ok=True)
+    summary.package = write_package(
+        files, out / "video" / f"{content_set.config.title}.zip", folder=content_set.config.title
     )
     write_manifest(
-        content_set, summary.presentation.path,
-        [c.demo_id for c in summary.chapters], summary.narration_provider,
+        content_set, summary.package, demo_ids, summary.narration_provider, files=files
     )
 
 def _assemble_cards(
@@ -259,8 +287,12 @@ def _assemble_cards(
     renderer: FrameRenderer,
     ffmpeg: Path | str | None,
     force: bool = False,
-) -> list[Path]:
-    """Build the title/chapter/closing cards and return the full concat order.
+) -> list[tuple[str, list[Path]]]:
+    """Build the title/chapter/closing cards and return the concat order, in parts.
+
+    Each part is (name, clips): the opening cards as ``00_intro``, then each demo
+    as ``NN_<demo id>``, its chapter card first; the closing card ends the last
+    one. Joined in order, the parts are the whole presentation.
 
     A chapter card is narrated by the *previous* demo's ``transition`` block — which
     is exactly what that block is written for ("next, Claude ports this to Python").
@@ -270,10 +302,17 @@ def _assemble_cards(
     transition, which is written as the set's last word.
 
     The contents card lists where each chapter card starts. Every card before a
-    chapter is sized first, narration included, so those times are exact.
+    chapter is sized first, narration included, so those times are exact. In a
+    split presentation it names each demo's file instead.
     """
     cards_dir = out / "video" / "_cards"
     total = len(summary.chapters)
+    split = cs.config.presentation.split
+    names = [
+        f"{chapter.number or i + 1:02d}_{chapter.demo_id.replace('-', '_')}"
+        for i, chapter in enumerate(summary.chapters)
+    ]
+    groups: list[tuple[str, list[Path]]] = []
     order: list[Path] = []
     said = summary.set_narration
     set_id = cs.config.id
@@ -344,9 +383,9 @@ def _assemble_cards(
         ]
         if opening[-1][0].kind == "ContentsCard":
             at = sum(sized(c, a).duration for c, a in opening)
-            entries = []
-            for chapter, (card, audio) in zip(summary.chapters, chapter_cards):
-                entries.append((chapter.number, chapter.title, at))
+            entries: list[tuple[int, str, float | str]] = []
+            for chapter, (card, audio), name in zip(summary.chapters, chapter_cards, names):
+                entries.append((chapter.number, chapter.title, f"{name}.mp4" if split else at))
                 at += sized(card, audio).duration + chapter.seconds
             last, audio = opening[-1]
             opening[-1] = (
@@ -356,11 +395,14 @@ def _assemble_cards(
             )
         for card, audio in opening:
             emit(card, audio=audio)
+        groups.append((OPENING_PART, order))
 
-    for chapter, (card, audio) in zip(summary.chapters, chapter_cards):
+    for chapter, (card, audio), name in zip(summary.chapters, chapter_cards, names):
+        order = []
         emit(card, audio=audio)
         # The chapter opens with its own intro cards, already encoded.
         order.extend(chapter.parts)
+        groups.append((name, order))
 
     if cs.config.presentation.outro:
         named, audio = spoken(SET_OUTRO)
@@ -379,7 +421,7 @@ def _assemble_cards(
             ).with_corner("Closing"),
             audio=audio,
         )
-    return order
+    return groups
 
 
 def _card_frame(

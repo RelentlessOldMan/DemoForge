@@ -12,6 +12,9 @@ description = "A DemoForge content set demonstrating Claude across engineering w
 # Intro/outro slides generated for the whole set (demo sections are derived).
 intro = true
 outro = true
+# Release the video as one zip of numbered files (00_intro.mp4, 01_..., 10_...)
+# rather than one 87-minute MP4, so a viewer can watch just the demo they want.
+split = true
 # Demo order follows each demo.yaml `order`; this is a tiebreak/override if needed.
 
 [narration]

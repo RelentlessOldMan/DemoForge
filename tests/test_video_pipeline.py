@@ -530,3 +530,67 @@ def test_every_narrated_scene_shows_its_words(tmp_path):
     # Shown as words: the pronunciation override and the Markdown are gone.
     assert end.caption == "The checks agree with Kalman."
     assert all(not s.caption for s in summary.chapters[0].timeline.scenes if not s.narration)
+
+
+# ---- split presentation -----------------------------------------------
+def _split(cs):
+    toml = cs.root / "demoforge.toml"
+    toml.write_text(toml.read_text(encoding="utf-8") + "\n[presentation]\nsplit = true\n", encoding="utf-8")
+    return load_content_set(cs.root)
+
+
+def test_a_split_presentation_ships_numbered_files_in_one_zip(tmp_path):
+    import zipfile
+
+    from demoforge.render.video import probe_seconds
+
+    cs = _split(_set(tmp_path, approve=("alpha", "beta")))
+    summary = _build(cs)
+
+    assert summary.presentation is None
+    names = [p.path.name for p in summary.parts]
+    assert names == ["00_intro.mp4", "01_alpha.mp4", "02_beta.mp4"]
+    # Joined in order, the parts are the whole presentation: every card and chapter once.
+    total = sum(probe_seconds(p.path) for p in summary.parts)
+    assert total == pytest.approx(summary.seconds, abs=0.5)
+
+    with zipfile.ZipFile(summary.package) as zf:
+        assert zf.namelist() == [f"Video Set/{n}" for n in names]
+        assert all(i.compress_type == zipfile.ZIP_STORED for i in zf.infolist())
+        for part in summary.parts:
+            assert zf.read(f"Video Set/{part.path.name}") == part.path.read_bytes()
+
+    manifest = json.loads((summary.package.parent / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["video"] == "Video Set.zip"
+    assert [f["name"] for f in manifest["files"]] == names
+
+
+def test_a_split_contents_card_names_each_demos_file(tmp_path):
+    import re
+
+    class Recording(_StubRenderer):
+        def __init__(self) -> None:
+            super().__init__()
+            self.html: list[str] = []
+
+        def render(self, html, out_path):
+            self.html.append(html)
+            super().render(html, out_path)
+
+    renderer = Recording()
+    _build(_split(_set(tmp_path, approve=("alpha", "beta"))), renderer=renderer)
+    contents = next(h for h in renderer.html if "Skip to a demo" in h)
+    assert re.findall(r'class="toc__at">([^<]+)<', contents) == ["01_alpha.mp4", "02_beta.mp4"]
+
+
+def test_a_split_rebuild_is_the_same_zip_and_drops_old_parts(tmp_path):
+    cs = _split(_set(tmp_path, approve=("alpha", "beta")))
+    first = _build(cs)
+    stale = first.parts[0].path.with_name("07_gone.mp4")
+    stale.write_bytes(b"old")
+    zipped = first.package.read_bytes()
+
+    second = _build(cs)
+    assert all(p.cached for p in second.parts)
+    assert second.package.read_bytes() == zipped
+    assert not stale.exists()

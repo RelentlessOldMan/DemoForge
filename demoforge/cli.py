@@ -285,6 +285,11 @@ def _print_video(summary: VideoSummary, cs: ContentSet) -> None:
     if summary.presentation is not None:
         state = "cached" if summary.presentation.cached else "encoded"
         print(f"  {'presentation':24} {summary.seconds:>7.1f}s  {state}")
+    for part in summary.parts:
+        state = "cached" if part.cached else "encoded"
+        print(f"  {part.path.name:24} {part.seconds:>7.1f}s  {state}")
+    if summary.package is not None:
+        print(f"  {summary.package.name:24} {len(summary.parts):>3} files, stored")
     if summary.skipped:
         print(f"skipped (enabled, not yet approved): {', '.join(summary.skipped)}")
     if summary.chapters and not summary.narrated:

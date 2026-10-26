@@ -34,6 +34,9 @@ class PresentationConfig:
     # A card after the title listing where each demo starts, to skip to it.
     contents: bool = True
     outro: bool = True
+    # Ship the presentation as numbered files (the opening, then one per demo)
+    # zipped into one download, instead of one long video.
+    split: bool = False
 
 
 @dataclass(frozen=True)
@@ -125,6 +128,7 @@ class ContentSetConfig:
                 intro=bool(pres.get("intro", True)),
                 contents=bool(pres.get("contents", True)),
                 outro=bool(pres.get("outro", True)),
+                split=bool(pres.get("split", False)),
             ),
             narration=NarrationConfig(
                 enabled=bool(narr.get("enabled", True)),

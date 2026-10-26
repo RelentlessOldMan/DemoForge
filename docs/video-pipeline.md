@@ -252,6 +252,14 @@ Pure ffmpeg, driven by a generated `timeline.json` — no editor, no GUI.
 3. Add chapter/section cards (from slides) as transition scenes between demos.
 4. Concatenate all chapters → `output/video/presentation.mp4`.
 5. Per-demo videos (`output/video/<demo>.mp4`) also emitted for embedding in records.
+6. With `split = true` under `[presentation]`, step 4 instead writes one file per part to
+   `output/video/parts/`: `00_intro.mp4` holds the opening cards, and `NN_<demo>.mp4`
+   holds that demo's chapter card and chapter, with the closing card at the end of the
+   last one. Joined in order, the parts are exactly the presentation. The contents card
+   names each demo's file instead of a start time. The parts are zipped, stored rather
+   than compressed, into `output/video/<set title>.zip` under a `<set title>/` folder,
+   with fixed timestamps so the same parts always make the same zip. The manifest
+   records the zip's hash and each part's.
 
 Pinned encoding flags (codec, CRF, pixfmt, fps) live in `config/video.yaml` so output
 bytes are stable across machines with the same ffmpeg build.
@@ -266,6 +274,7 @@ bytes are stable across machines with the same ffmpeg build.
 | narration wav | hash(provider, voice, text) | that narration block's text changes |
 | demo.mp4 | hash(frames + audio + video cfg) | any input above changes |
 | presentation.mp4 | hash(all demo.mp4 + intro/outro) | any chapter changes |
+| parts/NN_*.mp4 | hash(that part's cards + chapter) | that part changes |
 
 `build` walks this DAG and does the minimum work. No change → identical bytes, no work.
 

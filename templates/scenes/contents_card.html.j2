@@ -1,7 +1,7 @@
 {#
   The contents card: where each demo starts in this presentation, so a viewer can
   skip straight to the one they want. Every time on it is computed from the pieces
-  the build actually joined.
+  the build actually joined. A split presentation names each demo's file instead.
 #}
 {% extends "_card_base.html.j2" %}
 {% block card %}
@@ -25,11 +25,13 @@
     .toc__n { font-family: var(--mono); color: var(--muted); width: 56px; }
     .toc__t { flex: 1; }
     .toc__at { font-family: var(--mono); color: var(--accent); }
+    .toc--files { width: 1600px; }
+    .toc--files .toc__at { font-size: 24px; }
   </style>
   <p class="eyebrow">{{ data.title }}</p>
   <p class="heading">Skip to a demo</p>
   <div class="rule"></div>
-  <ol class="toc">
+  <ol class="toc{% if data.files %} toc--files{% endif %}">
 {% for e in data.entries %}
     <li>
       <span class="toc__n">{{ "%02d" | format(e.number) }}</span>

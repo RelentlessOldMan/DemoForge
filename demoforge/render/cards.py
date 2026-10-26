@@ -124,13 +124,13 @@ def contents_card(
     config: ContentSetConfig,
     timing: Timing,
     *,
-    entries: list[tuple[int, str, float]],
+    entries: list[tuple[int, str, float | str]],
     narration: tuple[str, str] | None = None,
 ) -> Card:
     """Where each demo starts in the presentation, so a viewer can skip to it.
 
-    ``entries`` are (number, title, start seconds), the starts measured from the
-    pieces actually joined, so every time on the card is where that chapter is.
+    ``entries`` are (number, title, where): the start in seconds, measured from
+    the pieces actually joined, or, for a split presentation, the file name.
     """
     return Card(
         id="contents",
@@ -139,8 +139,10 @@ def contents_card(
         duration=timing.contents_card_seconds,
         data={
             "title": config.title,
+            "files": any(isinstance(at, str) for _, _, at in entries),
             "entries": [
-                {"number": n, "title": t, "start": clock(start)} for n, t, start in entries
+                {"number": n, "title": t, "start": at if isinstance(at, str) else clock(at)}
+                for n, t, at in entries
             ],
         },
         narration=narration,
