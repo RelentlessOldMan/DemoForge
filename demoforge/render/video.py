@@ -183,7 +183,7 @@ def concat_videos(
 
     key = _digest(VIDEO_VERSION, "concat", _encode_signature(video), *(_file_hash(p) for p in parts))
     if not force and _key_matches(out_path, key):
-        return VideoResult(path=out_path, seconds=0.0, cached=True)
+        return VideoResult(path=out_path, seconds=probe_seconds(out_path, ffmpeg=exe), cached=True)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     listing = out_path.parent / f".{out_path.stem}.concat.txt"

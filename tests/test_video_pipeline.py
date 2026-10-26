@@ -592,5 +592,6 @@ def test_a_split_rebuild_is_the_same_zip_and_drops_old_parts(tmp_path):
 
     second = _build(cs)
     assert all(p.cached for p in second.parts)
+    assert [p.seconds for p in second.parts] == [p.seconds for p in first.parts]
     assert second.package.read_bytes() == zipped
     assert not stale.exists()
