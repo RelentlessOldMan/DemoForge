@@ -28,8 +28,8 @@ independently, with tests Claude never saw.
 
 ## contents
 
-Here's what's coming. Each demo stands on its own, so you can skip to any of them at
-the time shown, or simply watch from the start.
+Here's what's coming. Each demo stands on its own, in its own file, so you can open
+any of them by the name shown, or simply watch them all in order.
 
 ## opening
 
