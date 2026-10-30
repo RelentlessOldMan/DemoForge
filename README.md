@@ -95,6 +95,8 @@ run  ─►  approve  ─►  render  ─►  build
 - **Builds are incremental.** Frames and audio are cached by content hash, so changing one
   demo re-renders only that demo.
 
+In plain language: [how Claude's work is captured](docs/how-capture-works.md) and
+[how the videos are made, with no video editor](docs/how-the-videos-are-made.md).
 Full design: [`docs/architecture.md`](docs/architecture.md) and
 [`docs/video-pipeline.md`](docs/video-pipeline.md).
 What each demo is, what Claude did and how it turned out: [`docs/demos.md`](docs/demos.md).
